@@ -16,6 +16,7 @@
 
 ## UI/UX
 [ ] - Prefers-reduced-motion
+   [x] - partial
 [ ] - Front page
    [ ] - Header
       [ ] - Design

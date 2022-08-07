@@ -43,7 +43,7 @@ const Header = () => {
       {/* Sidebar menu */}
       <nav className={ 
         (isNavOpen ? "translate-x-0" : "-translate-x-full" ) + 
-        " md:w-1/4 w-4/6 h-full top-0 fixed z-20 bg-slate-50 translate-x-0 transition-transform ease-in duration-300"}
+        " md:w-1/4 w-4/6 h-full top-0 fixed z-20 bg-slate-50 translate-x-0 motion-reduce:transition-none transition-transform ease-in duration-300"}
       >
         <button onClick={() => setIsNavOpen(false)} className="py-4 pl-5 border-b w-full flex gap-2" >
           <XIcon className="h-8 w-8 text-zinc-400 hover:text-black" />
