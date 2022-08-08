@@ -12,7 +12,7 @@ const Modal = ({ children, isOpen, setIsOpen }: Props) => {
     <Transition.Root show={isOpen} as={Fragment}>
     <Dialog
       onClose={setIsOpen}
-      className="fixed flex inset-0 min-h-0 z-[200] h-[100vh] p-4 md:py-[12vh]"
+      className="fixed flex flex-col inset-0 min-h-0 z-[200] h-[100vh] p-4 md:py-[12vh]"
     >
       <Transition.Child
         enter="duration-300 ease-out"
@@ -34,7 +34,7 @@ const Modal = ({ children, isOpen, setIsOpen }: Props) => {
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
       >
-        <Dialog.Panel className="w-[100%] flex flex-col relative z-50 mx-auto max-w-[95vw] divide-y rounded-lg bg-white shadow-2xl md:max-w-3xl transition-opacity">
+        <Dialog.Panel className="w-[100%] flex flex-col min-h-0 relative z-50 mx-auto max-w-[95vw] divide-y rounded-lg bg-white shadow-2xl md:max-w-3xl transition-opacity">
             {children}
         </Dialog.Panel>
       </Transition.Child>

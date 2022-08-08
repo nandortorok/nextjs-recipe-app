@@ -88,17 +88,35 @@ const Login = ({ setIsOpen }: LoginProps) => {
       >
         <XIcon className="h-6 w-6" />
       </button>
-      <h1 className="p-4 text-lg font-bold">Login</h1>
-      <input 
-        className="border outline-none" 
-        type="text" 
-        placeholder="Username"
-      />
-      <input 
-        className="border outline-none" 
-        type="text" 
-        placeholder="Password"
-      />
+
+      {/* Login form */}
+      <form className="flex flex-col gap-2 items-center pb-8 font-bold">
+        {/* Title */}
+        <h1 className="text-lg font-bold pb-8">Login</h1>
+        {/* Google login */}
+        <button className="bg-blue-500 px-3 py-2 w-full rounded-full text-white">
+          Login with Google
+        </button>
+
+        <p className="p-4 text-zinc-400">
+          OR
+        </p>
+
+        {/* Login */}
+        <input 
+          className="rounded-[4px]" 
+          type="text" 
+          placeholder="Username"
+        />
+        <input 
+          className="rounded-[4px]" 
+          type="password" 
+          placeholder="Password"
+        />
+        <button className="bg-blue-500 px-3 py-2 w-full rounded-full text-white">
+          Login
+        </button>
+      </form>
     </main>
   )
 }

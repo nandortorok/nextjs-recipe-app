@@ -51,8 +51,7 @@ const Results = ({ setIsOpen }: Props) => {
             <SearchIcon className="mr-3 h-6 w-6 text-slate-700" />
           </label>
           <input
-            className="outline-none"
-            type="text"
+            className="outline-none w-full"
             id="searchInput"
             placeholder="Search recipes"
           />
