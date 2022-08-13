@@ -6,21 +6,35 @@ const Upload: NextPage = () => {
       {/* Title */}
       <h1 className="py-10 text-center text-4xl font-bold">Upload a recipe</h1>
       {/* Form */}
-      <form className="flex flex-col items-center">
+      <form className="flex flex-col items-center space-y-3 pb-10 shadow-2xl">
         {/* Title */}
         <UploadInput 
-          type="text" 
+          label="Recipe Title"
           placeholder="Title"
+          type="text" 
         />
         {/* Prep, cook time, servings */}
-        <UploadInput 
-          type="number" 
-          placeholder="0"
+        <UploadSelect 
+          label="Prep Time"
+          children={
+            <select name="" id="">
+              <option value="1">minutes</option>
+              <option value="2">hours</option>
+              <option value="3">days</option>
+            </select>
+          }
+        />  
+        <UploadSelect 
+          label="Cook Time"
+          children={
+            <select name="" id="">
+              <option value="1">minutes</option>
+              <option value="2">hours</option>
+              <option value="3">days</option>
+            </select>
+          }
         />
-        <UploadInput 
-          type="number" 
-          placeholder="0"
-        />
+
         {/* Ingredients ( ammount unit ingredient ) */}
         {/* Directions (recipe steps) */}
       </form>
@@ -28,17 +42,18 @@ const Upload: NextPage = () => {
   )
 }
 
-
-type Props = {
+// UploadInput
+type InputProps = {
+  label?: string
+  placeholder: string,
   type: string,
-  placeholder: string
 }
 
-const UploadInput = ({ type, placeholder }: Props) => {
+const UploadInput = ({ label, placeholder, type }: InputProps) => {
   return (
     <>
-    <label className="self">
-      {placeholder}
+    <label className="font-bold">
+      {label}
     </label>
     <input
       className="w-1/4"
@@ -46,6 +61,24 @@ const UploadInput = ({ type, placeholder }: Props) => {
       type={type}
     />
     </>
+  )
+}
+
+type SelectProps = {
+  label: string,
+  children: JSX.Element
+}
+
+const UploadSelect = ({ label, children }: SelectProps) => {
+  return (
+    <section className="flex space-x-3 justify-center items-center w-1/4 border-b pb-4">
+      <UploadInput 
+        label={label}
+        placeholder="0"
+        type="number" 
+      />
+      {children}
+    </section>
   )
 }
 

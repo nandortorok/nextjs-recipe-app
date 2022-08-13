@@ -54,6 +54,7 @@ const Results = ({ setIsOpen }: Props) => {
             className="outline-none w-full"
             id="searchInput"
             placeholder="Search recipes"
+            autoComplete="off"
           />
         </form>
         <button
@@ -64,7 +65,7 @@ const Results = ({ setIsOpen }: Props) => {
         </button>
       </header>
       <main className="overflow-auto">
-        <h1 className="border-b-[1px] p-4 text-lg font-bold">Recipes</h1>
+        <h1 className="border-b p-4 text-lg font-bold">Recipes</h1>
         <ul className="divide-y">
           <li className="p-4 hover:bg-slate-100">Test</li>
           <li className="p-4 hover:bg-slate-100">Test</li>
