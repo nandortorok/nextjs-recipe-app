@@ -20,7 +20,7 @@ const Header = () => {
           {/* Logo */}
           <Link href={"/"}>
             <h1 className="cursor-pointer py-3 text-2xl">
-              Recipe website
+              Recipe Website
             </h1>
           </Link>
 
@@ -48,7 +48,7 @@ const Header = () => {
         <button onClick={() => setIsNavOpen(false)} className="py-4 pl-5 border-b w-full flex gap-2" >
           <XIcon className="h-8 w-8 text-zinc-400 hover:text-black" />
           <h1 className="text-2xl font-bold visible md:invisible md:text-sm">
-              Recipe website
+              Recipe Website
           </h1>
         </button>
         <section className="pl-[1.6rem] flex flex-col pt-5">
