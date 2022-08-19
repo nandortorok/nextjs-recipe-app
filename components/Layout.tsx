@@ -1,6 +1,6 @@
-import React, { PropsWithChildren } from "react"
-import Footer from "./Footer"
-import Header from "./Header"
+import React, { PropsWithChildren } from "react";
+import Footer from "./Footer";
+import Header from "./Header";
 
 const Layout = ({ children }: PropsWithChildren) => {
   return (
@@ -9,6 +9,6 @@ const Layout = ({ children }: PropsWithChildren) => {
       {children}
       <Footer />
     </>
-  )
-}
-export default Layout
+  );
+};
+export default Layout;

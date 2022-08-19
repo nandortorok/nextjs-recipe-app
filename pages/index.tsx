@@ -15,7 +15,6 @@ const Home: NextPage = () => {
       <SearchSection />
 
       <main className="bg-zinc-100">
-
         <h2 className="py-10 text-center text-4xl font-bold">Recipes</h2>
 
         <section className="container mx-auto px-4 md:px-6">
@@ -33,9 +32,7 @@ const Home: NextPage = () => {
           <div className="py-6">
             <Recipe />
           </div>
-
         </section>
-        
       </main>
     </>
   );

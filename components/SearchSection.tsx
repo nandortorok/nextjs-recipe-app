@@ -7,7 +7,7 @@ const SearchSection = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <section className="relative flex h-72 md:h-96 justify-center bg-gray-300">
+    <section className="relative flex h-72 justify-center bg-gray-300 md:h-96">
       <Image
         src={"/searchSectionimage-01.jpg"}
         className="object-scale-down"
@@ -18,8 +18,8 @@ const SearchSection = () => {
       <div className="absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]">
         <button
           className="flex h-14 w-[90vw] items-center bg-white/75 pl-2
-                   text-zinc-500 hover:text-black md:w-80 text-lg
-                     lg:w-[32rem]"  
+                   text-lg text-zinc-500 hover:text-black md:w-80
+                     lg:w-[32rem]"
           type="button"
           onClick={() => setIsOpen(!isOpen)}
         >
@@ -28,19 +28,18 @@ const SearchSection = () => {
         </button>
       </div>
 
-      <Modal 
+      <Modal
         children={<Results setIsOpen={setIsOpen} />}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
       />
-
     </section>
   );
 };
 
 type Props = {
-  setIsOpen: Dispatch<SetStateAction<boolean>>
-}
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+};
 
 const Results = ({ setIsOpen }: Props) => {
   return (
@@ -51,7 +50,7 @@ const Results = ({ setIsOpen }: Props) => {
             <SearchIcon className="mr-3 h-6 w-6 text-slate-700" />
           </label>
           <input
-            className="outline-none w-full"
+            className="w-full outline-none"
             id="searchInput"
             placeholder="Search recipes"
             autoComplete="off"
@@ -92,7 +91,7 @@ const Results = ({ setIsOpen }: Props) => {
         Created by Nándor Török
       </footer>
     </>
-  )
-}
+  );
+};
 
 export default SearchSection;

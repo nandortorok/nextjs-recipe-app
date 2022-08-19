@@ -1,17 +1,17 @@
 import Link from "next/link";
-import { MenuIcon, UserIcon, XIcon } from "@heroicons/react/solid";
+import { MenuIcon, UploadIcon, UserIcon, XIcon } from "@heroicons/react/solid";
 import { useState, Dispatch, SetStateAction } from "react";
 import Modal from "./Modal";
 
 const Header = () => {
-  const [ isNavOpen, setIsNavOpen ] = useState(false);
-  const [ isLoginOpen, setIsLoginOpen ] = useState(false);
+  const [isNavOpen, setIsNavOpen] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
 
   return (
     <>
       {/* Header */}
       <header className="sticky top-0 z-10 mx-auto border-b bg-white py-1 font-bold shadow-sm">
-        <div className="flex items-center gap-2 justify-start md:justify-between px-5">
+        <div className="flex items-center justify-start gap-2 px-5 md:justify-between">
           {/* Navigation menu */}
           <button onClick={() => setIsNavOpen(!isNavOpen)}>
             <MenuIcon className="h-8 w-8 cursor-pointer text-zinc-400 hover:text-black" />
@@ -19,42 +19,55 @@ const Header = () => {
 
           {/* Logo */}
           <Link href={"/"}>
-            <h1 className="cursor-pointer py-3 text-2xl">
+            <h1 className="mx-auto cursor-pointer py-3 text-2xl">
               Recipe Website
             </h1>
           </Link>
 
-          {/* Login */}
-          <button 
-            className="invisible md:visible"
-            onClick={() => setIsLoginOpen(!isLoginOpen)}>
-            <UserIcon className="h-8 w-8 cursor-pointer text-zinc-400 hover:text-black" />
-          </button>
+          {/* User section */}
+          <div className="flex-nowrap">
+            {/* Upload
+            <Link href={"/upload"}>
+              <UploadIcon className="h-8 w-8 cursor-pointer text-zinc-400 hover:text-black" />
+            </Link> */}
+            {/* Login */}
+            <button
+              className="invisible md:visible"
+              onClick={() => setIsLoginOpen(!isLoginOpen)}
+            >
+              <UserIcon className="h-8 w-8 cursor-pointer text-zinc-400 hover:text-black" />
+            </button>
+          </div>
         </div>
       </header>
 
       {/* Login modal dialog */}
-      <Modal 
+      <Modal
         children={<Login setIsOpen={setIsLoginOpen} />}
         isOpen={isLoginOpen}
         setIsOpen={setIsLoginOpen}
       />
 
       {/* Sidebar menu */}
-      <nav className={ 
-        (isNavOpen ? "translate-x-0" : "-translate-x-full" ) + 
-        " md:w-1/4 w-4/6 h-full top-0 fixed z-20 bg-slate-50 translate-x-0 motion-reduce:transition-none transition-transform ease-in duration-300"}
+      <nav
+        className={
+          (isNavOpen ? "translate-x-0" : "-translate-x-full") +
+          " fixed top-0 z-20 h-full w-4/6 translate-x-0 bg-slate-50 transition-transform duration-300 ease-in motion-reduce:transition-none md:w-1/4"
+        }
       >
-        <button onClick={() => setIsNavOpen(false)} className="py-4 pl-5 border-b w-full flex gap-2" >
+        <button
+          onClick={() => setIsNavOpen(false)}
+          className="flex w-full gap-2 border-b py-4 pl-5"
+        >
           <XIcon className="h-8 w-8 text-zinc-400 hover:text-black" />
-          <h1 className="text-2xl font-bold visible md:invisible md:text-sm">
-              Recipe Website
+          <h1 className="visible text-2xl font-bold md:invisible md:text-sm">
+            Recipe Website
           </h1>
         </button>
-        <section className="pl-[1.6rem] flex flex-col pt-5">
+        <section className="flex flex-col pl-[1.6rem] pt-5">
           {/* Login */}
-          <button 
-            className="md:hidden hover:underline pb-2 self-start"
+          <button
+            className="self-start pb-2 hover:underline md:hidden"
             onClick={() => setIsLoginOpen(!isLoginOpen)}
           >
             Login
@@ -76,49 +89,43 @@ const Header = () => {
 };
 
 type LoginProps = {
-  setIsOpen: Dispatch<SetStateAction<boolean>>
-}
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+};
 
 const Login = ({ setIsOpen }: LoginProps) => {
   return (
-    <main className="flex flex-col gap-2 items-center">
+    <main className="flex flex-col items-center gap-2">
       <button
-        className="text-slate-400 hover:text-slate-700 self-end p-4"
+        className="self-end p-4 text-slate-400 hover:text-slate-700"
         onClick={() => setIsOpen(false)}
       >
         <XIcon className="h-6 w-6" />
       </button>
 
       {/* Login form */}
-      <form className="flex flex-col gap-2 items-center pb-8 font-bold">
+      <form className="flex flex-col items-center gap-2 pb-8 font-bold">
         {/* Title */}
-        <h1 className="text-lg font-bold pb-8">Login</h1>
+        <h1 className="pb-8 text-lg font-bold">Login</h1>
         {/* Google login */}
-        <button className="bg-blue-500 px-3 py-2 w-full rounded-full text-white">
+        <button className="w-full rounded-full bg-blue-500 px-3 py-2 text-white">
           Login with Google
         </button>
 
-        <p className="p-4 text-zinc-400">
-          OR
-        </p>
+        <p className="p-4 text-zinc-400">OR</p>
 
         {/* Login */}
-        <input 
-          className="rounded-[4px]" 
-          type="text" 
-          placeholder="Username"
-        />
-        <input 
-          className="rounded-[4px]" 
-          type="password" 
+        <input className="rounded-[4px]" type="text" placeholder="Username" />
+        <input
+          className="rounded-[4px]"
+          type="password"
           placeholder="Password"
         />
-        <button className="bg-blue-500 px-3 py-2 w-full rounded-full text-white">
+        <button className="w-full rounded-full bg-blue-500 px-3 py-2 text-white">
           Login
         </button>
       </form>
     </main>
-  )
-}
+  );
+};
 
 export default Header;
