@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import Head from "next/head";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, FormEventHandler, FormHTMLAttributes, useEffect, useState } from "react";
 
 const Upload: NextPage = () => {
   const [totalTime, setTotalTime] = useState("");
@@ -55,7 +55,16 @@ const Upload: NextPage = () => {
     }
   }, [inputValues, selectValues]);
 
-  const handleSubmit = () => {};
+  
+  const handleSubmit = async (event:FormEvent<HTMLFormElement>) => {
+    // Stop the form from submitting and refreshing the page.
+    event.preventDefault()
+
+    const data = event.target.title.value
+
+    console.log(data);
+    
+  };
 
   return (
     <>
@@ -73,12 +82,29 @@ const Upload: NextPage = () => {
           </h1>
           {/* Title & Image */}
           <section className="space-y-4 border-b pb-6">
-            <UploadInput label="Title" type="text" placeholder="Recipe title" />
-            <UploadInput label="Image" type="file" placeholder="Recipe image" />
+            <UploadInput
+              label="Title"
+              name="title"
+              type="text"
+              placeholder="Recipe title"
+            />
+            <UploadInput
+              label="Image"
+              name="image"
+              type="file"
+              placeholder="Recipe image"
+            />
           </section>
           {/* Servings */}
           <section className="space-y-4 border-b pb-6">
-            <UploadInput label="Servings" type="number" placeholder="e.g. 4" />
+            <UploadInput
+              label="Servings"
+              name="servings"
+              type="number"
+              placeholder="e.g. 4"
+              min={0}
+              max={99}
+            />
           </section>
           {/* Prep & Cook time */}
           <section className="space-y-4 border-b pb-6">
@@ -110,13 +136,28 @@ const Upload: NextPage = () => {
           {/* Ingredients */}
           <section className="space-y-4 border-b pb-6">
             <h1 className="text-md font-bold">Ingredients</h1>
-            <input className="w-full" placeholder="e.g. egg" type="text" />
-            <input className="w-full" placeholder="e.g. egg" type="text" />
-            <input className="w-full" placeholder="e.g. egg" type="text" />
+            <input
+              className="w-full"
+              name="ingredient"
+              placeholder="e.g. egg"
+              type="text"
+            />
+            <input
+              className="w-full"
+              name="ingredient"
+              placeholder="e.g. bacon"
+              type="text"
+            />
+            <input
+              className="w-full"
+              name="ingredient"
+              placeholder="e.g. salt"
+              type="text"
+            />
           </section>
           {/* Directions */}
           <section className="space-y-4 border-b pb-6">
-            <h1 className="text-md font-bold">Ingredients</h1>
+            <h1 className="text-md font-bold">Directions</h1>
             <div>
               <label className="block pb-2 font-bold">Step 1</label>
               <textarea className="w-full" rows={4} />
@@ -130,6 +171,15 @@ const Upload: NextPage = () => {
               <textarea className="w-full" rows={4} />
             </div>
           </section>
+          {/* Submit */}
+          <div className="pb-4">
+            <button
+              className="w-full rounded-full bg-slate-500 py-2 font-bold text-white hover:bg-slate-700"
+              type="submit"
+            >
+              Upload recipe
+            </button>
+          </div>
         </form>
       </main>
     </>
@@ -139,15 +189,32 @@ const Upload: NextPage = () => {
 // UploadInput
 type InputProps = {
   label: string;
+  name: string;
   type: string;
   placeholder: string;
+  min?: number;
+  max?: number;
 };
 
-const UploadInput = ({ label, type, placeholder }: InputProps) => {
+const UploadInput = ({
+  label,
+  name,
+  type,
+  placeholder,
+  min,
+  max,
+}: InputProps) => {
   return (
     <div>
       <label className="block pb-2 font-bold">{label}</label>
-      <input className="w-full border" type={type} placeholder={placeholder} />
+      <input
+        className="w-full border"
+        name={name}
+        type={type}
+        placeholder={placeholder}
+        min={min}
+        max={max}
+      />
     </div>
   );
 };

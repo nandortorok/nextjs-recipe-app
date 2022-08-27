@@ -73,8 +73,8 @@ const Header = () => {
             Login
           </button>
           {/* Other stuff */}
-          <Link href={"/"}>
-            <a className="hover:underline">01</a>
+          <Link href={"/upload"}>
+            <a className="hover:underline">Upload a recipe</a>
           </Link>
           <Link href={"/"}>
             <a className="hover:underline">02</a>
@@ -120,7 +120,7 @@ const Login = ({ setIsOpen }: LoginProps) => {
           type="password"
           placeholder="Password"
         />
-        <button className="w-full rounded-full bg-blue-500 px-3 py-2 text-white">
+        <button className="w-full rounded-full bg-blue-500 p-2 text-white">
           Login
         </button>
       </form>

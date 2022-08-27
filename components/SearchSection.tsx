@@ -17,9 +17,7 @@ const SearchSection = () => {
 
       <div className="absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]">
         <button
-          className="flex h-14 w-[90vw] items-center bg-white/75 pl-2
-                   text-lg text-zinc-500 hover:text-black md:w-80
-                     lg:w-[32rem]"
+          className="flex h-14 w-[90vw] items-center bg-white/75 pl-2 text-lg text-zinc-500 hover:text-black md:w-80 lg:w-[32rem]"
           type="button"
           onClick={() => setIsOpen(!isOpen)}
         >
