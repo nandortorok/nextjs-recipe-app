@@ -1,3 +1,4 @@
+import { XIcon } from "@heroicons/react/solid";
 import { NextPage } from "next";
 import Head from "next/head";
 import { ChangeEvent, FormEvent, FormEventHandler, FormHTMLAttributes, useEffect, useState } from "react";
@@ -56,13 +57,18 @@ const Upload: NextPage = () => {
   }, [inputValues, selectValues]);
 
   
-  const handleSubmit = async (event:FormEvent<HTMLFormElement>) => {
-    // Stop the form from submitting and refreshing the page.
+  const handleSubmit = (event:FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
-    const data = event.target.title.value
-
-    console.log(data);
+    // make it better
+    // user login
+    // create recipe
+    // image upload
+    
+    // const formData = new FormData(event.currentTarget);
+    // for (let [key, value] of formData.entries()) {
+    //   console.log(key, value);
+    // }
     
   };
 
@@ -136,24 +142,9 @@ const Upload: NextPage = () => {
           {/* Ingredients */}
           <section className="space-y-4 border-b pb-6">
             <h1 className="text-md font-bold">Ingredients</h1>
-            <input
-              className="w-full"
-              name="ingredient"
-              placeholder="e.g. egg"
-              type="text"
-            />
-            <input
-              className="w-full"
-              name="ingredient"
-              placeholder="e.g. bacon"
-              type="text"
-            />
-            <input
-              className="w-full"
-              name="ingredient"
-              placeholder="e.g. salt"
-              type="text"
-            />
+            <IngredientInput placeholder="bacon"/>
+            <IngredientInput placeholder="eggs"/>
+            <IngredientInput placeholder="salt"/>
           </section>
           {/* Directions */}
           <section className="space-y-4 border-b pb-6">
@@ -245,5 +236,26 @@ const UploadSelect = ({ label, inputName, selectName }: SelectProps) => {
     </div>
   );
 };
+
+
+type IngredientInputProps = {
+  placeholder: string
+}
+
+const IngredientInput = ({ placeholder }: IngredientInputProps) => {
+  return (
+    <div className="flex border border-gray-500">
+      <input
+        className="w-full border-0 focus:ring-0"
+        name="ingredient"
+        placeholder={"e.g." + placeholder}
+        type="text"
+      />
+      <button className="mr-3">
+        <XIcon className="h-6 w-6 text-gray-500 hover:text-gray-700"/>
+      </button>
+    </div>
+  )
+}
 
 export default Upload;
