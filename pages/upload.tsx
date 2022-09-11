@@ -1,45 +1,32 @@
-import { XIcon } from "@heroicons/react/solid";
+import { PlusIcon, PencilIcon } from "@heroicons/react/24/solid";
 import { NextPage } from "next";
 import Head from "next/head";
-import { ChangeEvent, FormEvent, FormEventHandler, FormHTMLAttributes, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useCallback, useEffect, useState} from "react";
 
 const Upload: NextPage = () => {
+
+  // Total cooking time handler 
   const [totalTime, setTotalTime] = useState("");
-  const [inputValues, setInputValues] = useState({
+  const [timeValues, setTimeValues] = useState({
     prepTime: 0,
     cookTime: 0,
-  });
-  const [selectValues, setSelectValues] = useState({
     prepTimeUnit: 1,
     cookTimeUnit: 1,
   });
 
-  const handleChange = (e: ChangeEvent<HTMLFormElement>) => {
-    if (e.target instanceof HTMLInputElement) {
-      let name: string = e.target.name;
-      let value: number = parseInt(e.target.value);
+  const handleTimeValueChange = (event: ChangeEvent<HTMLFormElement>) => {
+    let name: string = event.target.name;
+    let value: number = parseInt(event.target.value);
 
-      setInputValues({
-        ...inputValues,
-        [name]: value,
-      });
-    }
+    setTimeValues({
+      ...timeValues,
+      [name]: value,
+    });
 
-    if (e.target instanceof HTMLSelectElement) {
-      let name: string = e.target.name;
-      let value: number = parseInt(e.target.value);
-
-      setSelectValues({
-        ...selectValues,
-        [name]: value,
-      });
-    }
   };
 
   useEffect(() => {
-    const { prepTime, cookTime } = inputValues;
-    const { prepTimeUnit, cookTimeUnit } = selectValues;
-
+    const { prepTime, cookTime, prepTimeUnit, cookTimeUnit } = timeValues;
     const total = prepTime * prepTimeUnit + cookTime * cookTimeUnit;
 
     if (total < 60) {
@@ -54,22 +41,53 @@ const Upload: NextPage = () => {
         }`
       );
     }
-  }, [inputValues, selectValues]);
 
+  }, [timeValues]);
+
+  // Ingredient inputs handler
+  const [newIngredient, setNewIngredient] = useState({
+    amount: '',
+    unit: '',
+    ingredientName: '',
+  })
+  const [ingredients, setIngredients] = useState<any>([])
+
+  const onNewIngredientChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    let name: string = event.target.name;
+    let value: string = event.target.value;
+
+    setNewIngredient(prevState => ({
+      ...prevState,
+      [name]: value
+    }))
+  }, [])
+
+  // button cilck event
+  const onAddNewIngredient = useCallback((event: any) => {
+    setIngredients([
+      ...ingredients,
+      {
+        id: ingredients.length + 1,
+        content: newIngredient,
+        // recipeHeader:
+      }
+    ])
+    
+    setNewIngredient({
+      amount: '',
+      unit: '',
+      ingredientName: '',
+    })
+
+  }, [newIngredient, ingredients])
   
+  // Subimt data
   const handleSubmit = (event:FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
-    // make it better
-    // user login
-    // create recipe
-    // image upload
-    
-    // const formData = new FormData(event.currentTarget);
-    // for (let [key, value] of formData.entries()) {
-    //   console.log(key, value);
-    // }
-    
+    const formData = new FormData(event.currentTarget);
+    const [ title, image, servings, prepTime, prepTimeUnit, cookTime, cookTimeUnit ] = formData
+
   };
 
   return (
@@ -80,7 +98,7 @@ const Upload: NextPage = () => {
       <main className="bg-slate-300 px-4 py-12">
         <form
           className="mx-auto mb-0 w-full max-w-2xl space-y-6 bg-white px-10 shadow"
-          onChange={handleChange}
+          onChange={handleTimeValueChange}
           onSubmit={handleSubmit}
         >
           <h1 className="pt-5 text-center text-2xl font-bold">
@@ -141,10 +159,97 @@ const Upload: NextPage = () => {
           </section>
           {/* Ingredients */}
           <section className="space-y-4 border-b pb-6">
-            <h1 className="text-md font-bold">Ingredients</h1>
-            <IngredientInput placeholder="bacon"/>
-            <IngredientInput placeholder="eggs"/>
-            <IngredientInput placeholder="salt"/>
+          <div className="flex space-x-4 border border-gray-500">
+            <input 
+              className="w-1/2 border-0 focus:ring-0"
+              value={newIngredient.amount}
+              onChange={onNewIngredientChange}
+              placeholder="e.g. 1"
+              name="amount"
+              type="number"
+              min={0}
+              max={999}
+              />
+            <input 
+              className="w-1/2 border-0 focus:ring-0"
+              value={newIngredient.unit}
+              onChange={onNewIngredientChange}
+              placeholder="e.g. kg"
+              name="unit"
+              type="text"
+             />
+            <div className="flex">
+              <input
+                className="border-0 focus:ring-0"
+                value={newIngredient.ingredientName}
+                onChange={onNewIngredientChange}
+                placeholder="e.g. bacon"
+                name="ingredientName"
+                type="text"
+              />
+              <button 
+                className="mr-3"
+                title="Add ingredient"
+                onClick={onAddNewIngredient}
+              >
+                <PlusIcon className="h-6 w-6 text-gray-500 hover:text-gray-700"/>
+              </button>
+            </div>
+          </div>
+          <table className="w-full">
+            {ingredients.map((item:any) => (
+              <tr key={item.id}>
+                <td className="w-1/4">{item.content.amount}</td>
+                <td className="w-1/4">{item.content.unit}</td>
+                <td className="">{item.content.ingredientName}</td>
+              </tr>
+            ))}
+          </table>
+
+          <div className="flex space-x-4 group">
+            <input 
+              className="w-1/2 border-0 focus:ring-0 appearance-none"
+              value={newIngredient.amount}
+              onChange={onNewIngredientChange}
+              name="amount"
+              type="number"
+              min={0}
+              max={999}
+              disabled={true}
+              />
+            <input 
+              className="w-1/2 border-0 focus:ring-0"
+              value={newIngredient.unit}
+              onChange={onNewIngredientChange}
+              name="unit"
+              type="text"
+              disabled={true}
+             />
+            <div className="flex">
+              <input
+                className="border-0 focus:ring-0"
+                value={newIngredient.ingredientName}
+                onChange={onNewIngredientChange}
+                name="ingredientName"
+                type="text"
+                disabled={true}
+              />
+              <button 
+                className="mr-3 inline-block w-full h-full"
+                title="Edit ingredient"
+                onClick={onAddNewIngredient}
+              >
+                <PencilIcon className="h-6 w-6 text-white group-hover:text-gray-700"/>
+              </button>
+            </div>
+          </div>
+
+          {/* <button 
+            className="w-full rounded-full bg-slate-500 py-2 font-bold text-white hover:bg-slate-700"
+            // onClick={}
+          >
+            Add header
+          </button> */}
           </section>
           {/* Directions */}
           <section className="space-y-4 border-b pb-6">
@@ -236,26 +341,5 @@ const UploadSelect = ({ label, inputName, selectName }: SelectProps) => {
     </div>
   );
 };
-
-
-type IngredientInputProps = {
-  placeholder: string
-}
-
-const IngredientInput = ({ placeholder }: IngredientInputProps) => {
-  return (
-    <div className="flex border border-gray-500">
-      <input
-        className="w-full border-0 focus:ring-0"
-        name="ingredient"
-        placeholder={"e.g." + placeholder}
-        type="text"
-      />
-      <button className="mr-3">
-        <XIcon className="h-6 w-6 text-gray-500 hover:text-gray-700"/>
-      </button>
-    </div>
-  )
-}
 
 export default Upload;

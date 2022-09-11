@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import Image from "next/image";
-import { SearchIcon, XIcon } from "@heroicons/react/solid";
+import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import Modal from "./Modal";
 
 const SearchSection = () => {
@@ -21,7 +21,7 @@ const SearchSection = () => {
           type="button"
           onClick={() => setIsOpen(!isOpen)}
         >
-          <SearchIcon className="mr-3 h-8 w-8" />
+          <MagnifyingGlassIcon className="mr-3 h-8 w-8" />
           Find a recipe
         </button>
       </div>
@@ -45,7 +45,7 @@ const Results = ({ setIsOpen }: Props) => {
       <header className="flex p-4">
         <form className="flex flex-auto">
           <label htmlFor="searchInput">
-            <SearchIcon className="mr-3 h-6 w-6 text-slate-700" />
+            <MagnifyingGlassIcon className="mr-3 h-6 w-6 text-slate-700" />
           </label>
           <input
             className="w-full outline-none"
@@ -58,7 +58,7 @@ const Results = ({ setIsOpen }: Props) => {
           className="text-slate-400 hover:text-slate-700"
           onClick={() => setIsOpen(false)}
         >
-          <XIcon className="h-6 w-6" />
+          <XMarkIcon className="h-6 w-6" />
         </button>
       </header>
       <main className="overflow-auto">

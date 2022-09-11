@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { MenuIcon, UploadIcon, UserIcon, XIcon } from "@heroicons/react/solid";
+import { Bars4Icon, UserIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { useState, Dispatch, SetStateAction } from "react";
 import Modal from "./Modal";
 
@@ -14,7 +14,7 @@ const Header = () => {
         <div className="flex items-center justify-start gap-2 px-5 md:justify-between">
           {/* Navigation menu */}
           <button onClick={() => setIsNavOpen(!isNavOpen)}>
-            <MenuIcon className="h-8 w-8 cursor-pointer text-zinc-400 hover:text-black" />
+            <Bars4Icon className="h-8 w-8 cursor-pointer text-zinc-400 hover:text-black" />
           </button>
 
           {/* Logo */}
@@ -59,7 +59,7 @@ const Header = () => {
           onClick={() => setIsNavOpen(false)}
           className="flex w-full gap-2 border-b py-4 pl-5"
         >
-          <XIcon className="h-8 w-8 text-zinc-400 hover:text-black" />
+          <XMarkIcon className="h-8 w-8 text-zinc-400 hover:text-black" />
           <h1 className="visible text-2xl font-bold md:invisible md:text-sm">
             Recipe Website
           </h1>
@@ -99,7 +99,7 @@ const Login = ({ setIsOpen }: LoginProps) => {
         className="self-end p-4 text-slate-400 hover:text-slate-700"
         onClick={() => setIsOpen(false)}
       >
-        <XIcon className="h-6 w-6" />
+        <XMarkIcon className="h-6 w-6" />
       </button>
 
       {/* Login form */}

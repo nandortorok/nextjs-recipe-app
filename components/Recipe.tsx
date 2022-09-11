@@ -1,5 +1,4 @@
-import { StarIcon as StarIconSolid } from "@heroicons/react/solid";
-import { StarIcon as StarIconOutline } from "@heroicons/react/outline";
+import { StarIcon as StarIconSolid } from "@heroicons/react/24/solid";
 import Image from "next/image";
 
 const Recipe = () => {
