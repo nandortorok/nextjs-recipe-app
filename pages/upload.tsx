@@ -1,93 +1,164 @@
 import { PlusIcon, PencilIcon } from "@heroicons/react/24/solid";
 import { NextPage } from "next";
 import Head from "next/head";
-import { ChangeEvent, FormEvent, useCallback, useEffect, useState} from "react";
+import {
+  ChangeEvent,
+  FormEvent,
+  useCallback,
+  useState,
+  MouseEvent,
+} from "react";
 
+// form components
+import {
+  UploadRecipeDetails,
+  UploadRecipeServings,
+  UploadRecipeTime,
+} from "../components/Upload/UploadInputElements";
+
+// custom cooking time hook
+import useCookingTime from "../components/Upload/useCookingTime";
+
+// Page
 const Upload: NextPage = () => {
+  const { totalTime, handleTimeValueChange } = useCookingTime();
 
-  // Total cooking time handler 
-  const [totalTime, setTotalTime] = useState("");
-  const [timeValues, setTimeValues] = useState({
-    prepTime: 0,
-    cookTime: 0,
-    prepTimeUnit: 1,
-    cookTimeUnit: 1,
-  });
-
-  const handleTimeValueChange = (event: ChangeEvent<HTMLFormElement>) => {
-    let name: string = event.target.name;
-    let value: number = parseInt(event.target.value);
-
-    setTimeValues({
-      ...timeValues,
-      [name]: value,
-    });
-
+  // Ingredient types
+  type IngredientContentProps = {
+    amount: number | string;
+    unit: string;
+    ingredientName: string;
   };
 
-  useEffect(() => {
-    const { prepTime, cookTime, prepTimeUnit, cookTimeUnit } = timeValues;
-    const total = prepTime * prepTimeUnit + cookTime * cookTimeUnit;
+  type IngredientsProps = {
+    id: number;
+    content: IngredientContentProps;
+    isEdited: boolean;
+  };
 
-    if (total < 60) {
-      setTotalTime(`${total} ${total > 1 ? "minutes" : "minute"}`);
-    } else if (total < 60 * 24) {
-      const minutes = total % 60;
-      const hours = Math.floor(total / 60);
-
-      setTotalTime(
-        `${hours} ${hours > 1 ? "hours" : "hour"} and ${minutes} ${
-          minutes > 1 ? "minutes" : "minute"
-        }`
-      );
-    }
-
-  }, [timeValues]);
+  type RecipeHeaderProps = {
+    id: number;
+    subRecipe: string;
+    subRecipeIngredients: IngredientsProps[];
+  };
 
   // Ingredient inputs handler
-  const [newIngredient, setNewIngredient] = useState({
-    amount: '',
-    unit: '',
-    ingredientName: '',
-  })
-  const [ingredients, setIngredients] = useState<any>([])
+  const [newIngredient, setNewIngredient] = useState<IngredientContentProps>({
+    amount: "",
+    unit: "",
+    ingredientName: "",
+  });
+  const [ingredients, setIngredients] = useState<IngredientsProps[]>([]);
+  const [recipeHeader, setRecipeHeader] = useState<RecipeHeaderProps[]>([]);
 
-  const onNewIngredientChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    let name: string = event.target.name;
-    let value: string = event.target.value;
+  // sets amount, unit, ingredientName into newIngredient state
+  const onNewIngredientChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      let name: string = event.target.name;
+      let value: string = event.target.value;
 
-    setNewIngredient(prevState => ({
-      ...prevState,
-      [name]: value
-    }))
-  }, [])
+      setNewIngredient((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    },
+    []
+  );
 
-  // button cilck event
-  const onAddNewIngredient = useCallback((event: any) => {
+  // sets newIngredients into ingredients array state
+  const onAddNewIngredient = useCallback(() => {
+    const { amount, unit, ingredientName } = newIngredient;
+
+    if (!amount.toString().trim() || !unit.trim() || !ingredientName.trim())
+      return;
+
     setIngredients([
       ...ingredients,
       {
         id: ingredients.length + 1,
         content: newIngredient,
-        // recipeHeader:
-      }
-    ])
-    
-    setNewIngredient({
-      amount: '',
-      unit: '',
-      ingredientName: '',
-    })
+        isEdited: false,
+      },
+    ]);
 
-  }, [newIngredient, ingredients])
-  
+    setNewIngredient({
+      amount: "",
+      unit: "",
+      ingredientName: "",
+    });
+  }, [newIngredient, ingredients]);
+
+  // sets ingredients isEdited prop true/false
+  const onEditIngredient =
+    (ingredeint: IngredientsProps) => (e: MouseEvent) => {
+      const newIngredients = ingredients.map((obj) => {
+        // if id equals update ingredient
+        if (obj.id === ingredeint.id)
+          return {
+            ...obj,
+            isEdited: !ingredeint.isEdited,
+          };
+
+        // if not return ingredient
+        return obj;
+      });
+
+      setIngredients(newIngredients);
+    };
+
+  // handles ingredient content prop change
+  const onChangeIngredient =
+    (ingredeint: IngredientsProps) =>
+    (event: ChangeEvent<HTMLInputElement>) => {
+      let name: string = event.target.name;
+      let value: string = event.target.value;
+
+      const newIngredients = ingredients.map((obj) => {
+        // if id equals update ingredient
+        if (obj.id === ingredeint.id)
+          return {
+            ...obj,
+            content: {
+              ...obj.content,
+              [name]: value,
+            },
+          };
+
+        // if not return ingredient
+        return obj;
+      });
+
+      setIngredients(newIngredients);
+    };
+
+  const onAddHeader = (event: MouseEvent) => {
+    const newRecipeHeader = () => [
+      ...recipeHeader,
+      {
+        id: recipeHeader.length + 1,
+        subRecipe: "Main",
+        subRecipeIngredients: ingredients,
+      },
+    ];
+
+    setRecipeHeader(newRecipeHeader);
+    console.log(recipeHeader);
+  };
+
   // Subimt data
-  const handleSubmit = (event:FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
-    const [ title, image, servings, prepTime, prepTimeUnit, cookTime, cookTimeUnit ] = formData
-
+    const [
+      title,
+      image,
+      servings,
+      prepTime,
+      prepTimeUnit,
+      cookTime,
+      cookTimeUnit,
+    ] = formData;
   };
 
   return (
@@ -104,152 +175,118 @@ const Upload: NextPage = () => {
           <h1 className="pt-5 text-center text-2xl font-bold">
             Upload a recipe
           </h1>
-          {/* Title & Image */}
-          <section className="space-y-4 border-b pb-6">
-            <UploadInput
-              label="Title"
-              name="title"
-              type="text"
-              placeholder="Recipe title"
-            />
-            <UploadInput
-              label="Image"
-              name="image"
-              type="file"
-              placeholder="Recipe image"
-            />
-          </section>
-          {/* Servings */}
-          <section className="space-y-4 border-b pb-6">
-            <UploadInput
-              label="Servings"
-              name="servings"
-              type="number"
-              placeholder="e.g. 4"
-              min={0}
-              max={99}
-            />
-          </section>
-          {/* Prep & Cook time */}
-          <section className="space-y-4 border-b pb-6">
-            <UploadSelect
-              label="Prep Time"
-              inputName="prepTime"
-              selectName="prepTimeUnit"
-            />
-            <UploadSelect
-              label="Cook Time"
-              inputName="cookTime"
-              selectName="cookTimeUnit"
-            />
-
-            <div className="flex items-center space-x-4">
-              <label className="block w-full flex-1 pb-1 font-bold">
-                Total Time
-              </label>
-              <input
-                className="z-[2] w-1/2 border-white"
-                name="totalTime"
-                type="text"
-                value={totalTime}
-                disabled={true}
-              />
-              <select className="invisible w-1/6" name="" id=""></select>
-            </div>
-          </section>
+          <UploadRecipeDetails />
+          <UploadRecipeServings />
+          <UploadRecipeTime totalTime={totalTime} />
           {/* Ingredients */}
           <section className="space-y-4 border-b pb-6">
-          <div className="flex space-x-4 border border-gray-500">
-            <input 
-              className="w-1/2 border-0 focus:ring-0"
-              value={newIngredient.amount}
-              onChange={onNewIngredientChange}
-              placeholder="e.g. 1"
-              name="amount"
-              type="number"
-              min={0}
-              max={999}
-              />
-            <input 
-              className="w-1/2 border-0 focus:ring-0"
-              value={newIngredient.unit}
-              onChange={onNewIngredientChange}
-              placeholder="e.g. kg"
-              name="unit"
-              type="text"
-             />
-            <div className="flex">
+            <div className="flex space-x-4 border border-gray-500">
               <input
-                className="border-0 focus:ring-0"
-                value={newIngredient.ingredientName}
+                className="w-1/2 border-0 focus:ring-0"
+                value={newIngredient.amount}
                 onChange={onNewIngredientChange}
-                placeholder="e.g. bacon"
-                name="ingredientName"
+                placeholder="e.g. 1"
+                name="amount"
+                type="number"
+                min={0}
+                max={999}
+              />
+              <input
+                className="w-1/2 border-0 focus:ring-0"
+                value={newIngredient.unit}
+                onChange={onNewIngredientChange}
+                placeholder="e.g. kg"
+                name="unit"
                 type="text"
               />
-              <button 
-                className="mr-3"
-                title="Add ingredient"
-                onClick={onAddNewIngredient}
-              >
-                <PlusIcon className="h-6 w-6 text-gray-500 hover:text-gray-700"/>
-              </button>
+              <div className="flex">
+                <input
+                  className="border-0 focus:ring-0"
+                  value={newIngredient.ingredientName}
+                  onChange={onNewIngredientChange}
+                  placeholder="e.g. bacon"
+                  name="ingredientName"
+                  type="text"
+                />
+                <button
+                  className="mr-3"
+                  title="Add ingredient"
+                  onClick={onAddNewIngredient}
+                >
+                  <PlusIcon className="h-6 w-6 text-gray-500 hover:text-gray-700" />
+                </button>
+              </div>
             </div>
-          </div>
-          <table className="w-full">
-            {ingredients.map((item:any) => (
-              <tr key={item.id}>
-                <td className="w-1/4">{item.content.amount}</td>
-                <td className="w-1/4">{item.content.unit}</td>
-                <td className="">{item.content.ingredientName}</td>
-              </tr>
-            ))}
-          </table>
 
-          <div className="flex space-x-4 group">
-            <input 
-              className="w-1/2 border-0 focus:ring-0 appearance-none"
-              value={newIngredient.amount}
-              onChange={onNewIngredientChange}
-              name="amount"
-              type="number"
-              min={0}
-              max={999}
-              disabled={true}
-              />
-            <input 
-              className="w-1/2 border-0 focus:ring-0"
-              value={newIngredient.unit}
-              onChange={onNewIngredientChange}
-              name="unit"
-              type="text"
-              disabled={true}
-             />
-            <div className="flex">
-              <input
-                className="border-0 focus:ring-0"
-                value={newIngredient.ingredientName}
-                onChange={onNewIngredientChange}
-                name="ingredientName"
-                type="text"
-                disabled={true}
-              />
-              <button 
-                className="mr-3 inline-block w-full h-full"
-                title="Edit ingredient"
-                onClick={onAddNewIngredient}
-              >
-                <PencilIcon className="h-6 w-6 text-white group-hover:text-gray-700"/>
-              </button>
-            </div>
-          </div>
+            <button
+              className="w-full rounded-full bg-slate-500 py-2 font-bold text-white hover:bg-slate-700"
+              onClick={onAddHeader}
+            >
+              Add header
+            </button>
 
-          {/* <button 
-            className="w-full rounded-full bg-slate-500 py-2 font-bold text-white hover:bg-slate-700"
-            // onClick={}
-          >
-            Add header
-          </button> */}
+            {recipeHeader.map(
+              ({ id, subRecipe, subRecipeIngredients }: RecipeHeaderProps) => (
+                <section key={id}>
+                  <h1>{subRecipe}</h1>
+                  {Object.values(subRecipeIngredients).map(
+                    (ingredient: IngredientsProps) => (
+                      <div
+                        className={
+                          (ingredient.isEdited
+                            ? "border-gray-500"
+                            : "border-white") + " group flex space-x-4 border"
+                        }
+                        key={ingredient.id}
+                      >
+                        <input
+                          className="w-1/2 border-0 focus:ring-0"
+                          value={ingredient.content.amount}
+                          onChange={onChangeIngredient(ingredient)}
+                          name="amount"
+                          type={ingredient.isEdited ? "number" : "text"}
+                          min={0}
+                          max={999}
+                          disabled={!ingredient.isEdited}
+                        />
+                        <input
+                          className="w-1/2 border-0 focus:ring-0"
+                          value={ingredient.content.unit}
+                          onChange={onChangeIngredient(ingredient)}
+                          name="unit"
+                          type="text"
+                          disabled={!ingredient.isEdited}
+                        />
+                        <div className="flex">
+                          <input
+                            className="border-0 focus:ring-0"
+                            value={ingredient.content.ingredientName}
+                            onChange={onChangeIngredient(ingredient)}
+                            name="ingredientName"
+                            type="text"
+                            disabled={!ingredient.isEdited}
+                          />
+                          <button
+                            className="mr-3 inline-block h-full w-full"
+                            title="Edit ingredient"
+                            onClick={onEditIngredient(ingredient)}
+                          >
+                            <PencilIcon
+                              className={
+                                (ingredient.isEdited
+                                  ? "text-gray-500"
+                                  : "text-white") +
+                                " h-6 w-6 group-hover:text-gray-700"
+                              }
+                            />
+                          </button>
+                        </div>
+                      </div>
+                    )
+                  )}
+                </section>
+              )
+            )}
           </section>
           {/* Directions */}
           <section className="space-y-4 border-b pb-6">
@@ -279,66 +316,6 @@ const Upload: NextPage = () => {
         </form>
       </main>
     </>
-  );
-};
-
-// UploadInput
-type InputProps = {
-  label: string;
-  name: string;
-  type: string;
-  placeholder: string;
-  min?: number;
-  max?: number;
-};
-
-const UploadInput = ({
-  label,
-  name,
-  type,
-  placeholder,
-  min,
-  max,
-}: InputProps) => {
-  return (
-    <div>
-      <label className="block pb-2 font-bold">{label}</label>
-      <input
-        className="w-full border"
-        name={name}
-        type={type}
-        placeholder={placeholder}
-        min={min}
-        max={max}
-      />
-    </div>
-  );
-};
-
-// UploadSelect
-type SelectProps = {
-  label: string;
-  inputName: string;
-  selectName: string;
-};
-
-const UploadSelect = ({ label, inputName, selectName }: SelectProps) => {
-  return (
-    <div className="flex items-center space-x-4">
-      <label className="block flex-1 pb-1 font-bold">{label}</label>
-      <input
-        className="w-1/6"
-        name={inputName}
-        type="number"
-        min={0}
-        max={360}
-        placeholder="0"
-      />
-      <select className="w-1/2" name={selectName}>
-        <option value={1}>minutes</option>
-        <option value={60}>hours</option>
-      </select>
-    </div>
   );
 };
 
