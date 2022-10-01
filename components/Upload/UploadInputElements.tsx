@@ -1,6 +1,6 @@
 import { UploadInput, UploadSelect, UploadSection } from "./UploadForms";
 
-const UploadRecipeDetails = () => {
+const TitleImageInput = () => {
   return (
     <UploadSection>
       <UploadInput
@@ -19,9 +19,9 @@ const UploadRecipeDetails = () => {
   );
 };
 
-const UploadRecipeServings = () => {
+const ServingsInput = () => {
   return (
-    <section className="space-y-4 border-b pb-6">
+    <UploadSection>
       <UploadInput
         label="Servings"
         name="servings"
@@ -30,7 +30,7 @@ const UploadRecipeServings = () => {
         min={0}
         max={99}
       />
-    </section>
+    </UploadSection>
   );
 };
 
@@ -38,7 +38,7 @@ type UploadRecipeTimeProps = {
   totalTime: string;
 };
 
-const UploadRecipeTime = ({ totalTime }: UploadRecipeTimeProps) => {
+const RecipeTimeInput = ({ totalTime }: UploadRecipeTimeProps) => {
   return (
     <section className="space-y-4 border-b pb-6">
       <UploadSelect
@@ -67,4 +67,4 @@ const UploadRecipeTime = ({ totalTime }: UploadRecipeTimeProps) => {
   );
 };
 
-export { UploadRecipeDetails, UploadRecipeServings, UploadRecipeTime };
+export { TitleImageInput, ServingsInput, RecipeTimeInput };

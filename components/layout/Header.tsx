@@ -1,11 +1,16 @@
 import Link from "next/link";
 import { Bars4Icon, UserIcon, XMarkIcon } from "@heroicons/react/24/solid";
-import { useState, Dispatch, SetStateAction } from "react";
-import Modal from "./Modal";
+import { useState, Dispatch, SetStateAction, useEffect } from "react";
+import Modal from "../Modal";
+import { useRouter } from "next/router";
 
 const Header = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const dynamicRoute = useRouter().asPath;
+
+  // Reset navbar to closed on route change
+  useEffect(() => setIsNavOpen(false), [dynamicRoute]);
 
   return (
     <>
