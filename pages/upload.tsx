@@ -23,12 +23,13 @@ const Upload: NextPage = () => {
     ingredients,
     inputState,
     contents,
+    headerInput,
     handleInputStateChange,
     handleHeaderInputChange,
+    handleChangeIngredient,
     addContent,
     addHeader,
     editIngredient,
-    onChangeIngredient,
   } = useIngredients();
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -40,6 +41,7 @@ const Upload: NextPage = () => {
       <Head>
         <title>Recipe Website | Upload</title>
       </Head>
+
       <main className="bg-slate-300 px-4 py-12">
         <form
           className="mx-auto mb-0 w-full max-w-2xl space-y-6 bg-white px-10 shadow"
@@ -50,19 +52,22 @@ const Upload: NextPage = () => {
           <h1 className="pt-5 text-center text-2xl font-bold">
             Upload a recipe
           </h1>
+
           <TitleImageInput />
           <ServingsInput />
           <RecipeTimeInput totalTime={totalTime} />
+
           {/* Ingredients */}
           <section className="space-y-4 border-b pb-6">
             <IngredientsInput
-              inputState={inputState}
-              onChange={handleInputStateChange}
-              onClick={addContent}
+              inputStateValue={inputState}
+              onInputStateChange={handleInputStateChange}
+              onAddContent={addContent}
             />
             <HeaderInput
-              onClick={addHeader}
-              onChange={handleHeaderInputChange}
+              headerInputValue={headerInput}
+              onHeaderInputChange={handleHeaderInputChange}
+              onAddHeader={addHeader}
             />
 
             {/* Ingredients list */}
@@ -74,9 +79,9 @@ const Upload: NextPage = () => {
                 {contents.map((item) => (
                   <IngredientListItem
                     key={item.contentID}
-                    content={item}
-                    onClick={editIngredient(item)}
-                    onChange={onChangeIngredient(item)}
+                    contentValue={item}
+                    onChangeIngredient={handleChangeIngredient(item)}
+                    onEditIngredient={editIngredient(item)}
                   />
                 ))}
               </div>
@@ -89,9 +94,9 @@ const Upload: NextPage = () => {
                   {item.content.map((subItem) => (
                     <IngredientListItem
                       key={subItem.contentID}
-                      content={subItem}
-                      onClick={editIngredient(subItem, item)}
-                      onChange={onChangeIngredient(subItem, item)}
+                      contentValue={subItem}
+                      onChangeIngredient={handleChangeIngredient(subItem, item)}
+                      onEditIngredient={editIngredient(subItem, item)}
                     />
                   ))}
                 </div>

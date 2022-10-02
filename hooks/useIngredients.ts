@@ -2,17 +2,15 @@ import { ChangeEvent, useEffect, useState, MouseEvent } from "react";
 import { ContentProps, IngredientsProps } from "../types/IngredientProps";
 
 const useIngredients = () => {
+  const [ingredients, setIngredients] = useState<IngredientsProps[]>([]);
+  const [contents, setContents] = useState<ContentProps[]>([]);
+  const [headerInput, setHeaderInput] = useState<string>("");
   const [inputState, setInputState] = useState<ContentProps>({
     amount: "",
     unit: "",
     ingredientName: "",
     isEdited: false,
   });
-
-  const [headerInput, setHeaderInput] = useState<string>("");
-
-  const [contents, setContents] = useState<ContentProps[]>([]);
-  const [ingredients, setIngredients] = useState<IngredientsProps[]>([]);
 
   const handleInputStateChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -51,7 +49,12 @@ const useIngredients = () => {
   };
 
   const addHeader = () => {
-    if (contents.length == 0 || headerInput.length == 0) return;
+    if (
+      contents.length == 0 ||
+      headerInput.length == 0 ||
+      ingredients.find((item) => item.header === headerInput)
+    )
+      return;
 
     setIngredients([
       ...ingredients,
@@ -64,11 +67,27 @@ const useIngredients = () => {
 
     // clear contents state
     setContents([]);
+    setHeaderInput("");
   };
 
   const editIngredient =
     (content: ContentProps, ingredient?: IngredientsProps) =>
     (event: MouseEvent<HTMLButtonElement>) => {
+      if (contents.length > 0) {
+        const newContents = contents.map((item) => {
+          if (item.contentID === content.contentID)
+            return {
+              ...item,
+              isEdited: !content.isEdited,
+            };
+
+          return item;
+        });
+
+        // only execute this code
+        return setContents(newContents);
+      }
+
       const newIngredients = ingredients.map((item) => {
         // if ids matches map ingredient
         if (item.id === ingredient?.id) {
@@ -112,11 +131,26 @@ const useIngredients = () => {
       setIngredients(newIngredients);
     };
 
-  const onChangeIngredient =
+  const handleChangeIngredient =
     (content: ContentProps, ingredient?: IngredientsProps) =>
     (event: ChangeEvent<HTMLInputElement>) => {
       let name: string = event.target.name;
       let value: string = event.target.value;
+
+      if (contents.length > 0) {
+        const newContents = contents.map((item) => {
+          if (item.contentID === content.contentID)
+            return {
+              ...item,
+              [name]: value,
+            };
+
+          return item;
+        });
+
+        // only execute this code
+        return setContents(newContents);
+      }
 
       const newIngredients = ingredients.map((item) => {
         // if ids matches map ingredient
@@ -168,10 +202,10 @@ const useIngredients = () => {
     headerInput,
     handleInputStateChange,
     handleHeaderInputChange,
+    handleChangeIngredient,
     addContent,
     addHeader,
     editIngredient,
-    onChangeIngredient,
   };
 };
 

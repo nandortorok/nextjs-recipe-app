@@ -1,11 +1,11 @@
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
-import { ChangeEventHandler, MouseEventHandler } from "react";
+import { HeaderInputProps } from "../../types/IngredientProps";
 
-type Props = {
-  onClick: MouseEventHandler;
-  onChange: ChangeEventHandler;
-};
-const HeaderInput = ({ onClick, onChange }: Props) => {
+const HeaderInput = ({
+  headerInputValue,
+  onAddHeader,
+  onHeaderInputChange,
+}: HeaderInputProps) => {
   return (
     <div className="flex space-x-4 border border-white">
       <div className="flex">
@@ -13,7 +13,7 @@ const HeaderInput = ({ onClick, onChange }: Props) => {
           className=""
           title="Add header to ingredients"
           type="button"
-          onClick={onClick}
+          onClick={onAddHeader}
         >
           <PlusCircleIcon className="h-6 w-6 text-gray-500 hover:text-gray-700" />
         </button>
@@ -22,7 +22,8 @@ const HeaderInput = ({ onClick, onChange }: Props) => {
           placeholder="Ingredient header"
           name="ingredientName"
           type="text"
-          onChange={onChange}
+          value={headerInputValue}
+          onChange={onHeaderInputChange}
         />
       </div>
     </div>

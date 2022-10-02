@@ -1,18 +1,11 @@
 import { PencilIcon } from "@heroicons/react/24/solid";
-import { ChangeEventHandler, MouseEventHandler } from "react";
-import { ContentProps } from "../../types/IngredientProps";
-
-type Props = {
-  content: ContentProps;
-  onChange?: ChangeEventHandler;
-  onClick: MouseEventHandler<HTMLButtonElement>;
-};
+import { IngredientListItemProps } from "../../types/IngredientProps";
 
 const IngredientListItem = ({
-  content: { amount, unit, ingredientName, isEdited },
-  onChange,
-  onClick,
-}: Props) => {
+  contentValue: { amount, unit, ingredientName, isEdited },
+  onChangeIngredient,
+  onEditIngredient,
+}: IngredientListItemProps) => {
   return (
     <div
       className={
@@ -23,7 +16,7 @@ const IngredientListItem = ({
       <input
         className="w-1/2 border-0 focus:ring-0"
         value={amount}
-        onChange={onChange}
+        onChange={onChangeIngredient}
         name="amount"
         type={isEdited ? "number" : "text"}
         min={0}
@@ -33,7 +26,7 @@ const IngredientListItem = ({
       <input
         className="w-1/2 border-0 focus:ring-0"
         value={unit}
-        onChange={onChange}
+        onChange={onChangeIngredient}
         name="unit"
         type="text"
         disabled={!isEdited}
@@ -42,7 +35,7 @@ const IngredientListItem = ({
         <input
           className="border-0 focus:ring-0"
           value={ingredientName}
-          onChange={onChange}
+          onChange={onChangeIngredient}
           name="ingredientName"
           type="text"
           disabled={!isEdited}
@@ -51,7 +44,7 @@ const IngredientListItem = ({
           className="mr-3 inline-block h-full w-full"
           title="Edit ingredient"
           type="button"
-          onClick={onClick}
+          onClick={onEditIngredient}
         >
           <PencilIcon
             className={
