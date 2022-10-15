@@ -70,6 +70,7 @@ const useIngredients = () => {
     setHeaderInput("");
   };
 
+  // TODO make it better
   const editIngredient =
     (content: ContentProps, ingredient?: IngredientsProps) =>
     (event: MouseEvent<HTMLButtonElement>) => {
@@ -131,6 +132,7 @@ const useIngredients = () => {
       setIngredients(newIngredients);
     };
 
+  // TODO remove redundant code
   const handleChangeIngredient =
     (content: ContentProps, ingredient?: IngredientsProps) =>
     (event: ChangeEvent<HTMLInputElement>) => {

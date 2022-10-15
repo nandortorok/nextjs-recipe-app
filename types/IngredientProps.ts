@@ -31,3 +31,15 @@ export type IngredientsInputProps = {
   onInputStateChange: ChangeEventHandler;
   onAddContent: MouseEventHandler;
 };
+
+export type DirectionsProps = {
+  step: string;
+  index: number;
+};
+
+export type DirectionsInputProps = {
+  directionInputValue: string;
+  onDirectionInputChange: ChangeEventHandler<HTMLTextAreaElement>;
+  onAddDirection: MouseEventHandler;
+  directions: DirectionsProps[];
+};

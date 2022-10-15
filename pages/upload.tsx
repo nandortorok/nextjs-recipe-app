@@ -13,8 +13,10 @@ import HeaderInput from "../components/Upload/HeaderInput";
 import IngredientsInput from "../components/Upload/IngredientsInput";
 import useCookingTime from "../hooks/useCookingTime";
 import useIngredients from "../hooks/useIngredients";
+import useDirections from "../hooks/useDirections";
 import IngredientListItem from "../components/Upload/IngredientListItem";
 import { FormEvent } from "react";
+import DirectionsInput from "../components/Upload/DirectionsInput";
 
 // Page
 const Upload: NextPage = () => {
@@ -31,6 +33,12 @@ const Upload: NextPage = () => {
     addHeader,
     editIngredient,
   } = useIngredients();
+  const {
+    directions,
+    directionState,
+    handleDirectionInputChange,
+    addDirections,
+  } = useDirections();
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -44,7 +52,8 @@ const Upload: NextPage = () => {
 
       <main className="bg-slate-300 px-4 py-12">
         <form
-          className="mx-auto mb-0 w-full max-w-2xl space-y-6 bg-white px-10 shadow"
+          className="mx-auto mb-0 w-full max-w-4xl space-y-6 bg-white px-10 shadow"
+          // TODO only handle timeInputs
           onChange={handleTimeValueChange}
           onSubmit={handleSubmit}
           method="POST"
@@ -59,23 +68,25 @@ const Upload: NextPage = () => {
 
           {/* Ingredients */}
           <section className="space-y-4 border-b pb-6">
+            <h1 className="text-md font-bold">Ingredients</h1>
             <IngredientsInput
               inputStateValue={inputState}
               onInputStateChange={handleInputStateChange}
               onAddContent={addContent}
             />
-            <HeaderInput
-              headerInputValue={headerInput}
-              onHeaderInputChange={handleHeaderInputChange}
-              onAddHeader={addHeader}
-            />
-
-            {/* Ingredients list */}
-            <h1 className="text-md font-bold underline">Ingredients</h1>
 
             {contents.length > 0 && (
+              <HeaderInput
+                headerInputValue={headerInput}
+                onHeaderInputChange={handleHeaderInputChange}
+                onAddHeader={addHeader}
+              />
+            )}
+            {/* TODO addEditHeader */}
+            {/* Ingredients list */}
+            {contents.length > 0 && (
               // if contents state is not empty list items
-              <div className="ml-3" key={0}>
+              <div key={0}>
                 {contents.map((item) => (
                   <IngredientListItem
                     key={item.contentID}
@@ -89,37 +100,27 @@ const Upload: NextPage = () => {
 
             {ingredients.map((item) => (
               <div key={item.id}>
-                <p className="font-bold">{item.header}</p>
-                <div className="ml-3">
-                  {item.content.map((subItem) => (
-                    <IngredientListItem
-                      key={subItem.contentID}
-                      contentValue={subItem}
-                      onChangeIngredient={handleChangeIngredient(subItem, item)}
-                      onEditIngredient={editIngredient(subItem, item)}
-                    />
-                  ))}
-                </div>
+                <p className="pb-3 underline">{item.header}</p>
+
+                {item.content.map((subItem) => (
+                  <IngredientListItem
+                    key={subItem.contentID}
+                    contentValue={subItem}
+                    onChangeIngredient={handleChangeIngredient(subItem, item)}
+                    onEditIngredient={editIngredient(subItem, item)}
+                  />
+                ))}
               </div>
             ))}
           </section>
 
           {/* Directions */}
-          <section className="space-y-4 border-b pb-6">
-            <h1 className="text-md font-bold">Directions</h1>
-            <div>
-              <label className="block pb-2 font-bold">Step 1</label>
-              <textarea className="w-full" rows={4} />
-            </div>
-            <div>
-              <label className="block pb-2 font-bold">Step 2</label>
-              <textarea className="w-full" rows={4} />
-            </div>
-            <div>
-              <label className="block pb-2 font-bold">Step 3</label>
-              <textarea className="w-full" rows={4} />
-            </div>
-          </section>
+          <DirectionsInput
+            directionInputValue={directionState}
+            onDirectionInputChange={handleDirectionInputChange}
+            onAddDirection={addDirections}
+            directions={directions}
+          />
           {/* Submit */}
           <div className="pb-4">
             <button

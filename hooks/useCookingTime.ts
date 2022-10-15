@@ -11,8 +11,7 @@ const useCookingTime = () => {
 
   // Total cooking time handler
   const handleTimeValueChange = (event: ChangeEvent<HTMLFormElement>) => {
-    let name: string = event.target.name;
-    let value: number = parseInt(event.target.value);
+    const { name, value } = event.target;
 
     setTimeValues({
       ...timeValues,
