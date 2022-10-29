@@ -1,8 +1,9 @@
 import { ChangeEvent, useEffect, useState } from "react";
+import { TimeValueProps } from "types/IngredientProps";
 
 const useCookingTime = () => {
   const [totalTime, setTotalTime] = useState("");
-  const [timeValues, setTimeValues] = useState({
+  const [timeValues, setTimeValues] = useState<TimeValueProps>({
     prepTime: 0,
     cookTime: 0,
     prepTimeUnit: 1,
@@ -37,6 +38,6 @@ const useCookingTime = () => {
     }
   }, [timeValues]);
 
-  return { totalTime, handleTimeValueChange };
+  return { timeValues, handleTimeValueChange, totalTime };
 };
 export default useCookingTime;

@@ -1,26 +1,27 @@
 import { NextPage } from "next";
+import { FormEvent } from "react";
 import Head from "next/head";
 
-// form components
-import {
-  TitleImageInput,
-  ServingsInput,
-  RecipeTimeInput,
-} from "../components/Upload/UploadInputElements";
+// components
+import DirectionsInput from "@uploadComps/DirectionsInput";
+import HeaderInput from "@uploadComps/HeaderInput";
+import ImageInput from "@uploadComps/ImageInput";
+import IngredientListItem from "@uploadComps/IngredientListItem";
+import IngredientsInput from "@uploadComps/IngredientsInput";
+import ServingsInput from "@uploadComps/ServingsInput";
+import { TimeInput } from "@uploadComps/TimeInput";
+import TitleInput from "@uploadComps/TitleInput";
 
-// custom cooking time hook
-import HeaderInput from "../components/Upload/HeaderInput";
-import IngredientsInput from "../components/Upload/IngredientsInput";
-import useCookingTime from "../hooks/useCookingTime";
-import useIngredients from "../hooks/useIngredients";
-import useDirections from "../hooks/useDirections";
-import IngredientListItem from "../components/Upload/IngredientListItem";
-import { FormEvent } from "react";
-import DirectionsInput from "../components/Upload/DirectionsInput";
+// custom hooks
+// import useCookingTime from "@hooks/useCookingTime_HTMLFORM";
+import useCookingTime from "@hooks/useCookingTime";
+import useIngredients from "@hooks/useIngredients";
+import useDirections from "@hooks/useDirections";
 
 // Page
 const Upload: NextPage = () => {
-  const { totalTime, handleTimeValueChange } = useCookingTime();
+  // const { totalTime, handleTimeValueChange } = useCookingTime();
+  const { timeValues, handleTimeValueChange, totalTime } = useCookingTime();
   const {
     ingredients,
     inputState,
@@ -42,6 +43,9 @@ const Upload: NextPage = () => {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    console.log(event);
+    
   };
 
   return (
@@ -53,22 +57,34 @@ const Upload: NextPage = () => {
       <main className="bg-slate-300 px-4 py-12">
         <form
           className="mx-auto mb-0 w-full max-w-4xl space-y-6 bg-white px-10 shadow"
-          // TODO only handle timeInputs
-          onChange={handleTimeValueChange}
           onSubmit={handleSubmit}
+          action="/api/upload"
           method="POST"
         >
           <h1 className="pt-5 text-center text-2xl font-bold">
             Upload a recipe
           </h1>
 
-          <TitleImageInput />
-          <ServingsInput />
-          <RecipeTimeInput totalTime={totalTime} />
+          <section className="space-y-4 border-b pb-6">
+            <TitleInput />
+            <ImageInput />
+          </section>
 
-          {/* Ingredients */}
+          <section className="space-y-4 border-b pb-6">
+            <ServingsInput />
+          </section>
+
+          <section className="space-y-4 border-b pb-6">
+            <TimeInput
+              timeValues={timeValues}
+              onTimeValueChange={handleTimeValueChange}
+              totalTime={totalTime}
+            />
+          </section>
+
           <section className="space-y-4 border-b pb-6">
             <h1 className="text-md font-bold">Ingredients</h1>
+
             <IngredientsInput
               inputStateValue={inputState}
               onInputStateChange={handleInputStateChange}
@@ -82,6 +98,7 @@ const Upload: NextPage = () => {
                 onAddHeader={addHeader}
               />
             )}
+
             {/* TODO addEditHeader */}
             {/* Ingredients list */}
             {contents.length > 0 && (

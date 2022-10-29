@@ -9,7 +9,9 @@ const IngredientListItem = ({
   return (
     <div className="group flex flex-col space-y-4 pb-6 lg:flex-row lg:space-y-0 lg:space-x-4">
       <input
-        className="w-full focus:ring-0 lg:w-72"
+        className={
+          (!isEdited && "border-white ") + "w-full focus:ring-0 lg:w-72"
+        }
         value={ingredientName}
         onChange={onChangeIngredient}
         name="ingredientName"
@@ -39,7 +41,7 @@ const IngredientListItem = ({
       </div>
       <div
         className={
-          (isEdited ? "text-gray-500" : "text-white") +
+          (isEdited ? "text-gray-600" : "text-gray-400 sm:text-white") +
           " flex items-center justify-end lg:w-64"
         }
       >
@@ -49,8 +51,8 @@ const IngredientListItem = ({
           type="button"
           onClick={onEditIngredient}
         >
-          <p className="pr-2">Edit ingredient</p>
-          <PencilIcon className=" h-6 w-6 " />
+          <p className="invisible pr-2 sm:visible">Edit ingredient</p>
+          <PencilIcon className="h-6 w-6 " />
         </button>
       </div>
     </div>

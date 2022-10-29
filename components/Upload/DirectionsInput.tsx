@@ -35,7 +35,7 @@ const DirectionsInput = ({
         {directions.map(({ step, index }) => (
           <div className="border-gray-300 bg-gray-300" key={index}>
             <textarea
-              className="turncate w-full border-0"
+              className="turncate block w-full border-0"
               rows={1}
               placeholder={"Step " + index}
               value={step}

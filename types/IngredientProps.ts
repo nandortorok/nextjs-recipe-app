@@ -1,5 +1,7 @@
 import { ChangeEventHandler, MouseEventHandler } from "react";
 
+// TODO export use Ingredient type
+
 export type ContentProps = {
   contentID?: number;
   amount: number | string;
@@ -32,6 +34,8 @@ export type IngredientsInputProps = {
   onAddContent: MouseEventHandler;
 };
 
+// TODO export useDirections types
+
 export type DirectionsProps = {
   step: string;
   index: number;
@@ -42,4 +46,19 @@ export type DirectionsInputProps = {
   onDirectionInputChange: ChangeEventHandler<HTMLTextAreaElement>;
   onAddDirection: MouseEventHandler;
   directions: DirectionsProps[];
+};
+
+// TODO export useCookingTime types
+
+export type TimeValueProps = {
+  prepTime: number;
+  cookTime: number;
+  prepTimeUnit: number;
+  cookTimeUnit: number;
+};
+
+export type TimeInputProps = {
+  totalTime: string;
+  onTimeValueChange: ChangeEventHandler;
+  timeValues: TimeValueProps;
 };

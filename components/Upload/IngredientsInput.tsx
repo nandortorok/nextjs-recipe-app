@@ -1,5 +1,5 @@
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
-import { IngredientsInputProps } from "../../types/IngredientProps";
+import { IngredientsInputProps } from "types/IngredientProps";
 
 const IngredientsInput = ({
   inputStateValue: { amount, unit, ingredientName },
