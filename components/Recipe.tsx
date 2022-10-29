@@ -6,10 +6,11 @@ const Recipe = () => {
     <article className="relative border bg-white shadow">
       <header className="">
         <Image
+          alt="recipe image"
           src="/test-image.png"
           width={1600}
           height={900}
-          objectFit="cover"
+          // objectFit="cover"
         />
       </header>
 

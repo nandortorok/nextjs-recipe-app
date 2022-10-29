@@ -47,11 +47,9 @@ const Header = () => {
       </header>
 
       {/* Login modal dialog */}
-      <Modal
-        children={<Login setIsOpen={setIsLoginOpen} />}
-        isOpen={isLoginOpen}
-        setIsOpen={setIsLoginOpen}
-      />
+      <Modal isOpen={isLoginOpen} setIsOpen={setIsLoginOpen}>
+        <Login setIsOpen={setIsLoginOpen} />
+      </Modal>
 
       {/* Sidebar menu */}
       <nav
@@ -78,15 +76,9 @@ const Header = () => {
             Login
           </button>
           {/* Other stuff */}
-          <Link href={"/upload"}>
-            <a className="hover:underline">Upload a recipe</a>
-          </Link>
-          <Link href={"/"}>
-            <a className="hover:underline">02</a>
-          </Link>
-          <Link href={"/"}>
-            <a className="hover:underline">03</a>
-          </Link>
+          <Link href={"/upload"}>Upload</Link>
+          <Link href={"/"}>02</Link>
+          <Link href={"/"}>02</Link>
         </section>
       </nav>
     </>

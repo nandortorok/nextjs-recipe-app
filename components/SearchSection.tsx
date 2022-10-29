@@ -7,12 +7,12 @@ const SearchSection = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <section className="relative flex h-72 justify-center bg-gray-300 md:h-96">
+    <section className="relative h-72 bg-gray-300 md:h-96">
       <Image
+        alt="image"
         src={"/searchSectionimage-01.jpg"}
-        className="object-scale-down"
-        layout={"fill"}
-        objectFit={"cover"}
+        className="object-cover"
+        fill={true}
       />
 
       <div className="absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]">
@@ -26,11 +26,9 @@ const SearchSection = () => {
         </button>
       </div>
 
-      <Modal
-        children={<Results setIsOpen={setIsOpen} />}
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-      />
+      <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
+        <Results setIsOpen={setIsOpen} />
+      </Modal>
     </section>
   );
 };

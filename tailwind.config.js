@@ -7,12 +7,9 @@ module.exports = {
   theme: {
     extend: {
       fontSize: {
-        '2xl_' : '1.51rem'
-      }
+        "2xl_": "1.51rem",
+      },
     },
   },
-  plugins: [
-    require('@tailwindcss/forms'),
-  ],
-  // important: true,
-}
+  plugins: [require("@tailwindcss/forms")],
+};
