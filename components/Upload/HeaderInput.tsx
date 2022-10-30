@@ -19,7 +19,7 @@ const HeaderInput = ({
       <input
         className="border-0 focus:ring-0"
         placeholder="Ingredient header"
-        name="ingredientName"
+        // name="ingredientName"
         type="text"
         value={headerInputValue}
         onChange={onHeaderInputChange}

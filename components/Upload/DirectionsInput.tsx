@@ -37,7 +37,8 @@ const DirectionsInput = ({
             <textarea
               className="turncate block w-full border-0"
               rows={1}
-              placeholder={"Step " + index}
+              placeholder={`Step ${index}`}
+              name={`step-${index}`}
               value={step}
               disabled={true}
               // onChange={onDirectionInputChange}

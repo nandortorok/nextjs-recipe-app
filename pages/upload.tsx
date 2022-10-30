@@ -44,8 +44,19 @@ const Upload: NextPage = () => {
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    console.log(event);
-    
+    const formData = new FormData();
+
+    console.log("----------------");
+    // for (const item of event.currentTarget) {
+    //   const { name, value } = item;
+
+    //   if (name) {
+    //     console.log(`${name}: ${value}`);
+    //     // console.log(item);
+    //   }
+    // }
+
+    console.log(ingredients);
   };
 
   return (
@@ -58,7 +69,6 @@ const Upload: NextPage = () => {
         <form
           className="mx-auto mb-0 w-full max-w-4xl space-y-6 bg-white px-10 shadow"
           onSubmit={handleSubmit}
-          action="/api/upload"
           method="POST"
         >
           <h1 className="pt-5 text-center text-2xl font-bold">
@@ -104,12 +114,12 @@ const Upload: NextPage = () => {
             {contents.length > 0 && (
               // if contents state is not empty list items
               <div key={0}>
-                {contents.map((item) => (
+                {contents.map((subItem) => (
                   <IngredientListItem
-                    key={item.contentID}
-                    contentValue={item}
-                    onChangeIngredient={handleChangeIngredient(item)}
-                    onEditIngredient={editIngredient(item)}
+                    key={subItem.contentID}
+                    contentValue={subItem}
+                    onChangeIngredient={handleChangeIngredient(subItem)}
+                    onEditIngredient={editIngredient(subItem)}
                   />
                 ))}
               </div>
@@ -122,6 +132,7 @@ const Upload: NextPage = () => {
                 {item.content.map((subItem) => (
                   <IngredientListItem
                     key={subItem.contentID}
+                    id={item.id}
                     contentValue={subItem}
                     onChangeIngredient={handleChangeIngredient(subItem, item)}
                     onEditIngredient={editIngredient(subItem, item)}

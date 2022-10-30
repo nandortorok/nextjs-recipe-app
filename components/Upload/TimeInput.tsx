@@ -73,7 +73,7 @@ const TimeInput = ({
         <label className="block w-full flex-1 pb-1 font-bold">Total Time</label>
         <input
           className="w-1/2 border-white"
-          name="totalTime"
+          // name="totalTime"
           type="text"
           value={totalTime}
           disabled={true}

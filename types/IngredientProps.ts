@@ -3,7 +3,7 @@ import { ChangeEventHandler, MouseEventHandler } from "react";
 // TODO export use Ingredient type
 
 export type ContentProps = {
-  contentID?: number;
+  contentID: number;
   amount: number | string;
   unit: string;
   ingredientName: string;
@@ -17,6 +17,7 @@ export type IngredientsProps = {
 };
 
 export type IngredientListItemProps = {
+  id?: number;
   contentValue: ContentProps;
   onChangeIngredient: ChangeEventHandler;
   onEditIngredient: MouseEventHandler<HTMLButtonElement>;

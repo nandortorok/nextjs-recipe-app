@@ -1,0 +1,113 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  name      String
+  password  String
+  role      Role     @default(USER)
+  recipes   Recipe[]
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("user")
+}
+
+enum Role {
+  USER
+  ADMIN
+
+  @@map("role")
+}
+
+model Category {
+  id      Int      @id @default(autoincrement())
+  name    String
+  recipes Recipe[]
+
+  @@map("category")
+}
+
+model Unit {
+  id          Int                 @id @default(autoincrement())
+  base        BaseUnit
+  name        String
+  short       String
+  ingredients SectionIngredient[]
+
+  @@map("unit")
+}
+
+enum BaseUnit {
+  mass
+  volume
+  other
+
+  @@map("base_unit")
+}
+
+model Ingredient {
+  id          Int                 @id @default(autoincrement())
+  name        String
+  ingredients SectionIngredient[]
+
+  @@map("ingredient")
+}
+
+model Direction {
+  stepNumber      Int     @id @default(autoincrement())
+  direction       String
+  Section         Section @relation(fields: [sectionId, sectionRecipeId], references: [id, recipeId])
+  sectionId       Int     @map("section_id")
+  sectionRecipeId Int     @map("section_recipe_id")
+
+  @@map("direction")
+}
+
+model SectionIngredient {
+  Section         Section    @relation(fields: [sectionId, sectionRecipeId], references: [id, recipeId])
+  sectionId       Int        @map("section_id")
+  sectionRecipeId Int        @map("section_recipe_id")
+  ingredient      Ingredient @relation(fields: [ingredientId], references: [id])
+  ingredientId    Int        @map("ingredient_id")
+  unit            Unit?      @relation(fields: [unitId], references: [id])
+  unitId          Int?       @map("unit_id")
+  amount          Int?
+
+  @@id([sectionId, sectionRecipeId, ingredientId])
+  @@map("recipe_ingredient")
+}
+
+model Recipe {
+  id             Int       @id @default(autoincrement())
+  category       Category  @relation(fields: [categoryId], references: [id])
+  categoryId     Int       @map("category_id")
+  user           User      @relation(fields: [userId], references: [id])
+  userId         Int       @map("user_id")
+  title          String
+  servings       Int
+  prepTime       Int       @map("prep_time")
+  cookingTime    Int       @map("cook_time")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
+  recipeSections Section[]
+}
+
+model Section {
+  id          Int                 @default(0)
+  Recipe      Recipe              @relation(fields: [recipeId], references: [id])
+  recipeId    Int                 @map("recipe_id")
+  title       String              @map("title")
+  ingredients SectionIngredient[]
+  directions  Direction[]
+
+  @@id([id, recipeId])
+  @@map("section")
+}
