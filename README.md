@@ -1,10 +1,11 @@
 # Next.js Recipe Website
 
-## About The Project
+<!-- ## About The Project -->
 
 ### Built With
 
 - Typescript
+- Prisma
 - Next.js
 - React
 - Tailwind
@@ -17,6 +18,7 @@
 
 - Node.js
   - npm
+- Docker
 
 ### Installation
 
@@ -34,7 +36,17 @@
 1. Run the development server:
    ```sh
    npm run dev
-   # or
-   yarn dev
    ```
-2. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Run docker to setup the database
+
+   ```
+   docker compose up
+   ```
+
+3. Run the migration:
+
+   ```sh
+   npx prisma migrate dev
+   ```
+
+4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
