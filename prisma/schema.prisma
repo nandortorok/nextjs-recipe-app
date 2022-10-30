@@ -23,16 +23,6 @@ model User {
 enum Role {
   USER
   ADMIN
-
-  @@map("role")
-}
-
-model Category {
-  id      Int      @id @default(autoincrement())
-  name    String
-  recipes Recipe[]
-
-  @@map("category")
 }
 
 model Unit {
@@ -46,11 +36,9 @@ model Unit {
 }
 
 enum BaseUnit {
-  mass
-  volume
-  other
-
-  @@map("base_unit")
+  MASS
+  VOLUME
+  OTHER
 }
 
 model Ingredient {
@@ -62,7 +50,7 @@ model Ingredient {
 }
 
 model Direction {
-  stepNumber      Int     @id @default(autoincrement())
+  stepNumber     Int     @id @default(autoincrement()) @map("step_number")
   direction       String
   Section         Section @relation(fields: [sectionId, sectionRecipeId], references: [id, recipeId])
   sectionId       Int     @map("section_id")
@@ -82,13 +70,11 @@ model SectionIngredient {
   amount          Int?
 
   @@id([sectionId, sectionRecipeId, ingredientId])
-  @@map("recipe_ingredient")
+  @@map("section_ingredient")
 }
 
 model Recipe {
   id             Int       @id @default(autoincrement())
-  category       Category  @relation(fields: [categoryId], references: [id])
-  categoryId     Int       @map("category_id")
   user           User      @relation(fields: [userId], references: [id])
   userId         Int       @map("user_id")
   title          String
@@ -98,13 +84,15 @@ model Recipe {
   createdAt      DateTime  @default(now()) @map("created_at")
   updatedAt      DateTime  @updatedAt @map("updated_at")
   recipeSections Section[]
+
+  @@map("recipe")
 }
 
 model Section {
   id          Int                 @default(0)
   Recipe      Recipe              @relation(fields: [recipeId], references: [id])
   recipeId    Int                 @map("recipe_id")
-  title       String              @map("title")
+  title       String?             @map("title")
   ingredients SectionIngredient[]
   directions  Direction[]
 
