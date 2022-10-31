@@ -2,6 +2,14 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-}
+};
 
-module.exports = nextConfig
+module.exports = {
+  webpack(config) {
+    config.infrastructureLogging = {
+      level: "error",
+    };
+  },
+};
+
+module.exports = nextConfig;

@@ -1,9 +1,20 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { ChangeEventHandler, Dispatch, SetStateAction, useState } from "react";
 import Image from "next/image";
 import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import Modal from "./Modal";
 
-const SearchSection = () => {
+// TODO better type def
+type SearchSectionProps = {
+  searchTerm: string;
+  onSearchTerm: ChangeEventHandler;
+  recipes: any;
+};
+
+const SearchSection = ({
+  searchTerm,
+  onSearchTerm,
+  recipes,
+}: SearchSectionProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -14,7 +25,6 @@ const SearchSection = () => {
         className="object-cover"
         fill={true}
       />
-
       <div className="absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]">
         <button
           className="flex h-14 w-[90vw] items-center bg-white/75 pl-2 text-lg text-zinc-500 hover:text-black md:w-80 lg:w-[32rem]"
@@ -27,17 +37,35 @@ const SearchSection = () => {
       </div>
 
       <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
-        <Results setIsOpen={setIsOpen} />
+        {/* TODO give proper type */}
+        {recipes.map((item: any) => (
+          <Results
+            value={searchTerm}
+            onChange={onSearchTerm}
+            setIsOpen={setIsOpen}
+            title={item.title}
+            key={item.id}
+          />
+        ))}
       </Modal>
     </section>
   );
 };
 
-type Props = {
+// TODO clear redundant types
+type ResultsProps = {
+  value: string;
+  onChange: ChangeEventHandler;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
+  title: string;
 };
 
-const Results = ({ setIsOpen }: Props) => {
+const Results = ({
+  value: searchTerm,
+  onChange: onSearchTerm,
+  setIsOpen,
+  title,
+}: ResultsProps) => {
   return (
     <>
       <header className="flex p-4">
@@ -47,7 +75,8 @@ const Results = ({ setIsOpen }: Props) => {
           </label>
           <input
             className="w-full outline-none"
-            id="searchInput"
+            value={searchTerm}
+            onChange={onSearchTerm}
             placeholder="Search recipes"
             autoComplete="off"
           />
@@ -62,24 +91,7 @@ const Results = ({ setIsOpen }: Props) => {
       <main className="overflow-auto">
         <h1 className="border-b p-4 text-lg font-bold">Recipes</h1>
         <ul className="divide-y">
-          <li className="p-4 hover:bg-slate-100">Test</li>
-          <li className="p-4 hover:bg-slate-100">Test</li>
-          <li className="p-4 hover:bg-slate-100">Test</li>
-          <li className="p-4 hover:bg-slate-100">Test</li>
-          <li className="p-4 hover:bg-slate-100">Test</li>
-          <li className="p-4 hover:bg-slate-100">Test</li>
-          <li className="p-4 hover:bg-slate-100">Test</li>
-          <li className="p-4 hover:bg-slate-100">Test</li>
-          <li className="p-4 hover:bg-slate-100">Test</li>
-          <li className="p-4 hover:bg-slate-100">Test</li>
-          <li className="p-4 hover:bg-slate-100">Test</li>
-          <li className="p-4 hover:bg-slate-100">Test</li>
-          <li className="p-4 hover:bg-slate-100">Test</li>
-          <li className="p-4 hover:bg-slate-100">Test</li>
-          <li className="p-4 hover:bg-slate-100">Test</li>
-          <li className="p-4 hover:bg-slate-100">Test</li>
-          <li className="p-4 hover:bg-slate-100">Test</li>
-          <li className="p-4 hover:bg-slate-100">Test</li>
+          <li className="p-4 hover:bg-slate-100">{title}</li>
         </ul>
       </main>
 

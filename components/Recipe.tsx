@@ -1,22 +1,22 @@
 import { StarIcon as StarIconSolid } from "@heroicons/react/24/solid";
 import Image from "next/image";
 
-const Recipe = () => {
+const Recipe = ({ title, userName }: { title: string; userName: string }) => {
   return (
     <article className="relative border bg-white shadow">
       <header className="">
         <Image
           alt="recipe image"
           src="/test-image.png"
-          width={1600}
-          height={900}
-          // objectFit="cover"
+          className="object-cover"
+          width={800}
+          height={250}
         />
       </header>
 
       <main className="p-2">
         <h1 className="cursor-pointer pl-1 pt-1 text-xl font-bold hover:underline">
-          Test Recipe
+          {title}
         </h1>
 
         <section className="inline-flex justify-start pt-3">
@@ -32,11 +32,12 @@ const Recipe = () => {
         <p>
           By{" "}
           <span className="font-bold text-black hover:underline">
-            Bacon Pardner
+            {userName}
           </span>
         </p>
       </footer>
     </article>
   );
 };
+
 export default Recipe;
