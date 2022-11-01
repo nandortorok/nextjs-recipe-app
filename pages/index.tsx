@@ -44,8 +44,8 @@ const Home: NextPage<RecipesProps> = ({ recipes }) => {
   useEffect(() => {
     const getRecipesList = async (params: string) => {
       // TODO refactor to send body
-      const res = await fetch(`api/search?title=${params}`);
-      const data = await res.json();
+      const req = await fetch(`api/search?title=${params}`);
+      const data = await req.json();
 
       setRecipesList(data);
     };

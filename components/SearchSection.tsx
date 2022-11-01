@@ -2,6 +2,7 @@ import { ChangeEventHandler, Dispatch, SetStateAction, useState } from "react";
 import Image from "next/image";
 import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import Modal from "./Modal";
+import Link from "next/link";
 
 // TODO better type def
 type SearchSectionProps = {
@@ -93,7 +94,7 @@ const Results = ({
               {/* TODO give proper type */}
               {list.map((item: any) => (
                 <li key={item.id} className="p-4 hover:bg-slate-100">
-                  {item.title}
+                  <Link href={`recipe/${item.id}`}>{item.title}</Link>
                 </li>
               ))}
             </ul>
