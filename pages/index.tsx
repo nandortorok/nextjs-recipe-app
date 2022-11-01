@@ -3,8 +3,9 @@ import Head from "next/head";
 import { prisma, Prisma } from "../lib/prisma";
 import Recipe from "@components/Recipe";
 import SearchSection from "@components/SearchSection";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 
+// TODO top, latest, most commented recipes
 const getRecipes = async () => {
   return await prisma.recipe.findMany({
     select: {
@@ -20,41 +21,37 @@ const getRecipes = async () => {
   });
 };
 
-const getSearchResults = async (params: string) => {
-  return await prisma.recipe.findMany({
-    where: {
-      title: {
-        contains: params,
-      },
-    },
-    select: {
-      id: true,
-      title: true,
-    },
-    take: 10,
-  });
-};
-
 type RecipesProps = {
   recipes: Prisma.PromiseReturnType<typeof getRecipes>;
-  searchResults: Prisma.PromiseReturnType<typeof getSearchResults>;
 };
 
 export const getServerSideProps: GetServerSideProps = async ({}) => {
   const recipes = await getRecipes();
-  const searchResults = await getSearchResults("");
 
   return {
-    props: { recipes, searchResults },
+    props: { recipes },
   };
 };
 
-const Home: NextPage<RecipesProps> = ({ recipes, searchResults }) => {
+const Home: NextPage<RecipesProps> = ({ recipes }) => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [recipesList, setRecipesList] = useState([]);
 
-  const handleSearchTerm = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleSearchTerm = async (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
+
+  useEffect(() => {
+    const getRecipesList = async (params: string) => {
+      // TODO refactor to send body
+      const res = await fetch(`api/search?title=${params}`);
+      const data = await res.json();
+
+      setRecipesList(data);
+    };
+
+    getRecipesList(searchTerm).catch(console.error);
+  }, [searchTerm]);
 
   return (
     <>
@@ -65,7 +62,7 @@ const Home: NextPage<RecipesProps> = ({ recipes, searchResults }) => {
       </Head>
 
       <SearchSection
-        recipes={searchResults}
+        recipes={recipesList}
         searchTerm={searchTerm}
         onSearchTerm={handleSearchTerm}
       />

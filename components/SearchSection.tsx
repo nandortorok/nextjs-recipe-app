@@ -37,16 +37,12 @@ const SearchSection = ({
       </div>
 
       <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
-        {/* TODO give proper type */}
-        {recipes.map((item: any) => (
-          <Results
-            value={searchTerm}
-            onChange={onSearchTerm}
-            setIsOpen={setIsOpen}
-            title={item.title}
-            key={item.id}
-          />
-        ))}
+        <Results
+          value={searchTerm}
+          onChange={onSearchTerm}
+          setIsOpen={setIsOpen}
+          list={recipes}
+        />
       </Modal>
     </section>
   );
@@ -57,14 +53,14 @@ type ResultsProps = {
   value: string;
   onChange: ChangeEventHandler;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
-  title: string;
+  list: any;
 };
 
 const Results = ({
   value: searchTerm,
   onChange: onSearchTerm,
   setIsOpen,
-  title,
+  list,
 }: ResultsProps) => {
   return (
     <>
@@ -89,10 +85,26 @@ const Results = ({
         </button>
       </header>
       <main className="overflow-auto">
-        <h1 className="border-b p-4 text-lg font-bold">Recipes</h1>
-        <ul className="divide-y">
-          <li className="p-4 hover:bg-slate-100">{title}</li>
-        </ul>
+        {/* TODO better empty array handling */}
+        {list != "" ? (
+          <>
+            <h1 className="border-b p-4 text-lg font-bold">Recipes</h1>
+            <ul className="divide-y">
+              {/* TODO give proper type */}
+              {list.map((item: any) => (
+                <li key={item.id} className="p-4 hover:bg-slate-100">
+                  {item.title}
+                </li>
+              ))}
+            </ul>
+          </>
+        ) : (
+          <ul className="divide-y">
+            <li className="hover:bg-slate-10 p-4 text-center text-gray-400">
+              No recipes found
+            </li>
+          </ul>
+        )}
       </main>
 
       <footer className="p-4 text-sm text-zinc-500">
