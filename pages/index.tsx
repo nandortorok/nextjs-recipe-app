@@ -1,7 +1,7 @@
 import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import { prisma, Prisma } from "../lib/prisma";
-import Recipe from "@components/Recipe";
+import RecipeElement from "@components/RecipeElement";
 import SearchSection from "@components/SearchSection";
 import { ChangeEvent, useEffect, useState } from "react";
 
@@ -73,9 +73,10 @@ const Home: NextPage<RecipesProps> = ({ recipes }) => {
         <section className="container mx-auto px-4 md:px-6">
           <div className="grid grid-cols-1 gap-6 py-6 md:grid-cols-2">
             {recipes.map((item) => (
-              <Recipe
+              <RecipeElement
                 key={item.id}
                 title={item.title}
+                href={`recipe/${item.id}`}
                 userName={item.user.name}
               />
             ))}

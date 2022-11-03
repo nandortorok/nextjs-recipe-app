@@ -1,7 +1,16 @@
 import { StarIcon as StarIconSolid } from "@heroicons/react/24/solid";
 import Image from "next/image";
+import Link from "next/link";
 
-const Recipe = ({ title, userName }: { title: string; userName: string }) => {
+const RecipeElement = ({
+  title,
+  href,
+  userName,
+}: {
+  title: string;
+  href: string;
+  userName: string;
+}) => {
   return (
     <article className="relative border bg-white shadow">
       <header className="">
@@ -16,7 +25,7 @@ const Recipe = ({ title, userName }: { title: string; userName: string }) => {
 
       <main className="p-2">
         <h1 className="cursor-pointer pl-1 pt-1 text-xl font-bold hover:underline">
-          {title}
+          <Link href={href}>{title}</Link>
         </h1>
 
         <section className="inline-flex justify-start pt-3">
@@ -40,4 +49,4 @@ const Recipe = ({ title, userName }: { title: string; userName: string }) => {
   );
 };
 
-export default Recipe;
+export default RecipeElement;

@@ -96,6 +96,7 @@ model Section {
   title       String?             @map("title")
   ingredients SectionIngredient[]
   directions  Direction[]
+  // TODO rename to Directions, SectionIngredients 
 
   @@id([id, recipeId])
   @@map("section")

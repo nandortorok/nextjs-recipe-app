@@ -1,4 +1,5 @@
 import {
+  Direction,
   Ingredient,
   Recipe,
   Section,
@@ -7,6 +8,7 @@ import {
   User,
 } from "@prisma/client";
 import { GetServerSideProps, NextPage } from "next";
+import Image from "next/image";
 import Head from "next/head";
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
@@ -21,6 +23,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 //     | (Recipe & {
 //         user: User;
 //         recipeSections: (Section & {
+//		 			 directions: Direction[];
 //           ingredients: (SectionIngredient & {
 //             ingredient: Ingredient;
 //             unit: Unit | null;
@@ -30,10 +33,21 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 //     | null;
 // };
 
+// <(Recipe & {
+// 	user: User;
+// 	recipeSections: (Section & {
+// 			directions: Direction[];
+// 			ingredients: (SectionIngredient & {
+// 					...;
+// 			})[];
+// 	})[];
+// }) | null>
+
 type Props = {
   recipe: Recipe & {
     user: User;
     recipeSections: (Section & {
+      directions: Direction[];
       ingredients: (SectionIngredient & {
         ingredient: Ingredient;
         unit: Unit | null;
@@ -43,25 +57,91 @@ type Props = {
 };
 
 const Recipe: NextPage<Props> = ({ recipe }) => {
+  const tableHead = ["Prep Time", "Cooking Time", "Total"];
+
   return (
     <>
       <Head>
         <title>{recipe.title}</title>
       </Head>
 
-      <main className="mx-auto">
-        <h2 className="py-6 text-center text-xl font-bold">{recipe.title}</h2>
+      <main className="container mx-auto my-10 space-y-6 shadow-lg">
+        <h1 className="text-center text-2xl font-bold">{recipe.title}</h1>
+        <h2 className="text-center italic text-gray-400">
+          By {recipe.user.name}
+        </h2>
 
-        <ul>
-          {recipe.recipeSections.map(({ ingredients }) =>
-            ingredients.map(({ ingredient }) => (
-              <li key={ingredient.id}>{ingredient.name}</li>
-            ))
-          )}
-        </ul>
+        <section className="flex flex-col items-center justify-center">
+          <table className="w-1/2 bg-slate-200 text-center">
+            <thead>
+              <tr>
+                {tableHead.map((item, index) => (
+                  <td key={index} className="px-6 pt-3">
+                    {item}
+                  </td>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="px-6 pb-3 text-gray-500">
+                  {recipe.prepTime} min
+                </td>
+                <td className="px-6 pb-3 text-gray-500">
+                  {recipe.cookingTime} min
+                </td>
+                <td className="px-6 pb-3 text-gray-500">
+                  {recipe.prepTime + recipe.cookingTime} min
+                </td>
+              </tr>
+            </tbody>
+          </table>
 
-        <p className="bg-slate-300">
-          user {recipe.recipeSections[0].ingredients[0].ingredient.name}
+          <Image
+            alt="image"
+            src={"/searchSectionimage-01.jpg"}
+            className="w-1/2 pt-6"
+            height={600}
+            width={600}
+          />
+        </section>
+
+        <section className="pl-10">
+          <h2 className="text-2xl">Ingredients</h2>
+
+          <div className="pl-4">
+            {recipe.recipeSections.map(({ ingredients }, index) => (
+              <h3 key={ingredients[index].sectionId}>
+                {recipe.recipeSections[index].recipeId}
+                <ul className="list-disc pl-4">
+                  {ingredients.map(({ ingredient }) => (
+                    <li key={ingredient.id}>{ingredient.name}</li>
+                  ))}
+                </ul>
+              </h3>
+            ))}
+          </div>
+        </section>
+
+        <section className="pl-10">
+          <h2 className="text-2xl">Directions</h2>
+
+          <div className="pl-4">
+            {recipe.recipeSections.map(({ directions }, index) => (
+              <h3 key={directions[index].sectionId}>
+                {recipe.recipeSections[index].recipeId}
+                <ul className="list-disc pl-4">
+                  {directions.map(({ stepNumber, direction }) => (
+                    <li key={stepNumber}>{direction}</li>
+                  ))}
+                </ul>
+              </h3>
+            ))}
+          </div>
+        </section>
+
+        <p className="text-center py-5 text-gray-500">
+          {new Date(Date.parse(recipe.createdAt.toString())).toDateString()}
         </p>
       </main>
     </>

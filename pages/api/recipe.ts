@@ -16,6 +16,7 @@ const getRecipe = async (param: string) => {
               unit: true,
             },
           },
+          directions: true,
         },
       },
     },
