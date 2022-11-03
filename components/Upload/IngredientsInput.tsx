@@ -13,7 +13,7 @@ const IngredientsInput = ({
         value={ingredientName}
         onChange={onInputStateChange}
         placeholder="e.g. bacon"
-        // name="ingredientName"
+        name="ingredientName"
         type="text"
       />
       <div className="flex space-x-3">
@@ -22,7 +22,7 @@ const IngredientsInput = ({
           value={amount}
           onChange={onInputStateChange}
           placeholder="e.g. 1"
-          // name="amount"
+          name="amount"
           type="number"
           min={0}
           max={999}
@@ -32,7 +32,7 @@ const IngredientsInput = ({
           value={unit}
           onChange={onInputStateChange}
           placeholder="e.g. kg"
-          // name="unit"
+          name="unit"
           type="text"
         />
       </div>

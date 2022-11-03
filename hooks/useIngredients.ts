@@ -46,6 +46,7 @@ const useIngredients = () => {
 
   const handleHeaderInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setHeaderInput(event.target.value);
+    console.log(event.target.value);
   };
 
   const addHeader = () => {
