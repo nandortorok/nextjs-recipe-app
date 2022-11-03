@@ -50,7 +50,7 @@ model Ingredient {
 }
 
 model Direction {
-  stepNumber     Int     @id @default(autoincrement()) @map("step_number")
+  stepNumber      Int     @id @default(autoincrement()) @map("step_number")
   direction       String
   Section         Section @relation(fields: [sectionId, sectionRecipeId], references: [id, recipeId])
   sectionId       Int     @map("section_id")
@@ -84,6 +84,7 @@ model Recipe {
   createdAt      DateTime  @default(now()) @map("created_at")
   updatedAt      DateTime  @updatedAt @map("updated_at")
   recipeSections Section[]
+  // TODO rename to Sections
 
   @@map("recipe")
 }
