@@ -15,11 +15,7 @@ const IngredientListItem = ({
         }
         value={ingredientName}
         onChange={onChangeIngredient}
-        name={
-          id
-            ? `ingredientName-${id}${contentID}`
-            : `ingredientName-0${contentID}`
-        }
+        name={"ingredientName"}
         type="text"
         disabled={!isEdited}
       />
@@ -29,7 +25,7 @@ const IngredientListItem = ({
           className="w-1/2 border-gray-200 bg-gray-200 focus:border-inherit focus:ring-0"
           value={amount}
           onChange={onChangeIngredient}
-          name={id ? `amount-${id}${contentID}` : `amount-0${contentID}`}
+          name={"amount"}
           type={isEdited ? "number" : "text"}
           min={0}
           max={999}
@@ -39,7 +35,7 @@ const IngredientListItem = ({
           className="w-1/2 border-gray-200 bg-gray-200 focus:border-inherit focus:ring-0"
           value={unit}
           onChange={onChangeIngredient}
-          name={id ? `unit-${id}${contentID}` : `unit-0${contentID}`}
+          name={"unit"}
           type="text"
           disabled={!isEdited}
         />

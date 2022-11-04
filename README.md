@@ -38,17 +38,18 @@
    ```
    docker compose up
    ```
+
 2. Run the migration and seed:
 
    ```sh
    npx prisma migrate dev
    npx prisma db seed
    ```
+
 3. Run the development server:
 
    ```sh
    npm run dev
    ```
-
 
 4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
