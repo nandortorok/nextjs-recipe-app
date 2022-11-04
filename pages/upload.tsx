@@ -44,19 +44,7 @@ const Upload: NextPage = () => {
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const formData = new FormData();
-
-    console.log("----------------");
-    // for (const item of event.currentTarget) {
-    //   const { name, value } = item;
-
-    //   if (name) {
-    //     console.log(`${name}: ${value}`);
-    //     // console.log(item);
-    //   }
-    // }
-
-    console.log(ingredients);
+    // const formData = new FormData();
   };
 
   return (

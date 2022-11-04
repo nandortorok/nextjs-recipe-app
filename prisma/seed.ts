@@ -44,8 +44,6 @@ async function main() {
       },
     },
   });
-
-  console.log({ egg, bob });
 }
 
 main()

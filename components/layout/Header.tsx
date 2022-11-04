@@ -3,6 +3,7 @@ import { Bars4Icon, UserIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { useState, Dispatch, SetStateAction, useEffect } from "react";
 import Modal from "../Modal";
 import { useRouter } from "next/router";
+import LoginForm from "@components/LoginForm";
 
 const Header = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -46,10 +47,7 @@ const Header = () => {
         </div>
       </header>
 
-      {/* Login modal dialog */}
-      <Modal isOpen={isLoginOpen} setIsOpen={setIsLoginOpen}>
-        <Login setIsOpen={setIsLoginOpen} />
-      </Modal>
+      <LoginForm isOpen={isLoginOpen} setIsOpen={setIsLoginOpen} />
 
       {/* Sidebar menu */}
       <nav
@@ -82,46 +80,6 @@ const Header = () => {
         </section>
       </nav>
     </>
-  );
-};
-
-type LoginProps = {
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
-};
-
-const Login = ({ setIsOpen }: LoginProps) => {
-  return (
-    <main className="flex flex-col items-center gap-2">
-      <button
-        className="self-end p-4 text-slate-400 hover:text-slate-700"
-        onClick={() => setIsOpen(false)}
-      >
-        <XMarkIcon className="h-6 w-6" />
-      </button>
-
-      {/* Login form */}
-      <form className="flex flex-col items-center gap-2 pb-8 font-bold">
-        {/* Title */}
-        <h1 className="pb-8 text-lg font-bold">Login</h1>
-        {/* Google login */}
-        <button className="w-full rounded-full bg-blue-500 px-3 py-2 text-white">
-          Login with Google
-        </button>
-
-        <p className="p-4 text-zinc-400">OR</p>
-
-        {/* Login */}
-        <input className="rounded-[4px]" type="text" placeholder="Username" />
-        <input
-          className="rounded-[4px]"
-          type="password"
-          placeholder="Password"
-        />
-        <button className="w-full rounded-full bg-blue-500 p-2 text-white">
-          Login
-        </button>
-      </form>
-    </main>
   );
 };
 

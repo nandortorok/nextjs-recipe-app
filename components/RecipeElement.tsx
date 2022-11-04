@@ -14,13 +14,15 @@ const RecipeElement = ({
   return (
     <article className="relative border bg-white shadow">
       <header className="">
-        <Image
-          alt="recipe image"
-          src="/test-image.png"
-          className="object-cover"
-          width={800}
-          height={250}
-        />
+        <Link href={href}>
+          <Image
+            alt="recipe image"
+            src="/test-image.png"
+            className="object-cover"
+            width={800}
+            height={250}
+          />
+        </Link>
       </header>
 
       <main className="p-2">

@@ -99,8 +99,8 @@ const Recipe: NextPage<Props> = ({ recipe }) => {
 
           <Image
             alt="image"
-            src={"/searchSectionimage-01.jpg"}
-            className="w-1/2 pt-6"
+            src={"/test-image.png"}
+            className="w-1/2 pt-6 shadow-lg"
             height={600}
             width={600}
           />
@@ -112,7 +112,7 @@ const Recipe: NextPage<Props> = ({ recipe }) => {
           <div className="pl-4">
             {recipe.recipeSections.map(({ ingredients }, index) => (
               <h3 key={ingredients[index].sectionId}>
-                {recipe.recipeSections[index].recipeId}
+                {recipe.recipeSections[index].title}
                 <ul className="list-disc pl-4">
                   {ingredients.map(({ ingredient }) => (
                     <li key={ingredient.id}>{ingredient.name}</li>
@@ -129,7 +129,7 @@ const Recipe: NextPage<Props> = ({ recipe }) => {
           <div className="pl-4">
             {recipe.recipeSections.map(({ directions }, index) => (
               <h3 key={directions[index].sectionId}>
-                {recipe.recipeSections[index].recipeId}
+                {recipe.recipeSections[index].title}
                 <ul className="list-disc pl-4">
                   {directions.map(({ stepNumber, direction }) => (
                     <li key={stepNumber}>{direction}</li>
@@ -140,7 +140,7 @@ const Recipe: NextPage<Props> = ({ recipe }) => {
           </div>
         </section>
 
-        <p className="text-center py-5 text-gray-500">
+        <p className="py-5 text-center text-gray-500">
           {new Date(Date.parse(recipe.createdAt.toString())).toDateString()}
         </p>
       </main>
