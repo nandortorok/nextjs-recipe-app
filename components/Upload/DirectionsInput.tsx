@@ -9,17 +9,17 @@ const DirectionsInput = ({
 }: DirectionsInputProps) => {
   return (
     <section className="space-y-4 border-b pb-6">
-      <h1 className="text-md font-bold">Directions</h1>
+      <label className="text-md font-bold">Directions</label>
 
       <textarea
-        className="w-full"
+        className="w-full rounded-md border-gray-300 p-4 transition ease-in-out focus:border-opacity-0"
         rows={2}
         placeholder={"Step " + (directions.length + 1)}
         value={directionInputValue}
         onChange={onDirectionInputChange}
       />
 
-      <div className="group flex items-center justify-end text-gray-500">
+      <div className="flex items-center justify-end text-blue-500 hover:text-blue-600">
         <button
           className="flex"
           title="Add direction"
@@ -27,25 +27,27 @@ const DirectionsInput = ({
           type="button"
         >
           <p className="pr-2">Add direction</p>
-          <PlusCircleIcon className="h-6 w-6 group-hover:text-gray-900" />
+          <PlusCircleIcon className="h-6 w-6" />
         </button>
       </div>
       {/* TODO add editDirection */}
-      <div className="">
-        {directions.map(({ step, index }) => (
-          <div className="border-gray-300 bg-gray-300" key={index}>
-            <textarea
-              className="turncate block w-full border-0"
-              rows={1}
-              placeholder={`Step ${index}`}
-              name={`step-${index}`}
-              value={step}
-              disabled={true}
-              // onChange={onDirectionInputChange}
-            />
-          </div>
-        ))}
-      </div>
+      {directions.length > 0 && (
+        <ul className="space-y-4 border-t pt-6">
+          {directions.map(({ step, index }) => (
+            <li key={index}>
+              <textarea
+                className="block w-full rounded-md border border-gray-300 p-4 transition ease-in-out"
+                rows={1}
+                placeholder={`Step ${index}`}
+                name={`step-${index}`}
+                disabled={true}
+                value={`${index}. ${step}`}
+                // onChange={onDirectionInputChange}
+              />
+            </li>
+          ))}
+        </ul>
+      )}
     </section>
   );
 };

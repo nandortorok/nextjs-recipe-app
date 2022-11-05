@@ -7,18 +7,18 @@ const HeaderInput = ({
   onHeaderInputChange,
 }: HeaderInputProps) => {
   return (
-    <div className="flex border border-white">
+    <div className="group flex border border-white text-blue-500 transition ease-in-out hover:text-blue-600">
       <button
         className=""
         title="Add header to ingredients"
         type="button"
         onClick={onAddHeader}
       >
-        <PlusCircleIcon className="h-6 w-6 text-gray-500 hover:text-gray-700" />
+        <PlusCircleIcon className="h-6 w-6 " />
       </button>
       <input
-        className="border-0 focus:ring-0"
-        placeholder="Ingredient header"
+        className="border-0 focus:ring-0 text-black"
+        placeholder="e.g. Main"
         // name="ingredientName"
         type="text"
         value={headerInputValue}

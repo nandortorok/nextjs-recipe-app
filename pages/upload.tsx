@@ -53,15 +53,13 @@ const Upload: NextPage = () => {
         <title>Recipe Website | Upload</title>
       </Head>
 
-      <main className="bg-slate-300 px-4 py-12">
+      <main className="bg-slate-300 px-2 py-4 sm:px-4 sm:py-12">
         <form
-          className="mx-auto mb-0 w-full max-w-4xl space-y-6 bg-white px-10 shadow"
+          className="mx-auto mb-0 w-full max-w-2xl space-y-6 bg-white px-6 shadow sm:px-10"
           onSubmit={handleSubmit}
           method="POST"
         >
-          <h1 className="pt-5 text-center text-2xl font-bold">
-            Upload a recipe
-          </h1>
+          <h1 className="pt-5 text-center font-bold">Upload a recipe</h1>
 
           <section className="space-y-4 border-b pb-6">
             <TitleInput />
@@ -80,8 +78,12 @@ const Upload: NextPage = () => {
             />
           </section>
 
-          <section className="space-y-4 border-b pb-6">
-            <h1 className="text-md font-bold">Ingredients</h1>
+          <section
+            className={
+              contents.length > 0 ? "space-y-4 border-b pb-6" : "space-y-4"
+            }
+          >
+            <label className="text-md font-bold">Ingredients</label>
 
             <IngredientsInput
               inputStateValue={inputState}
@@ -101,7 +103,7 @@ const Upload: NextPage = () => {
             {/* Ingredients list */}
             {contents.length > 0 && (
               // if contents state is not empty list items
-              <div key={0}>
+              <div key={0} className="space-y-4">
                 {contents.map((subItem) => (
                   <IngredientListItem
                     key={subItem.contentID}
@@ -114,7 +116,7 @@ const Upload: NextPage = () => {
             )}
 
             {ingredients.map((item) => (
-              <div key={item.id}>
+              <div key={item.id} className="space-y-4">
                 <p className="pb-3 underline">{item.header}</p>
 
                 {item.content.map((subItem) => (
@@ -138,14 +140,14 @@ const Upload: NextPage = () => {
             directions={directions}
           />
           {/* Submit */}
-          <div className="pb-4">
+          <section className="flex justify-center pb-6">
             <button
-              className="w-full rounded-full bg-slate-500 py-2 font-bold text-white hover:bg-slate-700"
+              className="rounded-md bg-blue-500 py-2 px-5 text-white transition ease-in-out hover:bg-blue-600 active:ring"
               type="submit"
             >
               Upload recipe
             </button>
-          </div>
+          </section>
         </form>
       </main>
     </>

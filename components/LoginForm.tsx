@@ -17,16 +17,16 @@ const Login = ({ setIsOpen }: LoginProps) => {
       </button>
 
       <form className="flex flex-col items-center space-y-5 p-10">
-        <h1 className="py-2">Login</h1>
+        <h1 className="py-2">Log In</h1>
 
         <input
           type="text"
-          className="block w-full rounded-md border-gray-300 p-4 text-sm transition ease-in-out focus:border-opacity-0"
+          className="w-full rounded-md border-gray-300 p-4 text-sm transition ease-in-out focus:border-opacity-0"
           placeholder="Email"
         />
         <input
           type="text"
-          className="block w-full rounded-md border-gray-300 p-4 text-sm transition ease-in-out focus:border-opacity-0"
+          className="w-full rounded-md border-gray-300 p-4 text-sm transition ease-in-out focus:border-opacity-0"
           placeholder="Password"
         />
 
@@ -35,61 +35,20 @@ const Login = ({ setIsOpen }: LoginProps) => {
             className="relative rounded-md bg-white py-2 px-5 text-blue-500 transition ease-in-out hover:ring-1 active:ring"
             type="button"
           >
-            Create account
+            Sign Up
           </button>
 
           <button
             className="rounded-md  bg-blue-500 py-2 px-5 text-white transition ease-in-out hover:bg-blue-600 active:ring"
             type="button"
           >
-            Login
+            Log In
           </button>
         </section>
       </form>
     </main>
   );
 };
-
-// const Login = ({ setIsOpen }: LoginProps) => {
-//   return (
-//     <main className="flex flex-col items-center gap-2 p-10">
-//       <button
-//         className="self-end p-4 text-slate-400 hover:text-slate-700"
-//         onClick={() => setIsOpen(false)}
-//       >
-//         <XMarkIcon className="h-6 w-6" />
-//       </button>
-
-//       <form className="flex flex-col items-center gap-2 pb-8">
-//         <h1 className="pb-8 text-2xl">Sign in</h1>
-
-//         <input
-//           className="rounded-md"
-//           type="text"
-//           placeholder="Email or phone"
-//         />
-//         <input className="rounded-md" type="password" placeholder="Password" />
-//         <section className="w-full pt-24">
-//           <button
-//             className="w-full rounded-md bg-blue-500 p-2 font-bold text-white"
-//             type="button"
-//           >
-//             Login
-//           </button>
-
-//           <p className="p-4 text-center font-bold text-zinc-400">OR</p>
-
-//           <button
-//             className="w-full rounded-md bg-blue-500 p-2 text-white"
-//             type="button"
-//           >
-//             Create account
-//           </button>
-//         </section>
-//       </form>
-//     </main>
-//   );
-// };
 
 type Props = {
   isOpen: boolean;
