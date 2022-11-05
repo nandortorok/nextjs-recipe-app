@@ -132,7 +132,7 @@ const Modal = ({ children, isOpen, setIsOpen }: Props) => {
     <Transition.Root show={isOpen} as={Fragment}>
       <Dialog
         onClose={setIsOpen}
-        className="fixed inset-0 z-50 flex h-[100vh] min-h-0 flex-col p-4 md:py-[12vh]"
+        className="fixed inset-0 z-50 flex h-full min-h-0 flex-col p-4 md:py-[12vh]"
       >
         <Transition.Child
           enter="duration-300 ease-out"

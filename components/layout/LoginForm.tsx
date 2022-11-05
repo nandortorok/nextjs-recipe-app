@@ -6,6 +6,7 @@ type LoginProps = {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 };
 
+// TODO mobile view
 const Login = ({ setIsOpen }: LoginProps) => {
   return (
     <main>
@@ -17,7 +18,7 @@ const Login = ({ setIsOpen }: LoginProps) => {
       </button>
 
       <form className="flex flex-col items-center space-y-5 p-10">
-        <h1 className="py-2">Log In</h1>
+        <h1 className="py-2 text-black">Log In</h1>
 
         <input
           type="text"
@@ -60,7 +61,7 @@ export const LoginForm = ({ isOpen, setIsOpen }: Props) => {
     <Transition.Root show={isOpen} as={Fragment}>
       <Dialog
         onClose={setIsOpen}
-        className="fixed inset-0 z-50 flex h-[100vh] min-h-0 flex-col p-4 md:py-[20vh]"
+        className="fixed inset-0 z-50 flex h-full flex-col p-4 lg:py-[20vh]"
       >
         <Transition.Child
           enter="duration-300 ease-out"
@@ -82,7 +83,7 @@ export const LoginForm = ({ isOpen, setIsOpen }: Props) => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Dialog.Panel className="relative z-50 mx-auto flex min-h-0 w-full max-w-[95vw] flex-col divide-y rounded-md bg-white shadow-xl transition-opacity md:w-1/4 md:max-w-3xl">
+          <Dialog.Panel className="relative z-50 w-full mx-auto overflow-auto rounded-md bg-white shadow-xl transition-opacity lg:w-1/2 xl:max-w-md">
             <Login setIsOpen={setIsOpen} />
           </Dialog.Panel>
         </Transition.Child>

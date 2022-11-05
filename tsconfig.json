@@ -14,12 +14,10 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    // "types": [],
-    // TODO check types attrb
     "baseUrl": "./",
     "paths": {
       "@components/*": ["components/*"],
-      "@uploadComps/*": ["components/Upload/*"],
+      "@uploadComps/*": ["components/upload/*"],
       "@hooks/*": ["hooks/*"]
     }
   },

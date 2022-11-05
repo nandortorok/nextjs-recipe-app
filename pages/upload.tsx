@@ -3,14 +3,14 @@ import { FormEvent } from "react";
 import Head from "next/head";
 
 // components
-import DirectionsInput from "@uploadComps/DirectionsInput";
-import HeaderInput from "@uploadComps/HeaderInput";
-import ImageInput from "@uploadComps/ImageInput";
-import IngredientListItem from "@uploadComps/IngredientListItem";
-import IngredientsInput from "@uploadComps/IngredientsInput";
-import ServingsInput from "@uploadComps/ServingsInput";
-import { TimeInput } from "@uploadComps/TimeInput";
-import TitleInput from "@uploadComps/TitleInput";
+import DirectionsInput from "@components/upload/DirectionsInput";
+import HeaderInput from "@components/upload/HeaderInput";
+import ImageInput from "@components/upload/ImageInput";
+import IngredientListItem from "@components/upload/IngredientListItem";
+import IngredientsInput from "@components/upload/IngredientsInput";
+import ServingsInput from "@components/upload/ServingsInput";
+import { TimeInput } from "@components/upload/TimeInput";
+import TitleInput from "@components/upload/TitleInput";
 
 // custom hooks
 // import useCookingTime from "@hooks/useCookingTime_HTMLFORM";

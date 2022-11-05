@@ -1,9 +1,15 @@
 import Link from "next/link";
 import { Bars4Icon, UserIcon, XMarkIcon } from "@heroicons/react/24/solid";
-import { useState, Dispatch, SetStateAction, useEffect } from "react";
-import Modal from "../Modal";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import LoginForm from "@components/LoginForm";
+import LoginForm from "@components/layout/LoginForm";
+
+const links = [
+  { name: "Upload", href: "/upload" },
+  { name: "Saved recipes", href: "/libary" },
+  { name: "Reviews", href: "/reviews" },
+  { name: "My recipes", href: "/libary/${user}" },
+];
 
 const Header = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -25,7 +31,7 @@ const Header = () => {
 
           {/* Logo */}
           <Link href={"/"}>
-            <h1 className="mx-auto cursor-pointer py-3 text-2xl">
+            <h1 className="mx-auto cursor-pointer py-3 text-2xl text-black">
               Recipe Website
             </h1>
           </Link>
@@ -53,7 +59,7 @@ const Header = () => {
       <nav
         className={
           (isNavOpen ? "translate-x-0" : "-translate-x-full") +
-          " fixed top-0 z-20 h-full w-4/6 translate-x-0 bg-slate-50 transition-transform duration-300 ease-in motion-reduce:transition-none md:w-1/4"
+          " fixed top-0 z-20 h-full w-60 translate-x-0 bg-slate-50 transition-transform duration-300 ease-in motion-reduce:transition-none"
         }
       >
         <button
@@ -61,10 +67,11 @@ const Header = () => {
           className="flex w-full gap-2 border-b py-4 pl-5"
         >
           <XMarkIcon className="h-8 w-8 text-zinc-400 hover:text-black" />
-          <h1 className="visible text-2xl font-bold md:invisible md:text-sm">
+          <h1 className="visible text-2xl font-bold md:invisible md:text-sm text-black">
             Recipe Website
           </h1>
         </button>
+
         <section className="flex flex-col pl-[1.6rem] pt-5">
           {/* Login */}
           <button
@@ -74,9 +81,15 @@ const Header = () => {
             Login
           </button>
           {/* Other stuff */}
-          <Link href={"/upload"}>Upload</Link>
-          <Link href={"/"}>02</Link>
-          <Link href={"/"}>02</Link>
+          {links.map((item, index) => (
+            <Link
+              key={index}
+              className="transition ease-in-out hover:text-blue-500 text-black"
+              href={item.href}
+            >
+              {item.name}
+            </Link>
+          ))}
         </section>
       </nav>
     </>
