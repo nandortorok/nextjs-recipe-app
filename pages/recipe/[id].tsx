@@ -18,31 +18,6 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   return { props: { recipe } };
 };
 
-// type Props = {
-//   recipe:
-//     | (Recipe & {
-//         user: User;
-//         recipeSections: (Section & {
-//		 			 directions: Direction[];
-//           ingredients: (SectionIngredient & {
-//             ingredient: Ingredient;
-//             unit: Unit | null;
-//           })[];
-//         })[];
-//       })
-//     | null;
-// };
-
-// <(Recipe & {
-// 	user: User;
-// 	recipeSections: (Section & {
-// 			directions: Direction[];
-// 			ingredients: (SectionIngredient & {
-// 					...;
-// 			})[];
-// 	})[];
-// }) | null>
-
 type Props = {
   recipe: Recipe & {
     user: User;

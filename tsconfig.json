@@ -16,9 +16,7 @@
     "incremental": true,
     "baseUrl": "./",
     "paths": {
-      "@components/*": ["components/*"],
-      "@uploadComps/*": ["components/upload/*"],
-      "@hooks/*": ["hooks/*"]
+      "@upComps/*": ["components/upload/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

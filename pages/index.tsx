@@ -5,7 +5,6 @@ import RecipeElement from "@components/RecipeElement";
 import SearchSection from "@components/SearchSection";
 import { ChangeEvent, useEffect, useState } from "react";
 
-// TODO top, latest, most commented recipes
 const getRecipes = async () => {
   return await prisma.recipe.findMany({
     select: {
@@ -43,7 +42,6 @@ const Home: NextPage<RecipesProps> = ({ recipes }) => {
 
   useEffect(() => {
     const getRecipesList = async (params: string) => {
-      // TODO refactor to send body
       const req = await fetch(`api/search?title=${params}`);
       const data = await req.json();
 

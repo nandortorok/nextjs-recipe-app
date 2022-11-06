@@ -3,20 +3,21 @@ import { FormEvent } from "react";
 import Head from "next/head";
 
 // components
-import DirectionsInput from "@components/upload/DirectionsInput";
-import HeaderInput from "@components/upload/HeaderInput";
-import ImageInput from "@components/upload/ImageInput";
-import IngredientListItem from "@components/upload/IngredientListItem";
-import IngredientsInput from "@components/upload/IngredientsInput";
-import ServingsInput from "@components/upload/ServingsInput";
-import { TimeInput } from "@components/upload/TimeInput";
-import TitleInput from "@components/upload/TitleInput";
+import DirectionsInput from "@upComps/DirectionsInput";
+import HeaderInput from "@upComps/HeaderInput";
+import ImageInput from "@upComps/ImageInput";
+import IngredientListItem from "@upComps/IngredientListItem";
+import IngredientsInput from "@upComps/IngredientsInput";
+import ServingsInput from "@upComps/ServingsInput";
+import { TimeInput } from "@upComps/TimeInput";
+import TitleInput from "@upComps/TitleInput";
 
 // custom hooks
 // import useCookingTime from "@hooks/useCookingTime_HTMLFORM";
-import useCookingTime from "@hooks/useCookingTime";
-import useIngredients from "@hooks/useIngredients";
-import useDirections from "@hooks/useDirections";
+import useCookingTime from "hooks/useCookingTime";
+import useIngredients from "hooks/useIngredients";
+import useDirections from "hooks/useDirections";
+import useHeader from "hooks/useHeader";
 
 // Page
 const Upload: NextPage = () => {
@@ -33,6 +34,7 @@ const Upload: NextPage = () => {
     addContent,
     addHeader,
     editIngredient,
+    editHeader,
   } = useIngredients();
   const {
     directions,
@@ -40,6 +42,8 @@ const Upload: NextPage = () => {
     handleDirectionInputChange,
     addDirections,
   } = useDirections();
+
+  const { disabled, disableHeader } = useHeader();
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -93,9 +97,10 @@ const Upload: NextPage = () => {
 
             {contents.length > 0 && (
               <HeaderInput
-                headerInputValue={headerInput}
-                onHeaderInputChange={handleHeaderInputChange}
-                onAddHeader={addHeader}
+                isItem={false}
+                value={headerInput}
+                onChange={handleHeaderInputChange}
+                onClick={addHeader}
               />
             )}
 
@@ -116,8 +121,16 @@ const Upload: NextPage = () => {
             )}
 
             {ingredients.map((item) => (
-              <div key={item.id} className="space-y-4">
-                <p className="pb-3 underline">{item.header}</p>
+              <div key={item.id} className="space-y-4 pt-3 border-t">
+                <HeaderInput
+                  isItem={true}
+                  name={item.header}
+                  value={item.header!}
+                  disabled={disabled}
+                  onChange={editHeader}
+                  onClick={disableHeader}
+                />
+                {/* <p className="px-4 py-2 underline">{item.header}</p> */}
 
                 {item.content.map((subItem) => (
                   <IngredientListItem

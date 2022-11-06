@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState, MouseEvent } from "react";
+import { ChangeEvent, useState, MouseEvent } from "react";
 import { ContentProps, IngredientsProps } from "../types/IngredientProps";
 
 const useIngredients = () => {
@@ -197,6 +197,25 @@ const useIngredients = () => {
       setIngredients(newIngredients);
     };
 
+  const editHeader = (event: ChangeEvent<HTMLInputElement>) => {
+    let name: string = event.target.name;
+    let value: string = event.target.value;
+
+    const newIngredients = ingredients.map((item) => {
+      // if ids matches map ingredient
+      if (item.header === name) {
+        return {
+          ...item,
+          header: value,
+        };
+      } else {
+        return item;
+      }
+    });
+
+    setIngredients(newIngredients);
+  };
+
   return {
     ingredients,
     inputState,
@@ -208,6 +227,7 @@ const useIngredients = () => {
     addContent,
     addHeader,
     editIngredient,
+    editHeader,
   };
 };
 

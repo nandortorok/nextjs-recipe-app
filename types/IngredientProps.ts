@@ -24,9 +24,12 @@ export type IngredientListItemProps = {
 };
 
 export type HeaderInputProps = {
-  headerInputValue: string;
-  onHeaderInputChange: ChangeEventHandler<HTMLInputElement>;
-  onAddHeader: MouseEventHandler;
+  isItem: boolean;
+  name?: string;
+  value: string;
+  disabled?: boolean;
+  onChange: ChangeEventHandler<HTMLInputElement>;
+  onClick: MouseEventHandler;
 };
 
 export type IngredientsInputProps = {
