@@ -17,7 +17,6 @@ import TitleInput from "@upComps/TitleInput";
 import useCookingTime from "hooks/useCookingTime";
 import useIngredients from "hooks/useIngredients";
 import useDirections from "hooks/useDirections";
-import useHeader from "hooks/useHeader";
 
 // Page
 const Upload: NextPage = () => {
@@ -35,6 +34,7 @@ const Upload: NextPage = () => {
     addHeader,
     editIngredient,
     editHeader,
+    disableHeader,
   } = useIngredients();
   const {
     directions,
@@ -42,8 +42,6 @@ const Upload: NextPage = () => {
     handleDirectionInputChange,
     addDirections,
   } = useDirections();
-
-  const { disabled, disableHeader } = useHeader();
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -113,22 +111,22 @@ const Upload: NextPage = () => {
                   <IngredientListItem
                     key={subItem.contentID}
                     contentValue={subItem}
-                    onChangeIngredient={handleChangeIngredient(subItem)}
-                    onEditIngredient={editIngredient(subItem)}
+                    onChange={handleChangeIngredient(subItem)}
+                    onClick={editIngredient(subItem)}
                   />
                 ))}
               </div>
             )}
 
             {ingredients.map((item) => (
-              <div key={item.id} className="space-y-4 pt-3 border-t">
+              <div key={item.id} className="space-y-4 border-b pb-3">
                 <HeaderInput
                   isItem={true}
-                  name={item.header}
-                  value={item.header!}
-                  disabled={disabled}
+                  name={item.header.title}
+                  value={item.header!.title}
+                  disabled={item.header.disabled}
                   onChange={editHeader}
-                  onClick={disableHeader}
+                  onClick={disableHeader(item)}
                 />
                 {/* <p className="px-4 py-2 underline">{item.header}</p> */}
 
@@ -137,8 +135,8 @@ const Upload: NextPage = () => {
                     key={subItem.contentID}
                     id={item.id}
                     contentValue={subItem}
-                    onChangeIngredient={handleChangeIngredient(subItem, item)}
-                    onEditIngredient={editIngredient(subItem, item)}
+                    onChange={handleChangeIngredient(subItem, item)}
+                    onClick={editIngredient(subItem, item)}
                   />
                 ))}
               </div>

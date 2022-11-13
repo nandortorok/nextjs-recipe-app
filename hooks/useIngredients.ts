@@ -52,7 +52,7 @@ const useIngredients = () => {
     if (
       contents.length == 0 ||
       headerInput.length == 0 ||
-      ingredients.find((item) => item.header === headerInput)
+      ingredients.find((item) => item.header!.title === headerInput)
     )
       return;
 
@@ -60,7 +60,10 @@ const useIngredients = () => {
       ...ingredients,
       {
         id: ingredients.length + 1,
-        header: headerInput,
+        header: {
+          title: headerInput,
+          disabled: true,
+        },
         content: contents,
       },
     ]);
@@ -70,10 +73,27 @@ const useIngredients = () => {
     setHeaderInput("");
   };
 
+  const disableHeader = ({ header }: IngredientsProps) => (event: MouseEvent) =>{
+    const newIngredients = ingredients.map((item) => {
+      if (item.header.title === header.title)
+        return {
+          ...item,
+          header: {
+            ...header,
+            disabled: !header.disabled,
+          },
+        };
+
+      return item;
+    });
+
+    setIngredients(newIngredients);
+  };
+
   // TODO make it better
   const editIngredient =
     (content: ContentProps, ingredient?: IngredientsProps) =>
-    (event: MouseEvent<HTMLButtonElement>) => {
+    (event: MouseEvent) => {
       if (contents.length > 0) {
         const newContents = contents.map((item) => {
           if (item.contentID === content.contentID)
@@ -203,10 +223,13 @@ const useIngredients = () => {
 
     const newIngredients = ingredients.map((item) => {
       // if ids matches map ingredient
-      if (item.header === name) {
+      if (item.header!.title === name) {
         return {
           ...item,
-          header: value,
+          header: {
+            title: value,
+            disabled: true,
+          },
         };
       } else {
         return item;
@@ -227,6 +250,7 @@ const useIngredients = () => {
     addContent,
     addHeader,
     editIngredient,
+    disableHeader,
     editHeader,
   };
 };

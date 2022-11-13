@@ -5,8 +5,8 @@ import { IngredientListItemProps } from "../../types/IngredientProps";
 const IngredientListItem = ({
   id,
   contentValue: { contentID, amount, unit, ingredientName, isEdited },
-  onChangeIngredient,
-  onEditIngredient,
+  onChange: onChangeIngredient,
+  onClick: onEditIngredient,
 }: IngredientListItemProps) => {
   return (
     <div className="group flex flex-col space-y-4 lg:flex-row lg:space-y-0 lg:space-x-4">

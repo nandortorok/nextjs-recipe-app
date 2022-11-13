@@ -10,17 +10,22 @@ export type ContentProps = {
   isEdited: boolean;
 };
 
+export type HeaderStateProps = {
+  title: string;
+  disabled: boolean;
+};
+
 export type IngredientsProps = {
   id: number;
-  header?: string;
+  header: HeaderStateProps;
   content: ContentProps[];
 };
 
 export type IngredientListItemProps = {
   id?: number;
   contentValue: ContentProps;
-  onChangeIngredient: ChangeEventHandler;
-  onEditIngredient: MouseEventHandler<HTMLButtonElement>;
+  onChange: ChangeEventHandler;
+  onClick: MouseEventHandler;
 };
 
 export type HeaderInputProps = {
