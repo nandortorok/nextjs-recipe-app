@@ -3,31 +3,31 @@ import { ChangeEventHandler } from "react";
 import { IngredientsInputProps } from "types/IngredientProps";
 
 const IngredientsInput = ({
-  inputStateValue: { amount, unit, ingredientName },
-  onInputStateChange,
-  onAddContent,
+  value: { amount, unit, name },
+  onChange,
+  onClick,
 }: IngredientsInputProps) => {
   return (
     <div className="grid grid-cols-2 justify-items-stretch gap-4 border-b pb-6 sm:grid-cols-3">
       <input
         className="col-span-2 w-full rounded-md border-gray-300 bg-gray-50 p-4 transition ease-in-out sm:col-span-1"
-        value={ingredientName}
-        onChange={onInputStateChange}
+        value={name}
+        onChange={onChange}
         autoComplete={"off"}
         placeholder="e.g. bacon"
-        name="ingredientName"
+        name="name"
         type="text"
       />
       <Input
         value={amount}
-        onChange={onInputStateChange}
+        onChange={onChange}
         placeholder="e.g. 1"
         name="amount"
         type="number"
       />
       <Input
         value={unit}
-        onChange={onInputStateChange}
+        onChange={onChange}
         placeholder="e.g. kg"
         name="unit"
         type="text"
@@ -35,7 +35,7 @@ const IngredientsInput = ({
       <div className="col-span-2 justify-self-center sm:col-span-3">
         <button
           className="rounded-md py-2 px-5 text-blue-500 transition ease-in-out hover:text-blue-600"
-          onClick={onAddContent}
+          onClick={onClick}
           type="button"
         >
           Add ingredient

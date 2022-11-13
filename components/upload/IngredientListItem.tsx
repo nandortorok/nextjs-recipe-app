@@ -4,7 +4,7 @@ import { IngredientListItemProps } from "../../types/IngredientProps";
 
 const IngredientListItem = ({
   id,
-  contentValue: { contentID, amount, unit, ingredientName, isEdited },
+  contentValue: { id: contentID, amount, unit, name: ingredientName, disabled: isEdited },
   onChange: onChangeIngredient,
   onClick: onEditIngredient,
 }: IngredientListItemProps) => {
@@ -25,7 +25,7 @@ const IngredientListItem = ({
           }
           value={ingredientName}
           onChange={onChangeIngredient}
-          name={"ingredientName"}
+          name={"name"}
           type="text"
           disabled={!isEdited}
           autoComplete={"off"}

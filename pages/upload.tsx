@@ -23,15 +23,15 @@ const Upload: NextPage = () => {
   // const { totalTime, handleTimeValueChange } = useCookingTime();
   const { timeValues, handleTimeValueChange, totalTime } = useCookingTime();
   const {
-    ingredients,
+    sections,
     inputState,
-    contents,
+    ingredients,
     headerInput,
     handleInputStateChange,
     handleHeaderInputChange,
     handleChangeIngredient,
-    addContent,
-    addHeader,
+    handleInputStateClick,
+    handleHeaderInputClick,
     editIngredient,
     editHeader,
     disableHeader,
@@ -82,34 +82,34 @@ const Upload: NextPage = () => {
 
           <section
             className={
-              contents.length > 0 ? "space-y-4 border-b pb-6" : "space-y-4"
+              ingredients.length > 0 ? "space-y-4 border-b pb-6" : "space-y-4"
             }
           >
             <label className="text-md font-bold">Ingredients</label>
 
             <IngredientsInput
-              inputStateValue={inputState}
-              onInputStateChange={handleInputStateChange}
-              onAddContent={addContent}
+              value={inputState}
+              onChange={handleInputStateChange}
+              onClick={handleInputStateClick}
             />
 
-            {contents.length > 0 && (
+            {ingredients.length > 0 && (
               <HeaderInput
                 isItem={false}
                 value={headerInput}
                 onChange={handleHeaderInputChange}
-                onClick={addHeader}
+                onClick={handleHeaderInputClick}
               />
             )}
 
             {/* TODO addEditHeader */}
             {/* Ingredients list */}
-            {contents.length > 0 && (
+            {ingredients.length > 0 && (
               // if contents state is not empty list items
               <div key={0} className="space-y-4">
-                {contents.map((subItem) => (
+                {ingredients.map((subItem) => (
                   <IngredientListItem
-                    key={subItem.contentID}
+                    key={subItem.id}
                     contentValue={subItem}
                     onChange={handleChangeIngredient(subItem)}
                     onClick={editIngredient(subItem)}
@@ -118,13 +118,13 @@ const Upload: NextPage = () => {
               </div>
             )}
 
-            {ingredients.map((item) => (
+            {sections.map((item) => (
               <div key={item.id} className="space-y-4 border-b pb-3">
                 <HeaderInput
                   isItem={true}
-                  name={item.header.title}
-                  value={item.header!.title}
-                  disabled={item.header.disabled}
+                  name={item.title.name}
+                  value={item.title.name}
+                  disabled={item.title.disabled}
                   onChange={editHeader}
                   onClick={disableHeader(item)}
                 />
@@ -132,7 +132,7 @@ const Upload: NextPage = () => {
 
                 {item.content.map((subItem) => (
                   <IngredientListItem
-                    key={subItem.contentID}
+                    key={subItem.id}
                     id={item.id}
                     contentValue={subItem}
                     onChange={handleChangeIngredient(subItem, item)}

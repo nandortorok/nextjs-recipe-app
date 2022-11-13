@@ -1,16 +1,16 @@
 import { ChangeEvent, useState, MouseEvent } from "react";
-import { ContentProps, IngredientsProps } from "../types/IngredientProps";
+import { IngredientProps, SectionProps } from "types/IngredientProps";
 
 const useIngredients = () => {
-  const [ingredients, setIngredients] = useState<IngredientsProps[]>([]);
-  const [contents, setContents] = useState<ContentProps[]>([]);
-  const [headerInput, setHeaderInput] = useState<string>("");
-  const [inputState, setInputState] = useState<ContentProps>({
+  const [inputState, setInputState] = useState<IngredientProps>({
     amount: "",
     unit: "",
-    ingredientName: "",
-    isEdited: false,
+    name: "",
+    disabled: false,
   });
+  const [headerInput, setHeaderInput] = useState<string>("");
+  const [sections, setSections] = useState<SectionProps[]>([]);
+  const [ingredients, setIngredients] = useState<IngredientProps[]>([]);
 
   const handleInputStateChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -21,26 +21,25 @@ const useIngredients = () => {
     });
   };
 
-  const addContent = () => {
-    const { amount, unit, ingredientName } = inputState;
+  const handleInputStateClick = () => {
+    const { name } = inputState;
 
-    if (!ingredientName.trim()) return;
+    if (!name.trim()) return;
 
-    // Add input values to 'contents' state with an id
-    setContents([
-      ...contents,
+    setIngredients([
+      ...ingredients,
       {
-        contentID: contents.length + 1,
+        id: ingredients.length + 1,
         ...inputState,
       },
     ]);
 
-    // Clear inputs
+    // Clear inputState
     setInputState({
       amount: "",
       unit: "",
-      ingredientName: "",
-      isEdited: false,
+      name: "",
+      disabled: false,
     });
   };
 
@@ -48,76 +47,100 @@ const useIngredients = () => {
     setHeaderInput(event.target.value);
   };
 
-  const addHeader = () => {
+  const handleHeaderInputClick = () => {
     if (
-      contents.length == 0 ||
+      ingredients.length == 0 ||
       headerInput.length == 0 ||
-      ingredients.find((item) => item.header!.title === headerInput)
+      sections.find((item) => item.title!.name === headerInput)
     )
       return;
 
-    setIngredients([
-      ...ingredients,
+    setSections([
+      ...sections,
       {
-        id: ingredients.length + 1,
-        header: {
-          title: headerInput,
+        id: sections.length + 1,
+        title: {
+          name: headerInput,
           disabled: true,
         },
-        content: contents,
+        content: ingredients,
       },
     ]);
 
-    // clear contents state
-    setContents([]);
+    // clear ingredient state
+    setIngredients([]);
     setHeaderInput("");
   };
 
-  const disableHeader = ({ header }: IngredientsProps) => (event: MouseEvent) =>{
-    const newIngredients = ingredients.map((item) => {
-      if (item.header.title === header.title)
+  const disableHeader =
+    ({ title }: SectionProps) =>
+    (event: MouseEvent) => {
+      const newIngredients = sections.map((item) => {
+        if (item.title.name === title.name)
+          return {
+            ...item,
+            title: {
+              ...title,
+              disabled: !title.disabled,
+            },
+          };
+
+        return item;
+      });
+
+      setSections(newIngredients);
+    };
+
+  const editHeader = (event: ChangeEvent<HTMLInputElement>) => {
+    let name: string = event.target.name;
+    let value: string = event.target.value;
+
+    const newIngredients = sections.map((item) => {
+      // if ids matches map ingredient
+      if (item.title!.name === name) {
         return {
           ...item,
-          header: {
-            ...header,
-            disabled: !header.disabled,
+          title: {
+            ...item.title,
+            name: value,
           },
         };
-
-      return item;
+      } else {
+        return item;
+      }
     });
 
-    setIngredients(newIngredients);
+    setSections(newIngredients);
   };
 
   // TODO make it better
   const editIngredient =
-    (content: ContentProps, ingredient?: IngredientsProps) =>
+    (content: IngredientProps, ingredient?: SectionProps) =>
     (event: MouseEvent) => {
-      if (contents.length > 0) {
-        const newContents = contents.map((item) => {
-          if (item.contentID === content.contentID)
+      if (ingredients.length > 0) {
+        const newContents = ingredients.map((item) => {
+          if (item.id === content.id)
             return {
               ...item,
-              isEdited: !content.isEdited,
+              disabled: !content.disabled,
             };
 
           return item;
         });
 
         // only execute this code
-        return setContents(newContents);
+        return setIngredients(newContents);
       }
 
-      const newIngredients = ingredients.map((item) => {
+      const newIngredients = sections.map((item) => {
         // if ids matches map ingredient
         if (item.id === ingredient?.id) {
           const newContents = item.content.map((subItem) => {
             // if ids matches update isEdited props
-            if (subItem.contentID === content.contentID) {
+            if (subItem.id === content.id) {
               return {
                 ...subItem,
-                isEdited: !content.isEdited,
+                disabled: !content.disabled,
               };
             } else {
               return subItem;
@@ -131,12 +154,12 @@ const useIngredients = () => {
           };
         } else if (
           ingredient == undefined &&
-          item.content.find((obj) => obj.contentID === content.contentID)
+          item.content.find((obj) => obj.id === content.id)
         ) {
-          setContents(
-            contents.map((obj) => {
-              if (obj.contentID === content.contentID) {
-                return { ...obj, isEdited: !content.isEdited };
+          setIngredients(
+            ingredients.map((obj) => {
+              if (obj.id === content.id) {
+                return { ...obj, disabled: !content.disabled };
               } else {
                 return obj;
               }
@@ -149,19 +172,19 @@ const useIngredients = () => {
         }
       });
 
-      setIngredients(newIngredients);
+      setSections(newIngredients);
     };
 
   // TODO remove redundant code
   const handleChangeIngredient =
-    (content: ContentProps, ingredient?: IngredientsProps) =>
+    (content: IngredientProps, ingredient?: SectionProps) =>
     (event: ChangeEvent<HTMLInputElement>) => {
       let name: string = event.target.name;
       let value: string = event.target.value;
 
-      if (contents.length > 0) {
-        const newContents = contents.map((item) => {
-          if (item.contentID === content.contentID)
+      if (ingredients.length > 0) {
+        const newContents = ingredients.map((item) => {
+          if (item.id === content.id)
             return {
               ...item,
               [name]: value,
@@ -171,15 +194,15 @@ const useIngredients = () => {
         });
 
         // only execute this code
-        return setContents(newContents);
+        return setIngredients(newContents);
       }
 
-      const newIngredients = ingredients.map((item) => {
+      const newIngredients = sections.map((item) => {
         // if ids matches map ingredient
         if (item.id === ingredient?.id) {
           const newContents = item.content.map((subItem) => {
             // if ids matches update isEdited props
-            if (subItem.contentID === content.contentID) {
+            if (subItem.id === content.id) {
               return {
                 ...subItem,
                 [name]: value,
@@ -196,11 +219,11 @@ const useIngredients = () => {
           };
         } else if (
           ingredient == undefined &&
-          item.content.find((obj) => obj.contentID === content.contentID)
+          item.content.find((obj) => obj.id === content.id)
         ) {
-          setContents(
-            contents.map((obj) => {
-              if (obj.contentID === content.contentID) {
+          setIngredients(
+            ingredients.map((obj) => {
+              if (obj.id === content.id) {
                 return { ...obj, [name]: value };
               } else {
                 return obj;
@@ -214,41 +237,19 @@ const useIngredients = () => {
         }
       });
 
-      setIngredients(newIngredients);
+      setSections(newIngredients);
     };
 
-  const editHeader = (event: ChangeEvent<HTMLInputElement>) => {
-    let name: string = event.target.name;
-    let value: string = event.target.value;
-
-    const newIngredients = ingredients.map((item) => {
-      // if ids matches map ingredient
-      if (item.header!.title === name) {
-        return {
-          ...item,
-          header: {
-            title: value,
-            disabled: true,
-          },
-        };
-      } else {
-        return item;
-      }
-    });
-
-    setIngredients(newIngredients);
-  };
-
   return {
-    ingredients,
+    sections,
     inputState,
-    contents,
+    ingredients,
     headerInput,
     handleInputStateChange,
     handleHeaderInputChange,
     handleChangeIngredient,
-    addContent,
-    addHeader,
+    handleInputStateClick,
+    handleHeaderInputClick,
     editIngredient,
     disableHeader,
     editHeader,

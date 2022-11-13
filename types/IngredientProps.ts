@@ -1,29 +1,26 @@
 import { ChangeEventHandler, MouseEventHandler } from "react";
 
 // TODO export use Ingredient type
+export type SectionProps = {
+  id: number;
+  title: {
+    name: string;
+    disabled: boolean;
+  };
+  content: IngredientProps[];
+};
 
-export type ContentProps = {
-  contentID?: number;
+export type IngredientProps = {
+  id?: number;
   amount: number | string;
   unit: string;
-  ingredientName: string;
-  isEdited: boolean;
-};
-
-export type HeaderStateProps = {
-  title: string;
+  name: string;
   disabled: boolean;
-};
-
-export type IngredientsProps = {
-  id: number;
-  header: HeaderStateProps;
-  content: ContentProps[];
 };
 
 export type IngredientListItemProps = {
   id?: number;
-  contentValue: ContentProps;
+  contentValue: IngredientProps;
   onChange: ChangeEventHandler;
   onClick: MouseEventHandler;
 };
@@ -38,9 +35,9 @@ export type HeaderInputProps = {
 };
 
 export type IngredientsInputProps = {
-  inputStateValue: ContentProps;
-  onInputStateChange: ChangeEventHandler;
-  onAddContent: MouseEventHandler;
+  value: IngredientProps;
+  onChange: ChangeEventHandler;
+  onClick: MouseEventHandler;
 };
 
 // TODO export useDirections types
