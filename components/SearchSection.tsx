@@ -99,23 +99,23 @@ const Results = ({
             <ul className="divide-y">
               {/* TODO give proper type */}
               {list.map((item: any) => (
-                <li key={item.id} className="p-4 hover:bg-slate-100">
-                  <Link href={`recipe/${item.id}`}>{item.title}</Link>
-                </li>
+                <Link key={item.id} href={`recipe/${item.id}`}>
+                  <li className="p-4 hover:bg-blue-50">{item.title}</li>
+                </Link>
               ))}
             </ul>
           </>
         ) : (
           <ul className="divide-y">
-            <li className="hover:bg-slate-10 p-4 text-center text-gray-400">
+            <li className="hover:bg-slate-10 py-10 text-center text-gray-400">
               No recipes found
             </li>
           </ul>
         )}
       </main>
 
-      <footer className="p-4 text-sm text-zinc-500">
-        Created by Nándor Török
+      <footer className="p-4 text-center text-sm text-gray-400">
+        Recipe Website
       </footer>
     </>
   );

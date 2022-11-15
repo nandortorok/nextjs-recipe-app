@@ -1,4 +1,5 @@
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
+import { PencilIcon } from "@heroicons/react/24/solid";
 import { DirectionsInputProps } from "../../types/IngredientProps";
 
 const DirectionsInput = ({
@@ -35,15 +36,24 @@ const DirectionsInput = ({
         <ul className="space-y-4 border-t pt-6">
           {directions.map(({ step, index }) => (
             <li key={index}>
-              <textarea
-                className="block w-full rounded-md border border-gray-300 p-4 transition ease-in-out"
-                rows={1}
-                placeholder={`Step ${index}`}
-                name={`step-${index}`}
-                disabled={true}
-                value={`${index}. ${step}`}
-                // onChange={onDirectionInputChange}
-              />
+              <div className="relative">
+                <textarea
+                  className="box-border block h-full w-full rounded-md border border-gray-300 p-4 transition ease-in-out min-h-[58px]"
+                  rows={1}
+                  placeholder={`Step ${index}`}
+                  name={`step-${index}`}
+                  disabled={true}
+                  value={`${index}. ${step}`}
+                  // onChange={onDirectionInputChange}
+                />
+                <button
+                  className="text-gray-400 transition ease-in-out hover:text-blue-500"
+                  type="button"
+                  title="Edit direction"
+                >
+                  <PencilIcon className="absolute top-4 right-4 h-6 w-6 " />
+                </button>
+              </div>
             </li>
           ))}
         </ul>
