@@ -1,8 +1,8 @@
 import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import { prisma, Prisma } from "../lib/prisma";
-import RecipeElement from "@components/RecipeElement";
-import SearchSection from "@components/SearchSection";
+import RecipeElement from "components/RecipeElement";
+import SearchSection from "components/SearchSection";
 import { ChangeEvent, useEffect, useState } from "react";
 
 const getRecipes = async () => {
