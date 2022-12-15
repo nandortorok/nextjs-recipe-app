@@ -35,8 +35,8 @@ export type HeaderInputProps = {
 };
 
 export type IngredientsInputProps = {
-  value: IngredientProps;
-  onChange: ChangeEventHandler;
+  // value: IngredientProps;
+  // onChange: ChangeEventHandler;
   onClick: MouseEventHandler;
 };
 
@@ -65,6 +65,6 @@ export type TimeValueProps = {
 
 export type TimeInputProps = {
   totalTime: string;
-  onTimeValueChange: ChangeEventHandler;
+  // onChange: ChangeEventHandler;
   timeValues: TimeValueProps;
 };

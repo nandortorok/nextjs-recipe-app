@@ -2,10 +2,10 @@ import Link from "next/link";
 import { Bars4Icon, UserIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import LoginForm from "@components/layout/LoginForm";
+import LoginForm from "components/LoginForm";
+import Upload from "components/Upload";
 
 const links = [
-  { name: "Upload", href: "/upload" },
   { name: "Saved recipes", href: "/libary" },
   { name: "Reviews", href: "/reviews" },
   { name: "My recipes", href: "/libary/${user}" },
@@ -14,9 +14,10 @@ const links = [
 const Header = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
-  const dynamicRoute = useRouter().asPath;
+  const [isUploadOpen, setIsUploadOpen] = useState(false);
 
-  // Reset navbar to closed on route change
+  // Reset navbar on route change
+  const dynamicRoute = useRouter().asPath;
   useEffect(() => setIsNavOpen(false), [dynamicRoute]);
 
   return (
@@ -24,25 +25,17 @@ const Header = () => {
       {/* Header */}
       <header className="sticky top-0 z-10 mx-auto border-b bg-white py-1 font-bold shadow-sm">
         <div className="flex items-center justify-start gap-2 px-5 md:justify-between">
-          {/* Navigation menu */}
           <button onClick={() => setIsNavOpen(!isNavOpen)}>
             <Bars4Icon className="h-8 w-8 cursor-pointer text-zinc-400 hover:text-black" />
           </button>
 
-          {/* Logo */}
           <Link href={"/"}>
             <h1 className="mx-auto cursor-pointer py-3 text-2xl text-black">
               Recipe Website
             </h1>
           </Link>
 
-          {/* User section */}
           <div className="flex-nowrap">
-            {/* Upload
-            <Link href={"/upload"}>
-              <UploadIcon className="h-8 w-8 cursor-pointer text-zinc-400 hover:text-black" />
-            </Link> */}
-            {/* Login */}
             <button
               className="invisible md:visible"
               onClick={() => setIsLoginOpen(!isLoginOpen)}
@@ -54,6 +47,7 @@ const Header = () => {
       </header>
 
       <LoginForm isOpen={isLoginOpen} setIsOpen={setIsLoginOpen} />
+      <Upload isOpen={isUploadOpen} setIsOpen={setIsUploadOpen} />
 
       {/* Sidebar menu */}
       <nav
@@ -67,7 +61,7 @@ const Header = () => {
           className="flex w-full gap-2 border-b py-4 pl-5"
         >
           <XMarkIcon className="h-8 w-8 text-zinc-400 hover:text-black" />
-          <h1 className="visible text-2xl font-bold md:invisible md:text-sm text-black">
+          <h1 className="visible text-2xl font-bold text-black md:invisible md:text-sm">
             Recipe Website
           </h1>
         </button>
@@ -81,10 +75,16 @@ const Header = () => {
             Login
           </button>
           {/* Other stuff */}
+          <button
+            className="self-start text-black transition ease-in-out hover:text-blue-500"
+            onClick={() => setIsUploadOpen(!isUploadOpen)}
+          >
+            Upload
+          </button>
           {links.map((item, index) => (
             <Link
               key={index}
-              className="transition ease-in-out hover:text-blue-500 text-black"
+              className="text-black transition ease-in-out hover:text-blue-500"
               href={item.href}
             >
               {item.name}

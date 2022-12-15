@@ -33,7 +33,7 @@ const Login = ({ setIsOpen }: LoginProps) => {
 
         <section className="flex w-full flex-row justify-between">
           <button
-            className="relative rounded-md bg-white py-2 px-5 text-blue-500 transition ease-in-out hover:ring-1 active:ring"
+            className="relative rounded-md bg-white py-2 px-5 text-blue-500 transition ease-in-out hover:bg-blue-50 active:ring"
             type="button"
           >
             Sign Up
@@ -51,12 +51,12 @@ const Login = ({ setIsOpen }: LoginProps) => {
   );
 };
 
-type Props = {
+type LoginFormProps = {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 };
 
-export const LoginForm = ({ isOpen, setIsOpen }: Props) => {
+export const LoginForm = ({ isOpen, setIsOpen }: LoginFormProps) => {
   return (
     <Transition.Root show={isOpen} as={Fragment}>
       <Dialog
@@ -83,7 +83,7 @@ export const LoginForm = ({ isOpen, setIsOpen }: Props) => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Dialog.Panel className="relative z-50 w-full mx-auto overflow-auto rounded-md bg-white shadow-xl transition-opacity lg:w-1/2 xl:max-w-md">
+          <Dialog.Panel className="relative z-50 mx-auto w-full overflow-auto rounded-md bg-white shadow-xl transition-opacity lg:w-1/2 xl:max-w-md">
             <Login setIsOpen={setIsOpen} />
           </Dialog.Panel>
         </Transition.Child>
