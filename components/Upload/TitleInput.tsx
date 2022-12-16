@@ -1,4 +1,6 @@
-const TitleInput = () => {
+import { InputProps } from "types/IngredientProps";
+
+const TitleInput = (props: InputProps) => {
   return (
     <div>
       <label className="block pb-2 font-bold">Title</label>
@@ -7,6 +9,7 @@ const TitleInput = () => {
         name="title"
         type="text"
         placeholder="Recipe title"
+        {...props}
       />
     </div>
   );

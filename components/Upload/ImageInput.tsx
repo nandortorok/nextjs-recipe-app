@@ -1,6 +1,7 @@
 import { CloudArrowUpIcon } from "@heroicons/react/24/outline";
+import { InputProps } from "types/IngredientProps";
 
-const ImageInput = () => {
+const ImageInput = (props: InputProps) => {
   return (
     <div>
       <label className="block pb-2 font-bold">Image</label>
@@ -19,7 +20,7 @@ const ImageInput = () => {
               SVG, PNG, JPG or GIF (MAX. 800x400px)
             </p>
           </div>
-          <input id="dropzone-file" type="file" className="hidden" />
+          <input className="hidden" type="file" {...props} />
         </label>
       </div>
     </div>

@@ -1,4 +1,6 @@
-const ServingsInput = () => {
+import { InputProps } from "types/IngredientProps";
+
+const ServingsInput = (props: InputProps) => {
   return (
     <div>
       <label className="block pb-2 font-bold">Servings</label>
@@ -7,6 +9,7 @@ const ServingsInput = () => {
         name="servings"
         type="number"
         placeholder="e.g. 4"
+        {...props}
         min={0}
         max={99}
       />

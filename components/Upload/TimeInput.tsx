@@ -1,25 +1,39 @@
-import { ChangeEvent, ChangeEventHandler, useEffect, useState } from "react";
+import {
+  ChangeEvent,
+  ChangeEventHandler,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 
-const TimeInput = () => {
+type TimeValueProps = {
+  prepTime: number;
+  cookTime: number;
+  prepTimeUnit: number;
+  cookTimeUnit: number;
+};
+
+type TimeInputProps = {
+  state: TimeValueProps;
+  setState: Dispatch<SetStateAction<TimeValueProps>>;
+  onChange: ChangeEventHandler<HTMLInputElement>;
+};
+
+const TimeInput = ({ state, setState, onChange }: TimeInputProps) => {
   const [totalTime, setTotalTime] = useState("");
-  const [timeValues, setTimeValues] = useState({
-    prepTime: 0,
-    cookTime: 0,
-    prepTimeUnit: 1,
-    cookTimeUnit: 1,
-  });
 
   const handleChange = (event: ChangeEvent<HTMLFormElement>) => {
     const { name, value } = event.target;
 
-    setTimeValues({
-      ...timeValues,
+    setState({
+      ...state,
       [name]: value,
     });
   };
 
   useEffect(() => {
-    const { prepTime, cookTime, prepTimeUnit, cookTimeUnit } = timeValues;
+    const { prepTime, cookTime, prepTimeUnit, cookTimeUnit } = state;
     const total = prepTime * prepTimeUnit + cookTime * cookTimeUnit;
 
     if (total < 60) {
@@ -34,7 +48,7 @@ const TimeInput = () => {
         }`
       );
     }
-  }, [timeValues]);
+  }, [state]);
 
   return (
     <>
@@ -42,12 +56,12 @@ const TimeInput = () => {
         <>
           <Input
             name={"prepTime"}
-            value={timeValues.prepTime}
+            value={state.prepTime}
             onChange={handleChange}
           />
           <Select
             name={"prepTimeUnit"}
-            value={timeValues.prepTimeUnit}
+            value={state.prepTimeUnit}
             onChange={handleChange}
           />
         </>
@@ -56,12 +70,12 @@ const TimeInput = () => {
         <>
           <Input
             name={"cookTime"}
-            value={timeValues.cookTime}
+            value={state.cookTime}
             onChange={handleChange}
           />
           <Select
             name={"cookTimeUnit"}
-            value={timeValues.cookTimeUnit}
+            value={state.cookTimeUnit}
             onChange={handleChange}
           />
         </>

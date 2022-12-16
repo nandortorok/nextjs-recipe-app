@@ -1,6 +1,12 @@
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { Transition, Dialog } from "@headlessui/react";
-import { Dispatch, Fragment, SetStateAction, useState } from "react";
+import {
+  ChangeEvent,
+  Dispatch,
+  Fragment,
+  SetStateAction,
+  useState,
+} from "react";
 
 import DirectionsInput from "./DirectionsInput";
 import ImageInput from "./ImageInput";
@@ -18,19 +24,42 @@ type ContentProps = {
 };
 
 const Content = ({ value }: ContentProps) => {
+  const [data, setData] = useState({
+    title: "",
+    imageName: "",
+    servings: "",
+  });
+
+  const [timeValues, setTimeValues] = useState({
+    prepTime: 0,
+    cookTime: 0,
+    prepTimeUnit: 1,
+    cookTimeUnit: 1,
+  });
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    setData({ ...data, [name]: value });
+  };
+
   switch (value) {
     case 1:
       return (
         <>
-          <TitleInput />
-          <ImageInput />
+          <TitleInput value={data.title} onChange={handleChange} />
+          <ImageInput value={data.imageName} onChange={handleChange} />
         </>
       );
     case 2:
       return (
         <>
-          <ServingsInput />
-          <TimeInput />
+          <ServingsInput value={data.servings} onChange={handleChange} />
+          <TimeInput
+            state={timeValues}
+            setState={setTimeValues}
+            onChange={handleChange}
+          />
         </>
       );
     case 3:
@@ -66,7 +95,7 @@ const Main = ({ setIsOpen }: MainProps) => {
   };
 
   return (
-    <main className="absolute flex h-full w-full flex-col">
+    <main className="absolute flex h-full w-full flex-col overflow-auto">
       <button
         className="absolute top-0 right-0 p-4 text-slate-400 hover:text-slate-700"
         onClick={() => setIsOpen(false)}
@@ -80,20 +109,23 @@ const Main = ({ setIsOpen }: MainProps) => {
         <Content value={page} />
       </form>
       <section className="mt-auto flex justify-between p-10 px-5">
-        <button
-          className="rounded-md bg-white py-2 px-5 text-blue-500 transition ease-in-out hover:bg-blue-50 active:ring"
-          type="button"
-          onClick={handleDecrement}
-        >
-          Back
-        </button>
+        {
+          <button
+            className="rounded-md bg-white py-2 px-5 text-blue-500 transition ease-in-out hover:bg-blue-50 active:ring disabled:invisible"
+            type="button"
+            disabled={page > 1 ? false : true}
+            onClick={handleDecrement}
+          >
+            Back
+          </button>
+        }
 
         <button
           className="rounded-md bg-blue-500 py-2 px-5 text-white transition ease-in-out hover:bg-blue-600 active:ring"
           type="button"
           onClick={handleIncrement}
         >
-          Next
+          {page == 4 ? "Submit" : "Next"}
         </button>
       </section>
     </main>

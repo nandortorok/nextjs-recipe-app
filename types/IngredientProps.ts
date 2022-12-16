@@ -1,5 +1,10 @@
 import { ChangeEventHandler, MouseEventHandler } from "react";
 
+export type InputProps = {
+  value: string;
+  onChange: ChangeEventHandler<HTMLInputElement>;
+};
+
 // TODO export use Ingredient type
 export type SectionProps = {
   id: number;
