@@ -1,86 +1,16 @@
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { Transition, Dialog } from "@headlessui/react";
-import {
-  ChangeEvent,
-  Dispatch,
-  Fragment,
-  SetStateAction,
-  useState,
-} from "react";
+import { Dispatch, Fragment, SetStateAction, useContext } from "react";
 
-import DirectionsInput from "./DirectionsInput";
-import ImageInput from "./ImageInput";
-import Ingredients from "./Ingredients";
-import ServingsInput from "./ServingsInput";
-import TimeInput from "./TimeInput";
-import TitleInput from "./TitleInput";
+import { UploadContext } from "lib/contexts";
+import Form from "./Form";
 
 type MainProps = {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 };
 
-type ContentProps = {
-  value: number;
-};
-
-const Content = ({ value }: ContentProps) => {
-  const [data, setData] = useState({
-    title: "",
-    imageName: "",
-    servings: "",
-  });
-
-  const [timeValues, setTimeValues] = useState({
-    prepTime: 0,
-    cookTime: 0,
-    prepTimeUnit: 1,
-    cookTimeUnit: 1,
-  });
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-
-    setData({ ...data, [name]: value });
-  };
-
-  switch (value) {
-    case 1:
-      return (
-        <>
-          <TitleInput value={data.title} onChange={handleChange} />
-          <ImageInput value={data.imageName} onChange={handleChange} />
-        </>
-      );
-    case 2:
-      return (
-        <>
-          <ServingsInput value={data.servings} onChange={handleChange} />
-          <TimeInput
-            state={timeValues}
-            setState={setTimeValues}
-            onChange={handleChange}
-          />
-        </>
-      );
-    case 3:
-      return (
-        <>
-          <Ingredients />
-        </>
-      );
-    case 4:
-      return (
-        <>
-          <DirectionsInput />
-        </>
-      );
-    default:
-      return <div>Hi</div>;
-  }
-};
-
 const Main = ({ setIsOpen }: MainProps) => {
-  const [page, setPage] = useState(1);
+  const { page, setPage } = useContext(UploadContext);
 
   const handleDecrement = () => {
     if (page > 1) {
@@ -106,7 +36,7 @@ const Main = ({ setIsOpen }: MainProps) => {
       <form className="space-y-5 px-5 pb-10 transition-opacity sm:px-10">
         <h1 className="pt-5 text-center font-bold">Upload a recipe</h1>
 
-        <Content value={page} />
+        <Form value={page} />
       </form>
       <section className="mt-auto flex justify-between p-10 px-5">
         {
@@ -172,4 +102,5 @@ const Upload = ({ isOpen, setIsOpen }: UploadProps) => {
     </Transition.Root>
   );
 };
+
 export default Upload;

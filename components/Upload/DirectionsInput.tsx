@@ -1,6 +1,4 @@
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
-import { PencilIcon } from "@heroicons/react/24/solid";
-import { DirectionsInputProps } from "../../types/IngredientProps";
 
 const DirectionsInput = () => {
   return (
