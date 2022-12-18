@@ -1,57 +1,97 @@
-import { PlusCircleIcon } from "@heroicons/react/24/outline";
+import { PlusIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import { ChangeEventHandler, MouseEventHandler } from "react";
+
+import useDirections from "hooks/useDirections";
 
 const DirectionsInput = () => {
+  const { sections, handleChange, handleDelete, handleAddDirection } =
+    useDirections();
+
   return (
     <>
       <label className="text-md font-bold">Directions</label>
 
-      <textarea
-        className="w-full rounded-md border-gray-300 p-4 transition ease-in-out focus:border-opacity-0"
-        rows={2}
-        // placeholder={"Step " + (directions.length + 1)}
-        // value={directionInputValue}
-        // onChange={onDirectionInputChange}
-      />
-
-      <div className="flex items-center justify-end text-blue-500 hover:text-blue-600">
-        <button
-          className="flex"
-          title="Add direction"
-          // onClick={onAddDirection}
-          type="button"
-        >
-          <p className="pr-2">Add direction</p>
-          <PlusCircleIcon className="h-6 w-6" />
-        </button>
-      </div>
-      {/* TODO add editDirection */}
-      {/* {directions.length > 0 && ( */}
-      <ul className="">
-        {/* {directions.map(({ step, index }) => ( */}
-        {/* <li key={index}>
-              <div className="relative">
-                <textarea
-                  className="box-border block h-full min-h-[58px] w-full rounded-md border border-gray-300 p-4 transition ease-in-out"
-                  rows={1}
-                  placeholder={`Step ${index}`}
-                  name={`step-${index}`}
-                  disabled={true}
-                  value={`${index}. ${step}`}
-                  // onChange={onDirectionInputChange}
+      {sections.map(({ title, directions }, sectionIdx) => (
+        <div className="rounded-md border border-gray-300" key={sectionIdx}>
+          <table className="w-full text-left">
+            <caption className="border-b px-3 py-4 text-left text-lg font-bold">
+              <div className="flex justify-between">
+                <input
+                  className="border-0 align-middle text-lg focus:ring-0"
+                  type="text"
+                  placeholder="Title name"
+                  name="title"
+                  value={title}
+                  readOnly={true}
+                  // onChange={}
                 />
-                <button
-                  className="text-gray-400 transition ease-in-out hover:text-blue-500"
+                {/* <button
+                  className="pr-3 align-middle"
                   type="button"
-                  title="Edit direction"
+                  // onClick={() => handleDeleteSection(sectionIdx)}
                 >
-                  <PencilIcon className="absolute top-4 right-4 h-6 w-6 " />
-                </button>
+                  <XMarkIcon className="h-6 w-6" />
+                </button> */}
               </div>
-            </li> */}
-        {/* ))} */}
-      </ul>
-      {/* )} */}
+            </caption>
+            <tbody>
+              {directions.map((direction, idx) => (
+                <Row
+                  key={idx}
+                  index={idx}
+                  value={direction}
+                  onChange={handleChange(sectionIdx, idx)}
+                  onClick={() => handleDelete(sectionIdx, idx)}
+                />
+              ))}
+              {/* add input */}
+              <tr>
+                <td colSpan={4} className="p-3 text-center">
+                  <button
+                    className="align-middle"
+                    type="button"
+                    onClick={() => handleAddDirection(sectionIdx)}
+                  >
+                    <PlusIcon className="h-6 w-6" />
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      ))}
     </>
   );
 };
+
+type RowProps = {
+  index: number;
+  value: string;
+  onChange: ChangeEventHandler;
+  onClick: MouseEventHandler;
+};
+
+const Row = ({ index, value, onChange, onClick }: RowProps) => {
+  return (
+    <tr className="border-b">
+      <td className="flex">
+        <p className="my-auto px-4 text-gray-700">{index + 1}</p>
+        <input
+          className=" focus:ring-0"
+          type="text"
+          name="amount"
+          autoComplete="off"
+          value={value}
+          onChange={onChange}
+        />
+      </td>
+      <td className="py-3 px-6 text-right">
+        <button className="align-middle" type="button" onClick={onClick}>
+          <XMarkIcon className="h-6 w-6" />
+        </button>
+      </td>
+    </tr>
+  );
+};
+
 export default DirectionsInput;

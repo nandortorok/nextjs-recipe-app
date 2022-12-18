@@ -58,6 +58,7 @@ const useIngredients = () => {
             name: "",
           },
         ],
+        directions: [""],
       },
     ]);
 

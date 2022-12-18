@@ -10,7 +10,9 @@ export type IngredientProps = {
   unit?: string;
   name: string;
 };
+
 export type SectionProps = {
   title?: string;
   ingredients: IngredientProps[];
+  directions: string[];
 };
