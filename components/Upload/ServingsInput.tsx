@@ -1,4 +1,4 @@
-import { InputProps } from "types/IngredientProps";
+import { InputProps } from "types";
 
 const ServingsInput = (props: InputProps) => {
   return (

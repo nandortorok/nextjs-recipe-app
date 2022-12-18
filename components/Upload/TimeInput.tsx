@@ -6,17 +6,11 @@ import {
   useEffect,
   useState,
 } from "react";
-
-type TimeValueProps = {
-  prepTime: number;
-  cookTime: number;
-  prepTimeUnit: number;
-  cookTimeUnit: number;
-};
+import { TimeValuesProps } from "types";
 
 type TimeInputProps = {
-  state: TimeValueProps;
-  setState: Dispatch<SetStateAction<TimeValueProps>>;
+  state: TimeValuesProps;
+  setState: Dispatch<TimeValuesProps>;
   onChange: ChangeEventHandler<HTMLInputElement>;
 };
 

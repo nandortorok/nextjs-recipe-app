@@ -1,5 +1,5 @@
 import { CloudArrowUpIcon } from "@heroicons/react/24/outline";
-import { InputProps } from "types/IngredientProps";
+import { InputProps } from "types";
 
 const ImageInput = (props: InputProps) => {
   return (

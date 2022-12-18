@@ -1,4 +1,4 @@
-import { InputProps } from "types/IngredientProps";
+import { InputProps, TimeValuesProps } from "types";
 
 const TitleInput = (props: InputProps) => {
   return (

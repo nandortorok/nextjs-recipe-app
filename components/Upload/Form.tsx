@@ -8,11 +8,7 @@ import ServingsInput from "./ServingsInput";
 import TimeInput from "./TimeInput";
 import TitleInput from "./TitleInput";
 
-type Props = {
-  value: number;
-};
-
-const Form = ({ value }: Props) => {
+const Form = ({ value }: { value: number }) => {
   const { data, setData, timeValues, setTimeValues } =
     useContext(UploadContext);
 

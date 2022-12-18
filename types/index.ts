@@ -16,3 +16,10 @@ export type SectionProps = {
   ingredients: IngredientProps[];
   directions: string[];
 };
+
+export type TimeValuesProps = {
+  prepTime: number;
+  cookTime: number;
+  prepTimeUnit: number;
+  cookTimeUnit: number;
+};

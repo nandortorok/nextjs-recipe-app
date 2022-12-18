@@ -1,28 +1,17 @@
 import { createContext, Dispatch, SetStateAction } from "react";
-import { SectionProps } from "types";
+import { SectionProps, TimeValuesProps } from "types";
 
-type TimeValuesProps = {
-  prepTime: number;
-  cookTime: number;
-  prepTimeUnit: number;
-  cookTimeUnit: number;
+type DataProps = {
+  title: string;
+  imageName: string;
+  servings: string;
 };
 
 type UploadContextProps = {
   page: number;
   setPage: Dispatch<SetStateAction<number>>;
-  data: {
-    title: string;
-    imageName: string;
-    servings: string;
-  };
-  setData: Dispatch<
-    SetStateAction<{
-      title: string;
-      imageName: string;
-      servings: string;
-    }>
-  >;
+  data: DataProps;
+  setData: Dispatch<SetStateAction<DataProps>>;
   timeValues: TimeValuesProps;
   setTimeValues: Dispatch<TimeValuesProps>;
   sections: SectionProps[];
