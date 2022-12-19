@@ -28,6 +28,7 @@ const IngredientsInput = () => {
                   type="text"
                   placeholder="Title name"
                   name="title"
+                  autoComplete="off"
                   value={title}
                   onChange={handleChange(sectionIdx)}
                 />
@@ -83,6 +84,7 @@ const IngredientsInput = () => {
               type="text"
               placeholder="Title name"
               name="title"
+              autoComplete="off"
               value={sectionTitle}
               onChange={(e) => setSectionTitle(e.target.value)}
             />

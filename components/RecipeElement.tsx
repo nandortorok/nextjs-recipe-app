@@ -1,4 +1,4 @@
-import { StarIcon } from "@heroicons/react/24/solid";
+import { StarIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -12,35 +12,29 @@ const RecipeElement = ({
   userName: string;
 }) => {
   return (
-    <article className="group relative cursor-pointer border bg-white shadow ">
-      <header>
-        <Link href={href}>
-          <Image
-            alt="recipe image"
-            src="/test-image.png"
-            className="object-cover"
-            width={800}
-            height={250}
-          />
-        </Link>
-      </header>
-
-      <main className="p-5">
-        <h1 className="pl-1 pt-1 text-xl font-bold group-hover:underline">
-          <Link href={href}>{title}</Link>
-        </h1>
-
-        <section className="flex pt-3">
-          <StarIcon className="h-6 w-6 text-yellow-400" />
-          <p className="pl-1">4.83 (108)</p>
-        </section>
-      </main>
-      <footer className="px-5 pb-5 text-gray-500">
-        <p>
-          By <span className="font-bold">{userName}</span>
-        </p>
+    <section className="relative max-w-md">
+      <Link
+        className="inline-block cursor-pointer overflow-hidden rounded-xl"
+        href={href}
+      >
+        <Image
+          alt="recipe image"
+          src="/test-image.png"
+          className="block object-none brightness-50 transition ease-in-out hover:scale-110"
+          width={800}
+          height={250}
+        />
+      </Link>
+      <p className="absolute top-6 px-4 text-white">{userName}</p>
+      <div className="absolute top-6 right-6 flex text-white">
+        <StarIcon className="h-6 w-6 align-middle" />
+        <p className="pl-2 align-middle">4.8</p>
+      </div>
+      <footer className="absolute bottom-6 px-4 text-white">
+        <h1 className="text-2xl font-bold">{title}</h1>
+        <p className="text-sm font-bold">12 ingredients | 40 min</p>
       </footer>
-    </article>
+    </section>
   );
 };
 

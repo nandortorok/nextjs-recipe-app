@@ -6,7 +6,6 @@ type LoginProps = {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 };
 
-// TODO mobile view
 const Login = ({ setIsOpen }: LoginProps) => {
   return (
     <main>
@@ -83,7 +82,7 @@ export const LoginForm = ({ isOpen, setIsOpen }: LoginFormProps) => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Dialog.Panel className="relative z-50 mx-auto w-full overflow-auto rounded-md bg-white shadow-xl transition-opacity lg:w-1/2 xl:max-w-md">
+          <Dialog.Panel className="relative z-50 mx-auto w-full overflow-auto rounded-xl bg-white shadow-xl transition-opacity lg:w-1/2 xl:max-w-md">
             <Login setIsOpen={setIsOpen} />
           </Dialog.Panel>
         </Transition.Child>

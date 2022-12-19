@@ -2,7 +2,6 @@ import {
   ChangeEvent,
   ChangeEventHandler,
   Dispatch,
-  SetStateAction,
   useEffect,
   useState,
 } from "react";
@@ -76,7 +75,7 @@ const TimeInput = ({ state, setState, onChange }: TimeInputProps) => {
       </Section>
       <Section labelText="Total">
         <>
-          <p className="my-auto p-4">{totalTime}</p>
+          <p className="col-span-2 my-auto p-4">{totalTime}</p>
         </>
       </Section>
     </>

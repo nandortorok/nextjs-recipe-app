@@ -32,9 +32,9 @@ const SearchSection = ({
         className="object-cover"
         fill={true}
       />
-      <div className="absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
         <button
-          className="flex h-14 w-[90vw] items-center rounded-md bg-white/75 pl-4 text-lg text-zinc-500 transition ease-in-out hover:text-black md:w-80 lg:w-[32rem]"
+          className="flex h-14 w-[90vw] items-center rounded-full bg-white/75 pl-4 text-lg text-gray-500 transition ease-in-out hover:text-black md:w-80 lg:w-[32rem]"
           type="button"
           onClick={() => setIsOpen(!isOpen)}
         >
@@ -154,7 +154,7 @@ const Modal = ({ children, isOpen, setIsOpen }: Props) => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Dialog.Panel className="relative z-50 mx-auto flex min-h-0 w-full max-w-[95vw] flex-col divide-y rounded-md bg-white shadow-xl transition-opacity md:max-w-3xl">
+          <Dialog.Panel className="relative z-50 mx-auto flex min-h-0 w-full max-w-[95vw] flex-col divide-y rounded-xl bg-white shadow-xl transition-opacity md:max-w-3xl">
             {children}
           </Dialog.Panel>
         </Transition.Child>

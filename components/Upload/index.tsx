@@ -94,7 +94,7 @@ const Upload = ({ isOpen, setIsOpen }: UploadProps) => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Dialog.Panel className="relative z-50 mx-auto min-h-full w-full max-w-[95vw] rounded-md bg-white shadow-xl transition-opacity md:max-w-2xl">
+          <Dialog.Panel className="relative z-50 mx-auto min-h-full w-full max-w-[95vw] rounded-xl bg-white shadow-xl transition-opacity md:max-w-2xl">
             <Main setIsOpen={setIsOpen} />
           </Dialog.Panel>
         </Transition.Child>

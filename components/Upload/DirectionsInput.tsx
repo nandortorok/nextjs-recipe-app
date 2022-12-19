@@ -74,19 +74,25 @@ type RowProps = {
 const Row = ({ index, value, onChange, onClick }: RowProps) => {
   return (
     <tr className="border-b">
-      <td className="flex">
-        <p className="my-auto px-4 text-gray-700">{index + 1}</p>
-        <input
-          className=" focus:ring-0"
-          type="text"
-          name="amount"
-          autoComplete="off"
-          value={value}
-          onChange={onChange}
-        />
+      <td>
+        <div className="flex">
+          <p className="my-auto pl-6 text-gray-700">{index + 1}</p>
+          <input
+            className="w-full border-0 focus:ring-0"
+            type="text"
+            name="amount"
+            autoComplete="off"
+            value={value}
+            onChange={onChange}
+          />
+        </div>
       </td>
       <td className="py-3 px-6 text-right">
-        <button className="align-middle" type="button" onClick={onClick}>
+        <button
+          className="align-middle transition ease-in-out hover:text-red-600"
+          type="button"
+          onClick={onClick}
+        >
           <XMarkIcon className="h-6 w-6" />
         </button>
       </td>

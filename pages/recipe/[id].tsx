@@ -22,17 +22,17 @@ type Props = {
   recipe: Recipe & {
     user: User;
     recipeSections: (Section & {
-      directions: Direction[];
       ingredients: (SectionIngredient & {
         ingredient: Ingredient;
         unit: Unit | null;
       })[];
+      directions: Direction[];
     })[];
   };
 };
 
 const Recipe: NextPage<Props> = ({ recipe }) => {
-  const tableHead = ["Prep Time", "Cooking Time", "Total"];
+  const tableHead = ["Prep", "Cook", "Total"];
 
   return (
     <>
@@ -40,79 +40,88 @@ const Recipe: NextPage<Props> = ({ recipe }) => {
         <title>{recipe.title}</title>
       </Head>
 
-      <main className="container mx-auto my-10 space-y-6 shadow-lg">
-        <h1 className="text-center text-2xl font-bold">{recipe.title}</h1>
-        <h2 className="text-center italic text-gray-400">
-          By {recipe.user.name}
-        </h2>
+      <main className="flex flex-col items-center space-y-8 bg-gray-100 py-10 px-5">
+        <section>
+          <h1 className="text-center text-2xl font-bold">{recipe.title}</h1>
+          <p className="text-center text-sm text-gray-400">
+            By {recipe.user.name}
+          </p>
+        </section>
 
-        <section className="flex flex-col items-center justify-center">
-          <table className="w-1/2 bg-slate-200 text-center">
-            <thead>
-              <tr>
-                {tableHead.map((item, index) => (
-                  <td key={index} className="px-6 pt-3">
-                    {item}
-                  </td>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="px-6 pb-3 text-gray-500">
-                  {recipe.prepTime} min
-                </td>
-                <td className="px-6 pb-3 text-gray-500">
-                  {recipe.cookingTime} min
-                </td>
-                <td className="px-6 pb-3 text-gray-500">
-                  {recipe.prepTime + recipe.cookingTime} min
-                </td>
-              </tr>
-            </tbody>
-          </table>
-
+        <div className="inline-block aspect-video overflow-hidden rounded-3xl">
           <Image
             alt="image"
             src={"/test-image.png"}
-            className="w-1/2 pt-6 shadow-lg"
+            className="block object-none"
             height={600}
             width={600}
           />
+        </div>
+
+        <table className="w-full rounded-3xl bg-white text-center">
+          <thead>
+            <tr>
+              {tableHead.map((item, index) => (
+                <td key={index} className="px-6 pt-3">
+                  {item}
+                </td>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className="px-6 pb-3 text-gray-500">{recipe.prepTime} min</td>
+              <td className="px-6 pb-3 text-gray-500">
+                {recipe.cookingTime} min
+              </td>
+              <td className="px-6 pb-3 text-gray-500">
+                {recipe.prepTime + recipe.cookingTime} min
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h1 className="w-full text-left font-bold">Ingredients (1)</h1>
+
+        <section className="w-full">
+          {recipe.recipeSections.map(({ title, ingredients }, sectionIdx) => (
+            <div key={sectionIdx} className="">
+              <h1 className="w-full text-left font-bold">{title}</h1>
+              <ul className="space-y-5">
+                {ingredients.map(({ ingredient, amount, unit }, idx) => (
+                  <li
+                    key={idx}
+                    className=" flex rounded-2xl bg-white py-4 font-bold capitalize"
+                  >
+                    <p className="px-10">
+                      {amount} {!unit} {ingredient.name}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </section>
 
-        <section className="pl-10">
-          <h2 className="text-2xl">Ingredients</h2>
+        <h1 className="w-full text-left font-bold">Directions (3)</h1>
 
-          <div className="pl-4">
-            {recipe.recipeSections.map(({ ingredients }, index) => (
-              <h3 key={ingredients[index].sectionId}>
-                {recipe.recipeSections[index].title}
-                <ul className="list-disc pl-4">
-                  {ingredients.map(({ ingredient }) => (
-                    <li key={ingredient.id}>{ingredient.name}</li>
-                  ))}
-                </ul>
-              </h3>
-            ))}
-          </div>
-        </section>
-
-        <section className="pl-10">
-          <h2 className="text-2xl">Directions</h2>
-
-          <div className="pl-4">
-            {recipe.recipeSections.map(({ directions }, index) => (
-              <h3 key={directions[index].sectionId}>
-                {recipe.recipeSections[index].title}
-                <ul className="list-disc pl-4">
-                  {directions.map(({ stepNumber, direction }) => (
-                    <li key={stepNumber}>{direction}</li>
-                  ))}
-                </ul>
-              </h3>
-            ))}
-          </div>
+        <section className="w-full">
+          {recipe.recipeSections.map(({ title, directions }, sectionIdx) => (
+            <div key={sectionIdx} className="">
+              <h1 className="w-full text-left font-bold">{title}</h1>
+              <ul className="space-y-5">
+                {directions.map(({ direction }, idx) => (
+                  <li
+                    key={idx}
+                    className=" flex rounded-2xl bg-white py-4 font-bold capitalize"
+                  >
+                    <p className="px-4 text-gray-500">{idx}</p>
+                    <p className="">{direction}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </section>
 
         <p className="py-5 text-center text-gray-500">
