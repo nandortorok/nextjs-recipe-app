@@ -54,8 +54,8 @@ const Home: NextPage<RecipesProps> = ({ recipes }) => {
   return (
     <>
       <Head>
-        <title>Recipe Website</title>
-        <meta name="description" content="Recipe website by Bacon Pardner" />
+        <title>Recipe App</title>
+        <meta name="description" content="Next.js Recipe App by BaconPardner" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 

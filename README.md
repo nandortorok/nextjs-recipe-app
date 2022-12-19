@@ -1,4 +1,4 @@
-# Next.js Recipe Website
+# Next.js Recipe App
 
 <!-- ## About The Project -->
 
@@ -24,7 +24,7 @@
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/BaconPardner/nextjs-recipe-website.git
+   git clone https://github.com/BaconPardner/nextjs-recipe-app.git
    ```
 2. Install NPM packages
    ```sh

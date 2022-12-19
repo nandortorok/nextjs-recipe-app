@@ -53,7 +53,7 @@ const Header = () => {
 
           <Link href={"/"}>
             <p className="mx-auto cursor-pointer py-3 text-lg text-black">
-              Recipe Website
+              Recipe App
             </p>
           </Link>
 
@@ -85,7 +85,7 @@ const Header = () => {
         >
           <Bars3Icon className="h-6 w-6 cursor-pointer hover:text-blue-500" />
           <p className="visible px-2 text-lg font-bold md:invisible md:text-sm">
-            Recipe Website
+            Recipe App
           </p>
         </button>
 
