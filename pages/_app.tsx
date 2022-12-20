@@ -1,18 +1,24 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
+import { SessionProvider } from "next-auth/react";
 
 import Layout from "../components/Layout";
 import { UploadContext } from "lib/contexts";
 import useUpload from "hooks/useUpload";
 
-export default function MyApp({ Component, pageProps }: AppProps) {
+export default function MyApp({
+  Component,
+  pageProps: { session, ...pageProps },
+}: AppProps) {
   const providerValue = useUpload();
 
   return (
-    <UploadContext.Provider value={providerValue}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </UploadContext.Provider>
+    <SessionProvider session={session}>
+      <UploadContext.Provider value={providerValue}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </UploadContext.Provider>
+    </SessionProvider>
   );
 }

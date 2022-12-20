@@ -1,8 +1,9 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 import { useState, MouseEventHandler, ReactNode, useEffect } from "react";
 import {
   UserIcon,
-  XMarkIcon,
   ArrowLeftCircleIcon,
   HomeIcon,
   BookmarkSquareIcon,
@@ -13,7 +14,7 @@ import {
 
 import LoginForm from "components/LoginForm";
 import Upload from "components/Upload";
-import { useRouter } from "next/router";
+import Image from "next/image";
 
 const links = [
   {
@@ -38,6 +39,8 @@ const Header = () => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isUploadOpen, setIsUploadOpen] = useState(false);
 
+  const { data: session } = useSession();
+
   // Reset navbar on route change
   const dynamicRoute = useRouter().asPath;
   useEffect(() => setIsNavOpen(false), [dynamicRoute]);
@@ -58,12 +61,24 @@ const Header = () => {
           </Link>
 
           <div className="group flex-nowrap rounded-full transition ease-in-out hover:bg-blue-100 active:bg-blue-200 active:text-blue-700">
-            <button
-              className="invisible p-2 align-middle md:visible"
-              onClick={() => setIsLoginOpen(!isLoginOpen)}
-            >
-              <UserIcon className="h-6 w-6 cursor-pointer group-hover:text-blue-500" />
-            </button>
+            {session ? (
+              <Link href="/login">
+                <Image
+                  src={session.user!.image!}
+                  alt={session.user!.name!}
+                  className="rounded-full border hover:scale-110 hover:bg-blue-100"
+                  width={24}
+                  height={24}
+                />
+              </Link>
+            ) : (
+              <button
+                className="invisible p-2 align-middle md:visible"
+                onClick={() => setIsLoginOpen(!isLoginOpen)}
+              >
+                <UserIcon className="h-6 w-6 cursor-pointer group-hover:text-blue-500" />
+              </button>
+            )}
           </div>
         </div>
       </header>
@@ -91,15 +106,34 @@ const Header = () => {
 
         <section className="flex flex-col space-y-3 pt-3">
           <span className="md:hidden">
-            <NavButton onClick={() => setIsLoginOpen(!isLoginOpen)}>
-              <ArrowLeftCircleIcon className="h-6 w-6" />
-              <p>Login</p>
-            </NavButton>
+            {session ? (
+              <NavLink href="/login">
+                <Image
+                  src={session.user!.image!}
+                  alt={session.user!.name!}
+                  width={24}
+                  height={24}
+                />
+                <p>{session.user!.name!}</p>
+              </NavLink>
+            ) : (
+              <NavButton onClick={() => setIsLoginOpen(!isLoginOpen)}>
+                <ArrowLeftCircleIcon className="h-6 w-6" />
+                <p>Login</p>
+              </NavButton>
+            )}
           </span>
-          <NavButton onClick={() => setIsUploadOpen(!isUploadOpen)}>
-            <HomeIcon className="h-6 w-6" />
-            <p>Upload</p>
-          </NavButton>
+          {session ? (
+            <NavButton onClick={() => setIsUploadOpen(!isUploadOpen)}>
+              <HomeIcon className="h-6 w-6" />
+              <p>Upload</p>
+            </NavButton>
+          ) : (
+            <NavLink href="/login">
+              <HomeIcon className="h-6 w-6" />
+              <p>Upload</p>
+            </NavLink>
+          )}
           {links.map(({ icon, href, name }, index) => (
             <NavLink key={index} href={href}>
               {icon}
