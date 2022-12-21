@@ -5,11 +5,11 @@ import { useState, MouseEventHandler, ReactNode, useEffect } from "react";
 import {
   UserIcon,
   ArrowLeftCircleIcon,
-  HomeIcon,
   BookmarkSquareIcon,
   DocumentTextIcon,
   RectangleStackIcon,
   Bars3Icon,
+  ArrowUpOnSquareIcon,
 } from "@heroicons/react/24/outline";
 
 import LoginForm from "components/LoginForm";
@@ -123,17 +123,10 @@ const Header = () => {
               </NavButton>
             )}
           </span>
-          {session ? (
-            <NavButton onClick={() => setIsUploadOpen(!isUploadOpen)}>
-              <HomeIcon className="h-6 w-6" />
-              <p>Upload</p>
-            </NavButton>
-          ) : (
-            <NavLink href="/login">
-              <HomeIcon className="h-6 w-6" />
-              <p>Upload</p>
-            </NavLink>
-          )}
+          <NavButton onClick={() => setIsUploadOpen(!isUploadOpen)}>
+            <ArrowUpOnSquareIcon className="h-6 w-6" />
+            <p>Upload</p>
+          </NavButton>
           {links.map(({ icon, href, name }, index) => (
             <NavLink key={index} href={href}>
               {icon}

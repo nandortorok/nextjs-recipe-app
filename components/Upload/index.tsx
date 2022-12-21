@@ -1,9 +1,12 @@
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { Transition, Dialog } from "@headlessui/react";
 import { Dispatch, Fragment, SetStateAction, useContext } from "react";
+import { useSession } from "next-auth/react";
 
 import { UploadContext } from "lib/contexts";
 import Form from "./Form";
+import Link from "next/link";
+import { ArrowUpOnSquareIcon } from "@heroicons/react/24/outline";
 
 type MainProps = {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
@@ -11,6 +14,7 @@ type MainProps = {
 
 const Main = ({ setIsOpen }: MainProps) => {
   const { page, setPage } = useContext(UploadContext);
+  const { data: session } = useSession();
 
   const handleDecrement = () => {
     if (page > 1) {
@@ -33,31 +37,48 @@ const Main = ({ setIsOpen }: MainProps) => {
         <XMarkIcon className="h-6 w-6" />
       </button>
 
-      <form className="space-y-5 px-5 pb-10 transition-opacity sm:px-10">
-        <h1 className="pt-5 text-center font-bold">Upload a recipe</h1>
+      {session ? (
+        <>
+          <form className="space-y-5 px-5 pb-10 transition-opacity sm:px-10">
+            <h1 className="pt-5 text-center font-bold">Upload a recipe</h1>
 
-        <Form value={page} />
-      </form>
-      <section className="mt-auto flex justify-between p-10 px-5">
-        {
-          <button
-            className="rounded-md bg-white py-2 px-5 text-blue-500 transition ease-in-out hover:bg-blue-50 active:ring disabled:invisible"
-            type="button"
-            disabled={page > 1 ? false : true}
-            onClick={handleDecrement}
-          >
-            Back
-          </button>
-        }
+            <Form value={page} />
+          </form>
+          <section className="mt-auto flex justify-between p-10 px-5">
+            {
+              <button
+                className="rounded-md bg-white py-2 px-5 text-blue-500 transition ease-in-out hover:bg-blue-50 active:ring disabled:invisible"
+                type="button"
+                disabled={page > 1 ? false : true}
+                onClick={handleDecrement}
+              >
+                Back
+              </button>
+            }
 
-        <button
-          className="rounded-md bg-blue-500 py-2 px-5 text-white transition ease-in-out hover:bg-blue-600 active:ring"
-          type="button"
-          onClick={handleIncrement}
-        >
-          {page == 4 ? "Submit" : "Next"}
-        </button>
-      </section>
+            <button
+              className="rounded-md bg-blue-500 py-2 px-5 text-white transition ease-in-out hover:bg-blue-600 active:ring"
+              type="button"
+              onClick={handleIncrement}
+            >
+              {page == 4 ? "Submit" : "Next"}
+            </button>
+          </section>
+        </>
+      ) : (
+        <section className="flex h-screen">
+          <div className="m-auto flex flex-col justify-center">
+            <ArrowUpOnSquareIcon className="h-24 w-24 mx-auto" />
+            <p className="p-10">Log in to upload your favorite recipes</p>
+            <Link
+              className="mx-auto rounded-xl bg-blue-500 py-2 px-5 text-white transition ease-in-out hover:bg-blue-600 active:ring"
+              href="/login"
+            >
+              Log in
+            </Link>
+          </div>
+        </section>
+      )}
     </main>
   );
 };
