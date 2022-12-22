@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { SectionProps } from "types";
 
 export type UploadContextProps = ReturnType<typeof useUpload>;
@@ -20,15 +20,35 @@ const useUpload = () => {
 
   const [sections, setSections] = useState<SectionProps[]>([]);
 
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    setData({ ...data, [name]: value });
+  };
+
+  const handleDecrement = () => {
+    if (page > 1) {
+      setPage(page - 1);
+    }
+  };
+
+  const handleIncrement = () => {
+    if (page < 4) {
+      setPage(page + 1);
+    }
+  };
+
   return {
     page,
     setPage,
     data,
-    setData,
     timeValues,
     setTimeValues,
     sections,
     setSections,
+    handleChange,
+    handleDecrement,
+    handleIncrement,
   };
 };
 

@@ -1,52 +1,46 @@
 import { UploadContext } from "lib/contexts";
-import { ChangeEvent, useContext } from "react";
+import { FormEventHandler, useContext } from "react";
 
-import DirectionsInput from "./DirectionsInput";
-import ImageInput from "./ImageInput";
-import IngredientsInput from "./IngredientsInput";
-import ServingsInput from "./ServingsInput";
-import TimeInput from "./TimeInput";
-import TitleInput from "./TitleInput";
+type FormProps = {
+  onSubmit: FormEventHandler;
+  children: JSX.Element;
+};
 
-const Form = ({ value }: { value: number }) => {
-  const { data, setData } = useContext(UploadContext);
+export const Form = ({ onSubmit, children }: FormProps) => {
+  const { page, setPage } = useContext(UploadContext);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-
-    setData({ ...data, [name]: value });
+  const handleDecrement = () => {
+    if (page > 1) {
+      setPage(page - 1);
+    }
   };
 
-  switch (value) {
-    case 1:
-      return (
-        <>
-          <TitleInput value={data.title} onChange={handleChange} />
-          <ImageInput value={data.imageName} onChange={handleChange} />
-        </>
-      );
-    case 2:
-      return (
-        <>
-          <ServingsInput value={data.servings} onChange={handleChange} />
-          <TimeInput />
-        </>
-      );
-    case 3:
-      return (
-        <>
-          <IngredientsInput />
-        </>
-      );
-    case 4:
-      return (
-        <>
-          <DirectionsInput />
-        </>
-      );
-    default:
-      return <div>Hi</div>;
-  }
+  return (
+    <form
+      className="space-y-5 px-5 pb-10 transition-opacity sm:px-10"
+      onSubmit={onSubmit}
+    >
+      <h1 className="pt-5 text-center font-bold">Upload a recipe</h1>
+
+      {children}
+      <section className="mt-auto flex justify-between p-10 px-5">
+        <button
+          className="rounded-md bg-white py-2 px-5 text-blue-500 transition ease-in-out hover:bg-blue-50 active:ring disabled:invisible"
+          type="button"
+          disabled={page > 1 ? false : true}
+          onClick={handleDecrement}
+        >
+          Back
+        </button>
+        <button
+          className="rounded-md bg-blue-500 py-2 px-5 text-white transition ease-in-out hover:bg-blue-600 active:ring"
+          type="submit"
+        >
+          {page < 4 ? "Next" : "Submit"}
+        </button>
+      </section>
+    </form>
+  );
 };
 
 export default Form;

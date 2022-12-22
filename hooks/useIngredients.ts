@@ -1,9 +1,9 @@
 import { UploadContext } from "lib/contexts";
-import { useState, ChangeEvent, useContext } from "react";
+import { useState, ChangeEvent, useContext, FormEvent } from "react";
 
 const useIngredients = () => {
   const [sectionTitle, setSectionTitle] = useState("");
-  const { sections, setSections } = useContext(UploadContext);
+  const { sections, setSections, handleIncrement } = useContext(UploadContext);
 
   const handleChange =
     (sectionId: number, ingredientId?: number) =>
@@ -115,6 +115,11 @@ const useIngredients = () => {
     setSections(newSections);
   };
 
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    handleIncrement();
+  };
+
   return {
     sections,
     sectionTitle,
@@ -124,6 +129,7 @@ const useIngredients = () => {
     handleAddIngredient,
     handleDeleteSection,
     handleDeleteIngredient,
+    handleSubmit,
   };
 };
 

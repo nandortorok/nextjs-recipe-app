@@ -2,65 +2,73 @@ import { PlusIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { ChangeEventHandler, MouseEventHandler } from "react";
 
 import useDirections from "hooks/useDirections";
+import Form from "./Form";
 
 const DirectionsInput = () => {
-  const { sections, handleChange, handleDelete, handleAddDirection } =
-    useDirections();
+  const {
+    sections,
+    handleChange,
+    handleDelete,
+    handleAddDirection,
+    handleSubmit,
+  } = useDirections();
 
   return (
-    <>
-      <label className="text-md font-bold">Directions</label>
+    <Form onSubmit={handleSubmit}>
+      <>
+        <label className="text-md font-bold">Directions</label>
 
-      {sections.map(({ title, directions }, sectionIdx) => (
-        <div className="rounded-md border border-gray-300" key={sectionIdx}>
-          <table className="w-full text-left">
-            <caption className="border-b px-3 py-4 text-left text-lg font-bold">
-              <div className="flex justify-between">
-                <input
-                  className="border-0 align-middle text-lg focus:ring-0"
-                  type="text"
-                  placeholder="Title name"
-                  name="title"
-                  value={title}
-                  readOnly={true}
-                  // onChange={}
-                />
-                {/* <button
+        {sections.map(({ title, directions }, sectionIdx) => (
+          <div className="rounded-md border border-gray-300" key={sectionIdx}>
+            <table className="w-full text-left">
+              <caption className="border-b px-3 py-4 text-left text-lg font-bold">
+                <div className="flex justify-between">
+                  <input
+                    className="border-0 align-middle text-lg focus:ring-0"
+                    type="text"
+                    placeholder="Title name"
+                    name="title"
+                    value={title}
+                    readOnly={true}
+                    // onChange={}
+                  />
+                  {/* <button
                   className="pr-3 align-middle"
                   type="button"
                   // onClick={() => handleDeleteSection(sectionIdx)}
                 >
                   <XMarkIcon className="h-6 w-6" />
                 </button> */}
-              </div>
-            </caption>
-            <tbody>
-              {directions.map((direction, idx) => (
-                <Row
-                  key={idx}
-                  index={idx}
-                  value={direction}
-                  onChange={handleChange(sectionIdx, idx)}
-                  onClick={() => handleDelete(sectionIdx, idx)}
-                />
-              ))}
-              {/* add input */}
-              <tr>
-                <td colSpan={4} className="p-3 text-center">
-                  <button
-                    className="align-middle"
-                    type="button"
-                    onClick={() => handleAddDirection(sectionIdx)}
-                  >
-                    <PlusIcon className="h-6 w-6" />
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      ))}
-    </>
+                </div>
+              </caption>
+              <tbody>
+                {directions.map((direction, idx) => (
+                  <Row
+                    key={idx}
+                    index={idx}
+                    value={direction}
+                    onChange={handleChange(sectionIdx, idx)}
+                    onClick={() => handleDelete(sectionIdx, idx)}
+                  />
+                ))}
+                {/* add input */}
+                <tr>
+                  <td colSpan={4} className="p-3 text-center">
+                    <button
+                      className="align-middle"
+                      type="button"
+                      onClick={() => handleAddDirection(sectionIdx)}
+                    >
+                      <PlusIcon className="h-6 w-6" />
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        ))}
+      </>
+    </Form>
   );
 };
 

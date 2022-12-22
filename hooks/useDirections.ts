@@ -1,5 +1,5 @@
 import { UploadContext } from "lib/contexts";
-import { useContext, ChangeEvent } from "react";
+import { useContext, ChangeEvent, FormEvent } from "react";
 
 const useDirections = () => {
   const { sections, setSections } = useContext(UploadContext);
@@ -65,11 +65,18 @@ const useDirections = () => {
     setSections(newSections);
   };
 
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+
+    console.log(e);
+  };
+
   return {
     sections,
     handleChange,
     handleDelete,
     handleAddDirection,
+    handleSubmit,
   };
 };
 
