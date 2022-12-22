@@ -9,8 +9,7 @@ import TimeInput from "./TimeInput";
 import TitleInput from "./TitleInput";
 
 const Form = ({ value }: { value: number }) => {
-  const { data, setData, timeValues, setTimeValues } =
-    useContext(UploadContext);
+  const { data, setData } = useContext(UploadContext);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -30,11 +29,7 @@ const Form = ({ value }: { value: number }) => {
       return (
         <>
           <ServingsInput value={data.servings} onChange={handleChange} />
-          <TimeInput
-            state={timeValues}
-            setState={setTimeValues}
-            onChange={handleChange}
-          />
+          <TimeInput />
         </>
       );
     case 3:

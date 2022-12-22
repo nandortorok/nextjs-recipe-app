@@ -1,32 +1,27 @@
+import { UploadContext } from "lib/contexts";
 import {
   ChangeEvent,
   ChangeEventHandler,
-  Dispatch,
+  useContext,
   useEffect,
   useState,
 } from "react";
-import { TimeValuesProps } from "types";
 
-type TimeInputProps = {
-  state: TimeValuesProps;
-  setState: Dispatch<TimeValuesProps>;
-  onChange: ChangeEventHandler<HTMLInputElement>;
-};
-
-const TimeInput = ({ state, setState, onChange }: TimeInputProps) => {
+const TimeInput = () => {
+  const { timeValues, setTimeValues } = useContext(UploadContext);
   const [totalTime, setTotalTime] = useState("");
 
   const handleChange = (event: ChangeEvent<HTMLFormElement>) => {
     const { name, value } = event.target;
 
-    setState({
-      ...state,
+    setTimeValues({
+      ...timeValues,
       [name]: value,
     });
   };
 
   useEffect(() => {
-    const { prepTime, cookTime, prepTimeUnit, cookTimeUnit } = state;
+    const { prepTime, cookTime, prepTimeUnit, cookTimeUnit } = timeValues;
     const total = prepTime * prepTimeUnit + cookTime * cookTimeUnit;
 
     if (total < 60) {
@@ -41,7 +36,7 @@ const TimeInput = ({ state, setState, onChange }: TimeInputProps) => {
         }`
       );
     }
-  }, [state]);
+  }, [timeValues]);
 
   return (
     <>
@@ -49,12 +44,12 @@ const TimeInput = ({ state, setState, onChange }: TimeInputProps) => {
         <>
           <Input
             name={"prepTime"}
-            value={state.prepTime}
+            value={timeValues.prepTime}
             onChange={handleChange}
           />
           <Select
             name={"prepTimeUnit"}
-            value={state.prepTimeUnit}
+            value={timeValues.prepTimeUnit}
             onChange={handleChange}
           />
         </>
@@ -63,12 +58,12 @@ const TimeInput = ({ state, setState, onChange }: TimeInputProps) => {
         <>
           <Input
             name={"cookTime"}
-            value={state.cookTime}
+            value={timeValues.cookTime}
             onChange={handleChange}
           />
           <Select
             name={"cookTimeUnit"}
-            value={state.cookTimeUnit}
+            value={timeValues.cookTimeUnit}
             onChange={handleChange}
           />
         </>

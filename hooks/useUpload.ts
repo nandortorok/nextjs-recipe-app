@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { SectionProps } from "types";
 
-export type UploadContextProps = typeof useUpload;
+export type UploadContextProps = ReturnType<typeof useUpload>;
 
 const useUpload = () => {
   const [page, setPage] = useState(1);

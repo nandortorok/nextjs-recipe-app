@@ -1,12 +1,18 @@
-import { XMarkIcon } from "@heroicons/react/24/solid";
-import { Transition, Dialog } from "@headlessui/react";
-import { Dispatch, Fragment, SetStateAction, useContext } from "react";
+import Link from "next/link";
 import { useSession } from "next-auth/react";
+import {
+  Dispatch,
+  FormEvent,
+  Fragment,
+  SetStateAction,
+  useContext,
+} from "react";
+import { Transition, Dialog } from "@headlessui/react";
+import { XMarkIcon } from "@heroicons/react/24/solid";
+import { ArrowUpOnSquareIcon } from "@heroicons/react/24/outline";
 
 import { UploadContext } from "lib/contexts";
 import Form from "./Form";
-import Link from "next/link";
-import { ArrowUpOnSquareIcon } from "@heroicons/react/24/outline";
 
 type MainProps = {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
@@ -28,8 +34,12 @@ const Main = ({ setIsOpen }: MainProps) => {
     }
   };
 
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
+
   return (
-    <main className="absolute flex h-full w-full flex-col overflow-auto">
+    <main className="flex h-full w-full flex-col overflow-auto">
       <button
         className="absolute top-0 right-0 p-4 text-slate-400 hover:text-slate-700"
         onClick={() => setIsOpen(false)}
@@ -39,36 +49,48 @@ const Main = ({ setIsOpen }: MainProps) => {
 
       {session ? (
         <>
-          <form className="space-y-5 px-5 pb-10 transition-opacity sm:px-10">
+          <form
+            className="space-y-5 px-5 pb-10 transition-opacity sm:px-10"
+            onSubmit={handleSubmit}
+          >
             <h1 className="pt-5 text-center font-bold">Upload a recipe</h1>
 
             <Form value={page} />
-          </form>
-          <section className="mt-auto flex justify-between p-10 px-5">
-            {
-              <button
-                className="rounded-md bg-white py-2 px-5 text-blue-500 transition ease-in-out hover:bg-blue-50 active:ring disabled:invisible"
-                type="button"
-                disabled={page > 1 ? false : true}
-                onClick={handleDecrement}
-              >
-                Back
-              </button>
-            }
+            <section className="mt-auto flex justify-between p-10 px-5">
+              {
+                <button
+                  className="rounded-md bg-white py-2 px-5 text-blue-500 transition ease-in-out hover:bg-blue-50 active:ring disabled:invisible"
+                  type="button"
+                  disabled={page > 1 ? false : true}
+                  onClick={handleDecrement}
+                >
+                  Back
+                </button>
+              }
 
-            <button
-              className="rounded-md bg-blue-500 py-2 px-5 text-white transition ease-in-out hover:bg-blue-600 active:ring"
-              type="button"
-              onClick={handleIncrement}
-            >
-              {page == 4 ? "Submit" : "Next"}
-            </button>
-          </section>
+              {page < 4 ? (
+                <button
+                  className="rounded-md bg-blue-500 py-2 px-5 text-white transition ease-in-out hover:bg-blue-600 active:ring"
+                  type="button"
+                  onClick={handleIncrement}
+                >
+                  Next
+                </button>
+              ) : (
+                <button
+                  className="rounded-md bg-blue-500 py-2 px-5 text-white transition ease-in-out hover:bg-blue-600 active:ring"
+                  type="submit"
+                >
+                  Submit
+                </button>
+              )}
+            </section>
+          </form>
         </>
       ) : (
         <section className="flex h-screen">
           <div className="m-auto flex flex-col justify-center">
-            <ArrowUpOnSquareIcon className="h-24 w-24 mx-auto" />
+            <ArrowUpOnSquareIcon className="mx-auto h-24 w-24" />
             <p className="p-10">Log in to upload your favorite recipes</p>
             <Link
               className="mx-auto rounded-xl bg-blue-500 py-2 px-5 text-white transition ease-in-out hover:bg-blue-600 active:ring"
