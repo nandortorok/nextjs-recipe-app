@@ -5,15 +5,21 @@ import { z } from "zod";
 import Form from "./Form";
 
 const TitleImage = () => {
-  const { data, setData, handleChange, handleIncrement } =
+  const { titleImage, setTitleImage, handleIncrement } =
     useContext(UploadContext);
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
 
     if (files) {
-      setData({ ...data, imageName: files[0].name });
+      setTitleImage({ ...titleImage, imageName: files[0].name });
     }
+  };
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+
+    setTitleImage({ ...titleImage, title: value });
   };
 
   const schema = z.object({
@@ -22,7 +28,7 @@ const TitleImage = () => {
   });
 
   const handleSubmit = (e: FormEvent) => {
-    const { title, imageName } = data;
+    const { title, imageName } = titleImage;
     const valid = schema.safeParse({ title, imageName });
 
     if (valid.success) {
@@ -41,7 +47,7 @@ const TitleImage = () => {
           name="title"
           type="text"
           placeholder="Recipe title"
-          value={data.title}
+          value={titleImage.title}
           onChange={handleChange}
         />
 

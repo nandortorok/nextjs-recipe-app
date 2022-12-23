@@ -17,13 +17,13 @@ export const Form = ({ onSubmit, children }: FormProps) => {
 
   return (
     <form
-      className="space-y-5 px-5 pb-10 transition-opacity sm:px-10"
+      className="flex flex-1 flex-col px-5 pb-10 transition-opacity sm:px-10"
       onSubmit={onSubmit}
     >
-      <h1 className="pt-5 text-center font-bold">Upload a recipe</h1>
+      <h1 className="mb-5 pt-5 text-center font-bold">Upload recipe</h1>
 
-      {children}
-      <section className="mt-auto flex justify-between p-10 px-5">
+      <section className="space-y-5">{children}</section>
+      <section className="mt-auto flex justify-between px-5 pt-5">
         <button
           className="rounded-md bg-white py-2 px-5 text-blue-500 transition ease-in-out hover:bg-blue-50 active:ring disabled:invisible"
           type="button"

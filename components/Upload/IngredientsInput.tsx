@@ -46,10 +46,10 @@ const IngredientsInput = () => {
               </caption>
               <thead className="bg-gray-100 text-sm uppercase text-gray-700">
                 <tr>
-                  <th className="py-3 pl-6">Amount</th>
-                  <th className="py-3 pl-3">Unit</th>
-                  <th className="py-3 pl-3">Name</th>
-                  <th className="py-3">
+                  <th className="w-1/3 py-3 pl-6">Amount</th>
+                  <th className="w-1/3 py-3 pl-3">Unit</th>
+                  <th className="w-1/3 py-3 pl-3">Name</th>
+                  <th className="py-3 pl-10">
                     <span className="invisible">Edit</span>
                   </th>
                 </tr>
@@ -67,11 +67,12 @@ const IngredientsInput = () => {
                 <tr>
                   <td colSpan={4} className="p-3 text-center">
                     <button
-                      className="align-middle"
+                      className="align-middle uppercase font-bold text-sm"
                       type="button"
                       onClick={() => handleAddIngredient(sectionIdx)}
                     >
-                      <PlusIcon className="h-6 w-6" />
+                      {/* <PlusIcon className="h-6 w-6" /> */}
+                      Add ingredient 
                     </button>
                   </td>
                 </tr>
@@ -97,11 +98,12 @@ const IngredientsInput = () => {
               <tr>
                 <td colSpan={4} className="p-3 text-center">
                   <button
-                    className="align-middle"
+                    className="align-middle uppercase text-sm font-bold"
                     type="button"
                     onClick={handleAddSection}
                   >
-                    <PlusIcon className="h-6 w-6" />
+                    {/* <PlusIcon className="h-6 w-6" /> */}
+                    Add section
                   </button>
                 </td>
               </tr>
@@ -124,7 +126,7 @@ const Row = ({ values, onChange, onClick }: RowProps) => {
     <tr className="border-b">
       <td className="pl-3">
         <input
-          className="w-1/3 border-0 align-middle focus:ring-0"
+          className="w-full border-0 align-middle focus:ring-0"
           type="number"
           name="amount"
           autoComplete="off"
@@ -134,7 +136,7 @@ const Row = ({ values, onChange, onClick }: RowProps) => {
       </td>
       <td>
         <input
-          className="w-1/2 border-0 align-middle focus:ring-0"
+          className="w-full border-0 align-middle focus:ring-0"
           type="text"
           name="unit"
           autoComplete="off"
@@ -144,7 +146,7 @@ const Row = ({ values, onChange, onClick }: RowProps) => {
       </td>
       <td>
         <input
-          className="w-2/3 border-0 align-middle focus:ring-0"
+          className="w-full border-0 align-middle focus:ring-0"
           type="text"
           name="name"
           autoComplete="off"

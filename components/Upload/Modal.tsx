@@ -22,7 +22,7 @@ const Modal = ({ value, onClose, children }: ModalProps) => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Dialog.Overlay className="tranqw2sition-opacity fixed inset-0 bg-black/[.2]" />
+          <Dialog.Overlay className="fixed inset-0 bg-black/[.2]" />
         </Transition.Child>
         <Transition.Child
           as={Fragment}

@@ -5,7 +5,7 @@ export type UploadContextProps = ReturnType<typeof useUpload>;
 
 const useUpload = () => {
   const [page, setPage] = useState(1);
-  const [data, setData] = useState({
+  const [titleImage, setTitleImage] = useState({
     title: "",
     imageName: "",
   });
@@ -19,12 +19,6 @@ const useUpload = () => {
   });
 
   const [sections, setSections] = useState<SectionProps[]>([]);
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-
-    setData({ ...data, [name]: value });
-  };
 
   const handleDecrement = () => {
     if (page > 1) {
@@ -41,15 +35,14 @@ const useUpload = () => {
   return {
     page,
     setPage,
-    data,
-    setData,
+    titleImage,
+    setTitleImage,
     servings,
     setServings,
     timeValues,
     setTimeValues,
     sections,
     setSections,
-    handleChange,
     handleDecrement,
     handleIncrement,
   };
