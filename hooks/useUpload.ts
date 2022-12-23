@@ -8,9 +8,9 @@ const useUpload = () => {
   const [data, setData] = useState({
     title: "",
     imageName: "",
-    servings: "",
   });
 
+  const [servings, setServings] = useState(0);
   const [timeValues, setTimeValues] = useState({
     prepTime: 0,
     cookTime: 0,
@@ -42,6 +42,9 @@ const useUpload = () => {
     page,
     setPage,
     data,
+    setData,
+    servings,
+    setServings,
     timeValues,
     setTimeValues,
     sections,

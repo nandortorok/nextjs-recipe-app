@@ -125,7 +125,7 @@ const Row = ({ values, onChange, onClick }: RowProps) => {
       <td className="pl-3">
         <input
           className="w-1/3 border-0 align-middle focus:ring-0"
-          type="text"
+          type="number"
           name="amount"
           autoComplete="off"
           value={values.amount}

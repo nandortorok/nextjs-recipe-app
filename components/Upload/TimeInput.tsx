@@ -11,7 +11,16 @@ const TimeInput = () => {
   const { timeValues, setTimeValues } = useContext(UploadContext);
   const [totalTime, setTotalTime] = useState("");
 
-  const handleChange = (event: ChangeEvent<HTMLFormElement>) => {
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, valueAsNumber, value } = event.target;
+
+    setTimeValues({
+      ...timeValues,
+      [name]: valueAsNumber,
+    });
+  };
+
+  const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = event.target;
 
     setTimeValues({
@@ -45,12 +54,12 @@ const TimeInput = () => {
           <Input
             name={"prepTime"}
             value={timeValues.prepTime}
-            onChange={handleChange}
+            onChange={handleInputChange}
           />
           <Select
             name={"prepTimeUnit"}
             value={timeValues.prepTimeUnit}
-            onChange={handleChange}
+            onChange={handleSelectChange}
           />
         </>
       </Section>
@@ -59,12 +68,12 @@ const TimeInput = () => {
           <Input
             name={"cookTime"}
             value={timeValues.cookTime}
-            onChange={handleChange}
+            onChange={handleInputChange}
           />
           <Select
             name={"cookTimeUnit"}
             value={timeValues.cookTimeUnit}
-            onChange={handleChange}
+            onChange={handleSelectChange}
           />
         </>
       </Section>

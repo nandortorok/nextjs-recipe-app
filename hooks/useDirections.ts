@@ -1,5 +1,6 @@
 import { UploadContext } from "lib/contexts";
 import { useContext, ChangeEvent, FormEvent } from "react";
+import { z } from "zod";
 
 const useDirections = () => {
   const { sections, setSections } = useContext(UploadContext);
@@ -65,10 +66,20 @@ const useDirections = () => {
     setSections(newSections);
   };
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
+  const schema = z
+    .object({
+      directions: z.string().min(8).max(256).array(),
+    })
+    .array();
 
-    console.log(e);
+  const handleSubmit = (e: FormEvent) => {
+    const valid = schema.safeParse(sections);
+
+    if (valid.success) {
+      console.log(e);
+    }
+
+    e.preventDefault();
   };
 
   return {

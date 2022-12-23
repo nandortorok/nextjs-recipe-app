@@ -1,17 +1,35 @@
 import { CloudArrowUpIcon } from "@heroicons/react/24/outline";
 import { UploadContext } from "lib/contexts";
-import { useContext, FormEvent } from "react";
+import { useContext, FormEvent, ChangeEvent } from "react";
+import { z } from "zod";
 import Form from "./Form";
 
 const TitleImage = () => {
-  const { page, setPage, data, handleChange } = useContext(UploadContext);
+  const { data, setData, handleChange, handleIncrement } =
+    useContext(UploadContext);
+
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { files } = e.target;
+
+    if (files) {
+      setData({ ...data, imageName: files[0].name });
+    }
+  };
+
+  const schema = z.object({
+    title: z.string().min(3).max(64),
+    imageName: z.string().min(3).max(64),
+  });
 
   const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
+    const { title, imageName } = data;
+    const valid = schema.safeParse({ title, imageName });
 
-    if (page < 4) {
-      setPage(page + 1);
+    if (valid.success) {
+      handleIncrement();
     }
+
+    e.preventDefault();
   };
 
   return (
@@ -30,7 +48,7 @@ const TitleImage = () => {
         <label className="block pb-2 font-bold">Image</label>
         <div className="flex w-full items-center justify-center">
           <label
-            htmlFor="dropzone-file"
+            htmlFor="imageUpload"
             className="flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-lg border border-gray-300 bg-gray-50 transition ease-in-out hover:bg-gray-100"
           >
             <div className="flex flex-col items-center justify-center pt-5 pb-6">
@@ -45,9 +63,9 @@ const TitleImage = () => {
             </div>
             <input
               className="hidden"
+              id="imageUpload"
               type="file"
-              value={data.imageName}
-              onChange={handleChange}
+              onChange={handleImageChange}
             />
           </label>
         </div>

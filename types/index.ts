@@ -1,12 +1,12 @@
-import { ChangeEventHandler } from "react";
-
-export type InputProps = {
-  value: string;
-  onChange: ChangeEventHandler<HTMLInputElement>;
+export type TimeValuesProps = {
+  prepTime: number;
+  cookTime: number;
+  prepTimeUnit: number;
+  cookTimeUnit: number;
 };
 
 export type IngredientProps = {
-  amount?: string | number;
+  amount?: number;
   unit?: string;
   name: string;
 };
@@ -15,11 +15,4 @@ export type SectionProps = {
   title?: string;
   ingredients: IngredientProps[];
   directions: string[];
-};
-
-export type TimeValuesProps = {
-  prepTime: number;
-  cookTime: number;
-  prepTimeUnit: number;
-  cookTimeUnit: number;
 };

@@ -1,5 +1,6 @@
 import { UploadContext } from "lib/contexts";
 import { useState, ChangeEvent, useContext, FormEvent } from "react";
+import { z } from "zod";
 
 const useIngredients = () => {
   const [sectionTitle, setSectionTitle] = useState("");
@@ -8,7 +9,7 @@ const useIngredients = () => {
   const handleChange =
     (sectionId: number, ingredientId?: number) =>
     (e: ChangeEvent<HTMLInputElement>) => {
-      const { name, value } = e.target;
+      const { name, value, valueAsNumber } = e.target;
 
       const newSections = sections.map((section, sectionIDx) => {
         if (sectionIDx === sectionId) {
@@ -21,7 +22,12 @@ const useIngredients = () => {
             // filter items
             const newIngredients = section.ingredients.map(
               (ingredient, ingredientIdx) => {
-                if (ingredientIdx === ingredientId) {
+                if (name === "amount") {
+                  return {
+                    ...ingredient,
+                    [name]: valueAsNumber,
+                  };
+                } else if (ingredientIdx === ingredientId) {
                   return {
                     ...ingredient,
                     [name]: value,
@@ -53,7 +59,7 @@ const useIngredients = () => {
         title: sectionTitle,
         ingredients: [
           {
-            amount: "",
+            amount: 0,
             unit: "",
             name: "",
           },
@@ -73,7 +79,7 @@ const useIngredients = () => {
           ingredients: [
             ...section.ingredients,
             {
-              amount: "",
+              amount: 0,
               unit: "",
               name: "",
             },
@@ -115,9 +121,29 @@ const useIngredients = () => {
     setSections(newSections);
   };
 
+  const schema = z
+    .object({
+      title: z.string().min(3).max(64).optional(),
+      ingredients: z
+        .object({
+          amount: z.number().min(1).max(999).optional(),
+          unit: z.string().max(16).optional(),
+          name: z.string().min(3).max(32),
+        })
+        .array()
+        .min(1),
+    })
+    .array()
+    .min(1);
+
   const handleSubmit = (e: FormEvent) => {
+    const valid = schema.safeParse(sections);
+
+    if (valid.success) {
+      handleIncrement();
+    }
+
     e.preventDefault();
-    handleIncrement();
   };
 
   return {

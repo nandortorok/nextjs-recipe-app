@@ -1,17 +1,37 @@
 import { UploadContext } from "lib/contexts";
 import { useContext, FormEvent } from "react";
+import { z } from "zod";
 import Form from "./Form";
 import TimeInput from "./TimeInput";
 
 const ServingsTime = () => {
-  const { page, setPage, data, handleChange } = useContext(UploadContext);
+  const { servings, setServings, timeValues, handleIncrement } =
+    useContext(UploadContext);
+
+  const schema = z.object({
+    servings: z.number().int().min(1).max(64),
+    prepTime: z
+      .number()
+      .int()
+      .min(1)
+      .max(60 * 24),
+    cookTime: z
+      .number()
+      .int()
+      .min(1)
+      .max(60 * 24),
+  });
 
   const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
+    const { prepTime, cookTime } = timeValues;
 
-    if (page < 4) {
-      setPage(page + 1);
+    const valid = schema.safeParse({ servings, prepTime, cookTime });
+
+    if (valid.success) {
+      handleIncrement();
     }
+
+    e.preventDefault();
   };
 
   return (
@@ -23,8 +43,8 @@ const ServingsTime = () => {
           name="servings"
           type="number"
           placeholder="e.g. 4"
-          value={data.servings}
-          onChange={handleChange}
+          value={servings}
+          onChange={(e) => setServings(e.target.valueAsNumber)}
           min={0}
           max={99}
         />
