@@ -1,51 +1,35 @@
-import { ChangeEvent, useState } from "react";
-import { SectionProps } from "types";
+import { useState } from "react";
 
-export type UploadContextProps = ReturnType<typeof useUpload>;
+const formStateInit = {
+  title: "",
+  image: null,
+  servings: 0,
+  prepTime: 0,
+  prepTimeUnit: 1,
+  cookTime: 0,
+  cookTimeUnit: 1,
+  sections: [
+    {
+      title: "Main",
+      ingredients: [],
+      directions: [],
+    },
+  ],
+};
 
 const useUpload = () => {
   const [page, setPage] = useState(1);
-  const [titleImage, setTitleImage] = useState({
-    title: "",
-    imageName: "",
-  });
-
-  const [servings, setServings] = useState(0);
-  const [timeValues, setTimeValues] = useState({
-    prepTime: 0,
-    cookTime: 0,
-    prepTimeUnit: 1,
-    cookTimeUnit: 1,
-  });
-
-  const [sections, setSections] = useState<SectionProps[]>([]);
-
-  const handleDecrement = () => {
-    if (page > 1) {
-      setPage(page - 1);
-    }
-  };
-
-  const handleIncrement = () => {
-    if (page < 4) {
-      setPage(page + 1);
-    }
-  };
+  const [formValue, setFormValue] = useState(formStateInit);
 
   return {
     page,
     setPage,
-    titleImage,
-    setTitleImage,
-    servings,
-    setServings,
-    timeValues,
-    setTimeValues,
-    sections,
-    setSections,
-    handleDecrement,
-    handleIncrement,
+    formValue,
+    setFormValue,
   };
 };
+
+export type FormStateProps = typeof formStateInit;
+export type UploadContextProps = ReturnType<typeof useUpload>;
 
 export default useUpload;
