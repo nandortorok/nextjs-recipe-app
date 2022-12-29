@@ -1,3 +1,4 @@
+import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UploadContext } from "lib/contexts";
@@ -42,6 +43,8 @@ const DirectionsInput = () => {
     control,
     register,
     formState: { errors },
+    watch,
+    clearErrors,
   } = methods;
   const { fields, update, remove } = useFieldArray({
     control,
@@ -51,7 +54,7 @@ const DirectionsInput = () => {
   return (
     <FormProvider {...methods}>
       <Form>
-        <>
+        <section className="space-y-5">
           <label className="text-md font-bold">Directions</label>
           {fields.map((field, idx) => (
             <div key={field.id} className="rounded-md border border-gray-300">
@@ -80,15 +83,16 @@ const DirectionsInput = () => {
                       <button
                         className="align-middle text-sm font-bold uppercase hover:text-blue-700"
                         type="button"
-                        onClick={() =>
+                        onClick={() => {
+                          clearErrors(`sections.${idx}.directions`);
                           update(idx, {
-                            ...field,
+                            title: watch().sections[idx].title,
                             directions: [
-                              ...field.directions,
+                              ...watch().sections[idx].directions,
                               { direction: "" },
                             ],
-                          })
-                        }
+                          });
+                        }}
                       >
                         Add direction
                       </button>
@@ -96,25 +100,32 @@ const DirectionsInput = () => {
                   </tr>
                 </tbody>
               </table>
-              {errors?.sections && <p>{errors?.sections?.message}</p>}
-              {errors?.sections &&
-                errors?.sections?.map &&
-                errors?.sections?.map((section, sectionIdx) => (
-                  <div key={sectionIdx}>
-                    <p>{section?.message}</p>
-                    <p>{section?.directions?.message}</p>
-                    {section?.directions?.map &&
-                      section?.directions?.map((dic, dicIdx) => (
-                        <div key={dicIdx}>
-                          <p>{dic?.message}</p>
-                          <p>Direction: {dic?.direction?.message}</p>
-                        </div>
-                      ))}
-                  </div>
-                ))}
             </div>
           ))}
-        </>
+          <section>
+            {errors?.sections && (
+              <ErrorMessage error={errors?.sections?.message} />
+            )}
+            {errors?.sections &&
+              errors?.sections?.map &&
+              errors?.sections?.map((section, sectionIdx) => (
+                <div key={sectionIdx}>
+                  <ErrorMessage error={section?.message} />
+                  <ErrorMessage error={section?.directions?.message} />
+                  {section?.directions?.map &&
+                    section?.directions?.map((dic, dicIdx) => (
+                      <div key={dicIdx}>
+                        <ErrorMessage error={dic?.message} />
+                        <ErrorMessage
+                          name={`${dicIdx + 1}. Direction`}
+                          error={dic?.direction?.message}
+                        />
+                      </div>
+                    ))}
+                </div>
+              ))}
+          </section>
+        </section>
       </Form>
     </FormProvider>
   );
@@ -156,6 +167,25 @@ const Direction = ({ sectionIndex }: { sectionIndex: number }) => {
         </tr>
       ))}
     </>
+  );
+};
+
+type ErrorMessageProps = {
+  error: string | undefined;
+  name?: string;
+};
+
+const ErrorMessage = ({ error, name }: ErrorMessageProps) => {
+  return error ? (
+    <div className="col-span-3 flex w-full items-center gap-1 py-1 text-red-600">
+      <ExclamationTriangleIcon className="h-4 w-4" />
+      <p className="w-full text-sm">
+        {name && <span>{name}: </span>}
+        {error}
+      </p>
+    </div>
+  ) : (
+    <></>
   );
 };
 

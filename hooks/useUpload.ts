@@ -11,8 +11,8 @@ const formStateInit = {
   sections: [
     {
       title: "Main",
-      ingredients: [],
-      directions: [],
+      ingredients: [{ amount: 0, unit: "", name: "" }],
+      directions: [{ direction: "" }],
     },
   ],
 };
