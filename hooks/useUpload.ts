@@ -27,7 +27,7 @@ export const formSchema = z.object({
   cookTimeUnit: z.number().int().min(1).max(60),
   sections: z
     .object({
-      title: z.string().min(3).max(64),
+      title: z.string().min(3).max(64).optional(),
       ingredients: z
         .object({
           amount: z.number().min(1).max(999),

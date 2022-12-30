@@ -67,7 +67,11 @@ const IngredientsInput = () => {
                 <caption className="px-3 py-4 text-left text-lg font-bold">
                   <div className="flex justify-between pr-3">
                     <input
-                      className="border-0 align-middle text-lg focus:ring-0"
+                      className={
+                        fields.length > 1
+                          ? "border-0 align-middle text-lg transition ease-in-out focus:ring-0"
+                          : "invisible border-0 align-middle text-lg transition ease-in-out focus:ring-0"
+                      }
                       type="text"
                       placeholder="Title name"
                       autoComplete="off"
