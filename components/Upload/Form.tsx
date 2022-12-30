@@ -13,23 +13,15 @@ type FormProps = {
 };
 
 export const Form = ({ children }: FormProps) => {
-  const { page, setPage, formValue, setFormValue } = useContext(UploadContext);
-  const {
-    watch,
-    handleSubmit,
-    formState: { errors },
-  } = useFormContext();
+  const { page, setPage, formValue } = useContext(UploadContext);
+  const { handleSubmit } = useFormContext();
 
   const onSubmit: SubmitHandler<Partial<FormStateProps>> = (data) => {
     if (page < 4) {
       setPage(page + 1);
-
-      // console.log("onSubmit", data);
+    } else {
+      console.log("onSubmit", formValue);
     }
-  };
-
-  const onError: SubmitErrorHandler<Partial<FormStateProps>> = (error) => {
-    console.error(error);
   };
 
   const handleBack = () => {
@@ -41,7 +33,7 @@ export const Form = ({ children }: FormProps) => {
   return (
     <form
       className="flex flex-1 flex-col px-5 pb-10 transition-opacity sm:px-10"
-      onSubmit={handleSubmit(onSubmit, onError)}
+      onSubmit={handleSubmit(onSubmit)}
     >
       <h1 className="mb-5 pt-5 text-center font-bold">Upload recipe</h1>
 

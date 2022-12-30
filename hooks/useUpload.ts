@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { z } from "zod";
 
 const formStateInit = {
   title: "",
@@ -17,9 +18,38 @@ const formStateInit = {
   ],
 };
 
+export const formSchema = z.object({
+  title: z.string().min(3).max(64),
+  servings: z.number().int().min(1).max(64),
+  prepTime: z.number().int().min(1).max(60),
+  cookTime: z.number().int().min(1).max(60),
+  prepTimeUnit: z.number().int().min(1).max(60),
+  cookTimeUnit: z.number().int().min(1).max(60),
+  sections: z
+    .object({
+      title: z.string().min(3).max(64),
+      ingredients: z
+        .object({
+          amount: z.number().min(1).max(999),
+          unit: z.string().max(16).optional(),
+          name: z.string().min(3).max(32),
+        })
+        .array()
+        .min(1),
+      directions: z
+        .object({
+          direction: z.string().min(8).max(256),
+        })
+        .array()
+        .min(1),
+    })
+    .array()
+    .min(1),
+});
+
 const useUpload = () => {
   const [page, setPage] = useState(1);
-  const [formValue, setFormValue] = useState(formStateInit);
+  const [formValue, setFormValue] = useState<FormStateProps>(formStateInit);
 
   return {
     page,
@@ -29,7 +59,7 @@ const useUpload = () => {
   };
 };
 
-export type FormStateProps = typeof formStateInit;
+export type FormStateProps = z.infer<typeof formSchema>;
 export type UploadContextProps = ReturnType<typeof useUpload>;
 
 export default useUpload;

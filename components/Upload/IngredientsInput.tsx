@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import { XMarkIcon } from "@heroicons/react/24/solid";
 import Form from "./Form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UploadContext } from "lib/contexts";
@@ -10,7 +9,7 @@ import {
   useFormContext,
 } from "react-hook-form";
 import { z } from "zod";
-import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
+import { ErrorMessage, XButton } from "./Elements";
 
 const schema = z.object({
   sections: z
@@ -26,10 +25,9 @@ const schema = z.object({
         .min(1),
       directions: z
         .object({
-          direction: z.string().min(8).max(256),
+          direction: z.string(),
         })
-        .array()
-        .min(1),
+        .array(),
     })
     .array()
     .min(1),
@@ -67,21 +65,29 @@ const IngredientsInput = () => {
             <div className="rounded-md border border-gray-300" key={field.id}>
               <table className="w-full text-left">
                 <caption className="px-3 py-4 text-left text-lg font-bold">
-                  <div className="flex justify-between">
+                  <div className="flex justify-between pr-3">
                     <input
                       className="border-0 align-middle text-lg focus:ring-0"
                       type="text"
                       placeholder="Title name"
                       autoComplete="off"
-                      {...register(`sections.${idx}.title`)}
+                      {...register(`sections.${idx}.title`, {
+                        onChange: () =>
+                          setFormValue({
+                            ...formValue,
+                            sections: [...watch().sections],
+                          }),
+                      })}
                     />
-                    <button
-                      className="pr-3 align-middle"
-                      type="button"
-                      onClick={() => remove(idx)}
-                    >
-                      <XMarkIcon className="h-6 w-6" />
-                    </button>
+                    <XButton
+                      onClick={() => {
+                        remove(idx);
+                        setFormValue({
+                          ...formValue,
+                          sections: [...watch().sections],
+                        });
+                      }}
+                    />
                   </div>
                   {errors.sections && (
                     <ErrorMessage
@@ -91,13 +97,9 @@ const IngredientsInput = () => {
                 </caption>
                 <thead className="bg-gray-100 text-sm uppercase text-gray-700">
                   <tr>
-                    <th className="w-1/3 py-3 pl-6">
-                      Amount<span className="align-super">*</span>
-                    </th>
+                    <th className="w-1/3 py-3 pl-6">Amount*</th>
                     <th className="w-1/3 py-3 pl-3">Unit</th>
-                    <th className="w-1/3 py-3 pl-3">
-                      Name<span className="align-super">*</span>
-                    </th>
+                    <th className="w-1/3 py-3 pl-3">Name*</th>
                     <th className="py-3 pl-10">
                       <span className="invisible">Edit</span>
                     </th>
@@ -116,11 +118,6 @@ const IngredientsInput = () => {
                         className="align-middle text-sm font-bold uppercase hover:text-blue-700"
                         type="button"
                         onClick={() => {
-                          setFormValue({
-                            ...formValue,
-                            ...watch().sections,
-                          });
-
                           clearErrors(`sections.${idx}.ingredients`);
 
                           update(idx, {
@@ -129,7 +126,12 @@ const IngredientsInput = () => {
                               ...watch().sections[idx].ingredients,
                               { amount: 0, unit: "", name: "" },
                             ],
-                            directions: [],
+                            directions: [{ direction: "" }],
+                          });
+
+                          setFormValue({
+                            ...formValue,
+                            sections: [...watch().sections],
                           });
                         }}
                       >
@@ -147,23 +149,30 @@ const IngredientsInput = () => {
               className="rounded-md bg-blue-500 py-3 px-5 text-sm font-bold uppercase text-white transition ease-in-out hover:bg-blue-600 active:ring"
               type="button"
               onClick={() => {
+                clearErrors(`sections`);
+
                 append({
                   title: "",
                   ingredients: [{ amount: 0, unit: "", name: "" }],
-                  directions: [],
+                  directions: [{ direction: "" }],
+                });
+                setFormValue({
+                  ...formValue,
+                  sections: [...watch().sections],
                 });
               }}
             >
               Add section
             </button>
           </div>
+          {errors.sections && <ErrorMessage error={errors.sections.message} />}
           {errors?.sections &&
             errors?.sections?.map &&
             errors?.sections?.map((section, sectionIdx) => (
               <div key={sectionIdx}>
                 {section?.ingredients &&
                   section?.ingredients.map &&
-                  section?.ingredients?.map((ing, ingIdx) => (
+                  section?.ingredients.map((ing, ingIdx) => (
                     <div key={ingIdx}>
                       <ErrorMessage error={ing?.amount?.message} />
                       <ErrorMessage error={ing?.unit?.message} />
@@ -222,10 +231,8 @@ const Ingredient = ({ sectionIndex }: { sectionIndex: number }) => {
                   onChange: () => {
                     setFormValue({
                       ...formValue,
-                      ...watch().sections,
+                      sections: [...watch().sections],
                     });
-                    console.log("form", formValue);
-                    console.log("watch", watch());
                   },
                 }
               )}
@@ -240,7 +247,14 @@ const Ingredient = ({ sectionIndex }: { sectionIndex: number }) => {
               }
               type="text"
               autoComplete="off"
-              {...register(`sections.${sectionIndex}.ingredients.${idx}.unit`)}
+              {...register(`sections.${sectionIndex}.ingredients.${idx}.unit`, {
+                onBlur: () => {
+                  setFormValue({
+                    ...formValue,
+                    sections: [...watch().sections],
+                  });
+                },
+              })}
             />
           </td>
           <td>
@@ -252,36 +266,22 @@ const Ingredient = ({ sectionIndex }: { sectionIndex: number }) => {
               }
               type="text"
               autoComplete="off"
-              {...register(`sections.${sectionIndex}.ingredients.${idx}.name`)}
+              {...register(`sections.${sectionIndex}.ingredients.${idx}.name`, {
+                onBlur: () => {
+                  setFormValue({
+                    ...formValue,
+                    sections: [...watch().sections],
+                  });
+                },
+              })}
             />
           </td>
-          <td className="py-3 px-6 text-right">
-            <button
-              className="align-middle"
-              type="button"
-              onClick={() => remove(idx)}
-            >
-              <XMarkIcon className="h-6 w-6" />
-            </button>
+          <td className="py-3 px-6 text-right transition-colors ease-in-out hover:text-red-500">
+            <XButton onClick={() => remove(idx)} />
           </td>
         </tr>
       ))}
     </>
-  );
-};
-
-type ErrorMessageProps = {
-  error: string | undefined;
-};
-
-const ErrorMessage = ({ error }: ErrorMessageProps) => {
-  return error ? (
-    <div className="flex items-center justify-center gap-1 overflow-hidden text-ellipsis py-1 text-red-600">
-      <ExclamationTriangleIcon className="h-4 w-4" />
-      <p className="text-sm">{error}</p>
-    </div>
-  ) : (
-    <></>
   );
 };
 

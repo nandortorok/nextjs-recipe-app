@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { HTMLAttributes, useContext } from "react";
+import { useContext } from "react";
 import {
   useForm,
   Path,
@@ -12,7 +12,6 @@ import { z } from "zod";
 import { UploadContext } from "lib/contexts";
 import Form from "./Form";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
-import { watch } from "fs";
 
 const schema = z.object({
   servings: z.number().int().min(1).max(64),
@@ -116,25 +115,18 @@ const Input = ({ name }: InputProps) => {
 
 const Select = ({ name }: InputProps) => {
   const { formValue, setFormValue } = useContext(UploadContext);
-  const {
-    formState: { errors },
-    register,
-    watch,
-  } = useFormContext<schemaT>();
+  const { register, watch } = useFormContext<schemaT>();
   return (
-    <>
-      <select
-        className="rounded-md border-gray-300 p-4 transition ease-in-out focus:border-opacity-0 md:w-full"
-        {...register(name, {
-          valueAsNumber: true,
-          onChange: () => setFormValue({ ...formValue, [name]: watch()[name] }),
-        })}
-      >
-        <option value={1}>minutes</option>
-        <option value={60}>hours</option>
-      </select>
-      {/* {errors?.[name] && <p>{errors?.[name]?.message}</p>} */}
-    </>
+    <select
+      className="rounded-md border-gray-300 p-4 transition ease-in-out focus:border-opacity-0 md:w-full"
+      {...register(name, {
+        valueAsNumber: true,
+        onChange: () => setFormValue({ ...formValue, [name]: watch()[name] }),
+      })}
+    >
+      <option value={1}>minutes</option>
+      <option value={60}>hours</option>
+    </select>
   );
 };
 

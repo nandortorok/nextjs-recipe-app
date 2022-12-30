@@ -1,5 +1,3 @@
-import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
-import { XMarkIcon } from "@heroicons/react/24/solid";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UploadContext } from "lib/contexts";
 import { useContext } from "react";
@@ -11,12 +9,20 @@ import {
 } from "react-hook-form";
 import { z } from "zod";
 
+import { ErrorMessage, XButton } from "./Elements";
 import Form from "./Form";
 
 const schema = z.object({
   sections: z
     .object({
       title: z.string().min(3).max(64),
+      ingredients: z
+        .object({
+          amount: z.number(),
+          unit: z.string(),
+          name: z.string(),
+        })
+        .array(),
       directions: z
         .object({
           direction: z.string().min(8).max(256),
@@ -31,7 +37,7 @@ const schema = z.object({
 type schemaT = z.infer<typeof schema>;
 
 const DirectionsInput = () => {
-  const { formValue } = useContext(UploadContext);
+  const { formValue, setFormValue } = useContext(UploadContext);
   const methods = useForm<schemaT>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -60,21 +66,36 @@ const DirectionsInput = () => {
             <div key={field.id} className="rounded-md border border-gray-300">
               <table className="w-full text-left">
                 <caption className="border-b px-3 py-4 text-left text-lg font-bold">
-                  <div className="flex justify-between">
+                  <div className="flex justify-between pr-3">
                     <input
                       className="border-0 align-middle text-lg focus:ring-0"
                       type="text"
                       placeholder="Title name"
-                      {...register(`sections.${idx}.title`)}
+                      {...register(`sections.${idx}.title`, {
+                        onBlur: () => {
+                          clearErrors(`sections.${idx}.title`);
+                          setFormValue({
+                            ...formValue,
+                            sections: [...watch().sections],
+                          });
+                        },
+                      })}
                     />
-                    <button
-                      className="pr-3 align-middle"
-                      type="button"
-                      onClick={() => remove(idx)}
-                    >
-                      <XMarkIcon className="h-6 w-6" />
-                    </button>
+                    <XButton
+                      onClick={() => {
+                        remove(idx);
+                        setFormValue({
+                          ...formValue,
+                          sections: [...watch().sections],
+                        });
+                      }}
+                    />
                   </div>
+                  {errors.sections && (
+                    <ErrorMessage
+                      error={errors.sections[idx]?.title?.message}
+                    />
+                  )}
                 </caption>
                 <tbody>
                   <Direction sectionIndex={idx} />
@@ -86,11 +107,15 @@ const DirectionsInput = () => {
                         onClick={() => {
                           clearErrors(`sections.${idx}.directions`);
                           update(idx, {
-                            title: watch().sections[idx].title,
+                            ...watch().sections[idx],
                             directions: [
                               ...watch().sections[idx].directions,
                               { direction: "" },
                             ],
+                          });
+                          setFormValue({
+                            ...formValue,
+                            sections: [...watch().sections],
                           });
                         }}
                       >
@@ -102,29 +127,23 @@ const DirectionsInput = () => {
               </table>
             </div>
           ))}
-          <section>
-            {errors?.sections && (
-              <ErrorMessage error={errors?.sections?.message} />
-            )}
-            {errors?.sections &&
-              errors?.sections?.map &&
-              errors?.sections?.map((section, sectionIdx) => (
-                <div key={sectionIdx}>
-                  <ErrorMessage error={section?.message} />
-                  <ErrorMessage error={section?.directions?.message} />
-                  {section?.directions?.map &&
-                    section?.directions?.map((dic, dicIdx) => (
-                      <div key={dicIdx}>
-                        <ErrorMessage error={dic?.message} />
-                        <ErrorMessage
-                          name={`${dicIdx + 1}. Direction`}
-                          error={dic?.direction?.message}
-                        />
-                      </div>
-                    ))}
-                </div>
-              ))}
-          </section>
+
+          {errors?.sections && <ErrorMessage error={errors.sections.message} />}
+          {errors?.sections &&
+            errors?.sections?.map &&
+            errors?.sections?.map((section, sectionIdx) => (
+              <div key={sectionIdx}>
+                <ErrorMessage error={section?.message} />
+                <ErrorMessage error={section?.directions?.message} />
+                {section?.directions?.map &&
+                  section?.directions?.map((dic, dicIdx) => (
+                    <div key={dicIdx}>
+                      <ErrorMessage error={dic?.message} />
+                      <ErrorMessage error={dic?.direction?.message} />
+                    </div>
+                  ))}
+              </div>
+            ))}
         </section>
       </Form>
     </FormProvider>
@@ -132,6 +151,7 @@ const DirectionsInput = () => {
 };
 
 const Direction = ({ sectionIndex }: { sectionIndex: number }) => {
+  const { formValue, setFormValue } = useContext(UploadContext);
   const { register, control, watch } = useFormContext();
   const { remove, fields } = useFieldArray({
     control,
@@ -150,42 +170,32 @@ const Direction = ({ sectionIndex }: { sectionIndex: number }) => {
                 type="text"
                 autoComplete="off"
                 {...register(
-                  `sections.${sectionIndex}.directions.${idx}.direction`
+                  `sections.${sectionIndex}.directions.${idx}.direction`,
+                  {
+                    onBlur: () =>
+                      setFormValue({
+                        ...formValue,
+                        sections: [...watch().sections],
+                      }),
+                  }
                 )}
               />
             </div>
           </td>
           <td className="py-3 px-6 text-right">
-            <button
-              className="align-middle transition ease-in-out hover:text-red-600"
-              type="button"
-              onClick={() => remove(idx)}
-            >
-              <XMarkIcon className="h-6 w-6" />
-            </button>
+            <XButton
+              onClick={() => {
+                remove(idx);
+                setFormValue({
+                  ...formValue,
+                  sections: [...watch().sections],
+                });
+              }}
+            />
           </td>
         </tr>
       ))}
     </>
-  );
-};
-
-type ErrorMessageProps = {
-  error: string | undefined;
-  name?: string;
-};
-
-const ErrorMessage = ({ error, name }: ErrorMessageProps) => {
-  return error ? (
-    <div className="col-span-3 flex w-full items-center gap-1 py-1 text-red-600">
-      <ExclamationTriangleIcon className="h-4 w-4" />
-      <p className="w-full text-sm">
-        {name && <span>{name}: </span>}
-        {error}
-      </p>
-    </div>
-  ) : (
-    <></>
   );
 };
 
