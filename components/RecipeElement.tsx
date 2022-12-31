@@ -16,6 +16,7 @@ const RecipeElement = ({
       <Link
         className="inline-block cursor-pointer overflow-hidden rounded-xl"
         href={href}
+        passHref
       >
         <Image
           alt="recipe image"

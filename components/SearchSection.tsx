@@ -99,7 +99,7 @@ const Results = ({
             <ul className="divide-y">
               {/* TODO give proper type */}
               {list.map((item: any) => (
-                <Link key={item.id} href={`recipe/${item.id}`}>
+                <Link key={item.id} href={`recipe/${item.id}`} passHref>
                   <li className="p-4 hover:bg-blue-50">{item.title}</li>
                 </Link>
               ))}

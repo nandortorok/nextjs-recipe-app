@@ -54,7 +54,7 @@ const Header = () => {
             <Bars3Icon className="h-6 w-6 cursor-pointer hover:text-blue-500" />
           </button>
 
-          <Link href={"/"}>
+          <Link href={"/"} passHref>
             <p className="mx-auto cursor-pointer py-3 text-lg text-black">
               Recipe App
             </p>
@@ -62,7 +62,7 @@ const Header = () => {
 
           <div className="group flex-nowrap rounded-full transition ease-in-out hover:bg-blue-100 active:bg-blue-200 active:text-blue-700">
             {session ? (
-              <Link href="/login">
+              <Link href="/login" passHref>
                 <Image
                   src={session.user!.image!}
                   alt={session.user!.name!}
@@ -169,6 +169,7 @@ const NavLink = ({ href, children }: LinkProps) => {
       <Link
         className="ml-4 flex w-10/12 cursor-pointer space-x-4 self-start rounded-xl py-3 px-4 transition ease-in-out hover:bg-blue-100 active:bg-blue-200 active:text-blue-700 group-hover:text-blue-500"
         href={href}
+        passHref
       >
         {children}
       </Link>

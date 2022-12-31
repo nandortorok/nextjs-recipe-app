@@ -37,6 +37,7 @@ export const LogIn = () => {
         <Link
           className="mx-auto rounded-xl bg-blue-500 py-2 px-5 text-white transition ease-in-out hover:bg-blue-600 active:ring"
           href="/login"
+          passHref
         >
           Log in
         </Link>
