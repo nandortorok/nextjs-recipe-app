@@ -26,19 +26,26 @@ enum Role {
 }
 
 model Unit {
-  id          Int                 @id @default(autoincrement())
-  base        BaseUnit
+  id          Int                 @id
   name        String
-  short       String
+  short       String?
   ingredients SectionIngredient[]
+  metric      Conversion[]        @relation(name: "metric")
+  imperial    Conversion?         @relation(name: "imperial")
 
   @@map("unit")
 }
 
-enum BaseUnit {
-  MASS
-  VOLUME
-  OTHER
+model Conversion {
+  imperialUnitId Int   @unique
+  metricUnitId   Int
+  imperialAmount Int
+  metricAmount   Float
+  imperialUnit   Unit  @relation(name: "imperial", fields: [imperialUnitId], references: [id])
+  metricUnit     Unit  @relation(name: "metric", fields: [metricUnitId], references: [id])
+
+  @@id([metricUnitId, imperialUnitId])
+  @@map("conversion")
 }
 
 model Ingredient {
@@ -52,7 +59,7 @@ model Ingredient {
 model Direction {
   stepNumber      Int     @id @default(autoincrement()) @map("step_number")
   direction       String
-  Section         Section @relation(fields: [sectionId, sectionRecipeId], references: [id, recipeId])
+  section         Section @relation(fields: [sectionId, sectionRecipeId], references: [id, recipeId])
   sectionId       Int     @map("section_id")
   sectionRecipeId Int     @map("section_recipe_id")
 
@@ -60,7 +67,7 @@ model Direction {
 }
 
 model SectionIngredient {
-  Section         Section    @relation(fields: [sectionId, sectionRecipeId], references: [id, recipeId])
+  section         Section    @relation(fields: [sectionId, sectionRecipeId], references: [id, recipeId])
   sectionId       Int        @map("section_id")
   sectionRecipeId Int        @map("section_recipe_id")
   ingredient      Ingredient @relation(fields: [ingredientId], references: [id])
@@ -74,29 +81,27 @@ model SectionIngredient {
 }
 
 model Recipe {
-  id             Int       @id @default(autoincrement())
-  user           User      @relation(fields: [userId], references: [id])
-  userId         Int       @map("user_id")
-  title          String
-  servings       Int
-  prepTime       Int       @map("prep_time")
-  cookingTime    Int       @map("cook_time")
-  createdAt      DateTime  @default(now()) @map("created_at")
-  updatedAt      DateTime  @updatedAt @map("updated_at")
-  recipeSections Section[]
-  // TODO rename to Sections
+  id          Int       @id @default(autoincrement())
+  user        User      @relation(fields: [userId], references: [id])
+  userId      Int       @map("user_id")
+  title       String
+  servings    Int
+  prepTime    Int       @map("prep_time")
+  cookingTime Int       @map("cook_time")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  sections    Section[]
 
   @@map("recipe")
 }
 
 model Section {
   id          Int                 @default(0)
-  Recipe      Recipe              @relation(fields: [recipeId], references: [id])
+  recipe      Recipe              @relation(fields: [recipeId], references: [id])
   recipeId    Int                 @map("recipe_id")
   title       String?             @map("title")
   ingredients SectionIngredient[]
   directions  Direction[]
-  // TODO rename to Directions, SectionIngredients 
 
   @@id([id, recipeId])
   @@map("section")

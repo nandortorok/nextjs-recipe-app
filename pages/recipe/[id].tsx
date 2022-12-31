@@ -21,7 +21,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 type Props = {
   recipe: Recipe & {
     user: User;
-    recipeSections: (Section & {
+    sections: (Section & {
       ingredients: (SectionIngredient & {
         ingredient: Ingredient;
         unit: Unit | null;
@@ -84,7 +84,7 @@ const Recipe: NextPage<Props> = ({ recipe }) => {
         <h1 className="w-full text-left font-bold">Ingredients (1)</h1>
 
         <section className="w-full">
-          {recipe.recipeSections.map(({ title, ingredients }, sectionIdx) => (
+          {recipe.sections.map(({ title, ingredients }, sectionIdx) => (
             <div key={sectionIdx} className="">
               <h1 className="w-full text-left font-bold">{title}</h1>
               <ul className="space-y-5">
@@ -106,7 +106,7 @@ const Recipe: NextPage<Props> = ({ recipe }) => {
         <h1 className="w-full text-left font-bold">Directions (3)</h1>
 
         <section className="w-full">
-          {recipe.recipeSections.map(({ title, directions }, sectionIdx) => (
+          {recipe.sections.map(({ title, directions }, sectionIdx) => (
             <div key={sectionIdx} className="">
               <h1 className="w-full text-left font-bold">{title}</h1>
               <ul className="space-y-5">

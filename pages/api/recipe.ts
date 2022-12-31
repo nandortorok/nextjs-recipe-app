@@ -1,4 +1,4 @@
-import { prisma, Prisma } from "lib/prisma";
+import { prisma } from "lib/prisma";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const getRecipe = async (param: string) => {
@@ -8,7 +8,7 @@ const getRecipe = async (param: string) => {
     },
     include: {
       user: true,
-      recipeSections: {
+      sections: {
         include: {
           ingredients: {
             include: {
@@ -22,8 +22,6 @@ const getRecipe = async (param: string) => {
     },
   });
 };
-
-// type Props = { recipe: Prisma.PromiseReturnType<typeof getRecipe> };
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;

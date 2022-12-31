@@ -1,9 +1,6 @@
 -- CreateEnum
 CREATE TYPE "Role" AS ENUM ('USER', 'ADMIN');
 
--- CreateEnum
-CREATE TYPE "BaseUnit" AS ENUM ('MASS', 'VOLUME', 'OTHER');
-
 -- CreateTable
 CREATE TABLE "user" (
     "id" SERIAL NOT NULL,
@@ -19,12 +16,21 @@ CREATE TABLE "user" (
 
 -- CreateTable
 CREATE TABLE "unit" (
-    "id" SERIAL NOT NULL,
-    "base" "BaseUnit" NOT NULL,
+    "id" INTEGER NOT NULL,
     "name" TEXT NOT NULL,
-    "short" TEXT NOT NULL,
+    "short" TEXT,
 
     CONSTRAINT "unit_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "conversion" (
+    "imperialUnitId" INTEGER NOT NULL,
+    "metricUnitId" INTEGER NOT NULL,
+    "imperialAmount" INTEGER NOT NULL,
+    "metricAmount" DOUBLE PRECISION NOT NULL,
+
+    CONSTRAINT "conversion_pkey" PRIMARY KEY ("metricUnitId","imperialUnitId")
 );
 
 -- CreateTable
@@ -81,6 +87,15 @@ CREATE TABLE "section" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "user_email_key" ON "user"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "conversion_imperialUnitId_key" ON "conversion"("imperialUnitId");
+
+-- AddForeignKey
+ALTER TABLE "conversion" ADD CONSTRAINT "conversion_imperialUnitId_fkey" FOREIGN KEY ("imperialUnitId") REFERENCES "unit"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "conversion" ADD CONSTRAINT "conversion_metricUnitId_fkey" FOREIGN KEY ("metricUnitId") REFERENCES "unit"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "direction" ADD CONSTRAINT "direction_section_id_section_recipe_id_fkey" FOREIGN KEY ("section_id", "section_recipe_id") REFERENCES "section"("id", "recipe_id") ON DELETE RESTRICT ON UPDATE CASCADE;
