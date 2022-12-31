@@ -20,11 +20,11 @@ const getRecipes = async () => {
   });
 };
 
-type RecipesProps = {
+type HomeProps = {
   recipes: Prisma.PromiseReturnType<typeof getRecipes>;
 };
 
-export const getServerSideProps: GetServerSideProps = async ({}) => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const recipes = await getRecipes();
 
   return {
@@ -32,7 +32,7 @@ export const getServerSideProps: GetServerSideProps = async ({}) => {
   };
 };
 
-const Home: NextPage<RecipesProps> = ({ recipes }) => {
+const Home: NextPage<HomeProps> = ({ recipes }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [recipesList, setRecipesList] = useState([]);
 

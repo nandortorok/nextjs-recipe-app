@@ -1,14 +1,19 @@
-import { useContext } from "react";
-import Form from "./Form";
+import { Fragment, useContext, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UploadContext } from "lib/contexts";
 import {
+  Controller,
   FormProvider,
   useFieldArray,
   useForm,
   useFormContext,
 } from "react-hook-form";
 import { z } from "zod";
+import { Combobox, Transition } from "@headlessui/react";
+import useSWR from "swr";
+import { Unit } from "@prisma/client";
+
+import Form from "./Form";
 import { ErrorMessage, XButton } from "./Elements";
 
 const schema = z.object({
@@ -18,7 +23,7 @@ const schema = z.object({
       ingredients: z
         .object({
           amount: z.number().min(1).max(999),
-          unit: z.string().max(16).optional(),
+          unit: z.string().optional(),
           name: z.string().min(3).max(32),
         })
         .array()
@@ -191,6 +196,8 @@ const IngredientsInput = () => {
   );
 };
 
+const fetcher = (args: string) => fetch(args).then((res) => res.json());
+
 const Ingredient = ({ sectionIndex }: { sectionIndex: number }) => {
   const { formValue, setFormValue } = useContext(UploadContext);
   const {
@@ -203,6 +210,16 @@ const Ingredient = ({ sectionIndex }: { sectionIndex: number }) => {
     control,
     name: `sections.${sectionIndex}.ingredients`,
   });
+
+  const { data, error, isLoading } = useSWR<Unit[], Error>(
+    "/api/units",
+    fetcher
+  );
+  const [query, setQuery] = useState("");
+  const filteredList =
+    query === ""
+      ? data
+      : data?.filter((unit) => unit.name.includes(query.toLowerCase()));
 
   const showError = (number: number) => {
     if (
@@ -243,22 +260,60 @@ const Ingredient = ({ sectionIndex }: { sectionIndex: number }) => {
             />
           </td>
           <td>
-            <input
-              className={
-                showError(idx)?.unit
-                  ? "w-full border-red-500 align-middle focus:border-red-500 focus:ring-red-500"
-                  : "w-full border-0 align-middle focus:ring-0"
-              }
-              type="text"
-              autoComplete="off"
-              {...register(`sections.${sectionIndex}.ingredients.${idx}.unit`, {
-                onBlur: () => {
-                  setFormValue({
-                    ...formValue,
-                    sections: [...watch().sections],
-                  });
-                },
-              })}
+            <Controller
+              control={control}
+              name={`sections.${sectionIndex}.ingredients.${idx}.unit`}
+              render={({ field: { onChange, value } }) => (
+                <Combobox
+                  value={value}
+                  onChange={(e) => {
+                    onChange(e);
+                    setFormValue({
+                      ...formValue,
+                      sections: [...watch().sections],
+                    });
+                  }}
+                >
+                  <div className="relative w-full">
+                    <Combobox.Input
+                      className="w-full border-none focus:ring-0"
+                      onChange={(e) => setQuery(e.target.value)}
+                    />
+                    <Transition
+                      as={Fragment}
+                      leave="transition ease-in duration-100"
+                      leaveFrom="opacity-100"
+                      leaveTo="opacity-0"
+                      afterLeave={() => setQuery("")}
+                    >
+                      <Combobox.Options className="absolute z-10 mt-1 max-h-60 w-44 overflow-auto rounded-md bg-gray-100 py-1 shadow-md md:w-full">
+                        {filteredList?.length === 0 && query !== "" ? (
+                          <div className="px-4 py-1 text-gray-500">
+                            Nothing found
+                          </div>
+                        ) : (
+                          <>
+                            {filteredList?.map((unit, unitIdx) => (
+                              <Combobox.Option
+                                className={({ active }) =>
+                                  active
+                                    ? "relative max-h-60 cursor-pointer overflow-auto bg-blue-500 px-4 py-1 text-white active:bg-blue-600"
+                                    : "relative max-h-60 cursor-pointer overflow-auto px-4 py-1 hover:bg-blue-500 hover:text-white active:bg-blue-600"
+                                }
+                                key={unit.id}
+                                value={unit.name}
+                              >
+                                {unit.name + " "}
+                                <span className="text-xs">{unit.short}</span>
+                              </Combobox.Option>
+                            ))}
+                          </>
+                        )}
+                      </Combobox.Options>
+                    </Transition>
+                  </div>
+                </Combobox>
+              )}
             />
           </td>
           <td>
