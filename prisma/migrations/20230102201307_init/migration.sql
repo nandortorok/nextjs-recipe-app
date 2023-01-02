@@ -1,17 +1,49 @@
--- CreateEnum
-CREATE TYPE "Role" AS ENUM ('USER', 'ADMIN');
+-- CreateTable
+CREATE TABLE "account" (
+    "id" TEXT NOT NULL,
+    "user_id" TEXT NOT NULL,
+    "type" TEXT NOT NULL,
+    "provider" TEXT NOT NULL,
+    "provider_account_id" TEXT NOT NULL,
+    "refresh_token" TEXT,
+    "access_token" TEXT,
+    "expires_at" INTEGER,
+    "token_type" TEXT,
+    "scope" TEXT,
+    "id_token" TEXT,
+    "session_state" TEXT,
+
+    CONSTRAINT "account_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "session" (
+    "id" TEXT NOT NULL,
+    "session_token" TEXT NOT NULL,
+    "user_id" TEXT NOT NULL,
+    "expires" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "session_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "user" (
-    "id" SERIAL NOT NULL,
-    "email" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
-    "password" TEXT NOT NULL,
-    "role" "Role" NOT NULL DEFAULT 'USER',
+    "id" TEXT NOT NULL,
+    "name" TEXT,
+    "email" TEXT,
+    "email_verified" TIMESTAMP(3),
+    "image" TEXT,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "user_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "verificationtoken" (
+    "identifier" TEXT NOT NULL,
+    "token" TEXT NOT NULL,
+    "expires" TIMESTAMP(3) NOT NULL
 );
 
 -- CreateTable
@@ -42,19 +74,18 @@ CREATE TABLE "ingredient" (
 );
 
 -- CreateTable
-CREATE TABLE "direction" (
-    "step_number" SERIAL NOT NULL,
-    "direction" TEXT NOT NULL,
-    "section_id" INTEGER NOT NULL,
-    "section_recipe_id" INTEGER NOT NULL,
+CREATE TABLE "section" (
+    "id" INTEGER NOT NULL DEFAULT 0,
+    "recipe_id" TEXT NOT NULL,
+    "title" TEXT,
 
-    CONSTRAINT "direction_pkey" PRIMARY KEY ("step_number")
+    CONSTRAINT "section_pkey" PRIMARY KEY ("id","recipe_id")
 );
 
 -- CreateTable
 CREATE TABLE "section_ingredient" (
     "section_id" INTEGER NOT NULL,
-    "section_recipe_id" INTEGER NOT NULL,
+    "section_recipe_id" TEXT NOT NULL,
     "ingredient_id" INTEGER NOT NULL,
     "unit_id" INTEGER,
     "amount" INTEGER,
@@ -64,8 +95,8 @@ CREATE TABLE "section_ingredient" (
 
 -- CreateTable
 CREATE TABLE "recipe" (
-    "id" SERIAL NOT NULL,
-    "user_id" INTEGER NOT NULL,
+    "id" TEXT NOT NULL,
+    "user_id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "servings" INTEGER NOT NULL,
     "prep_time" INTEGER NOT NULL,
@@ -77,19 +108,47 @@ CREATE TABLE "recipe" (
 );
 
 -- CreateTable
-CREATE TABLE "section" (
-    "id" INTEGER NOT NULL DEFAULT 0,
-    "recipe_id" INTEGER NOT NULL,
-    "title" TEXT,
+CREATE TABLE "direction" (
+    "step_number" SERIAL NOT NULL,
+    "direction" TEXT NOT NULL,
+    "section_id" INTEGER NOT NULL,
+    "section_recipe_id" TEXT NOT NULL,
 
-    CONSTRAINT "section_pkey" PRIMARY KEY ("id","recipe_id")
+    CONSTRAINT "direction_pkey" PRIMARY KEY ("step_number")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "account_provider_provider_account_id_key" ON "account"("provider", "provider_account_id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "session_session_token_key" ON "session"("session_token");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "user_email_key" ON "user"("email");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "verificationtoken_token_key" ON "verificationtoken"("token");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "verificationtoken_identifier_token_key" ON "verificationtoken"("identifier", "token");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "unit_name_key" ON "unit"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "unit_short_key" ON "unit"("short");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "conversion_imperialUnitId_key" ON "conversion"("imperialUnitId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "ingredient_name_key" ON "ingredient"("name");
+
+-- AddForeignKey
+ALTER TABLE "account" ADD CONSTRAINT "account_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "session" ADD CONSTRAINT "session_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "conversion" ADD CONSTRAINT "conversion_imperialUnitId_fkey" FOREIGN KEY ("imperialUnitId") REFERENCES "unit"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -98,7 +157,7 @@ ALTER TABLE "conversion" ADD CONSTRAINT "conversion_imperialUnitId_fkey" FOREIGN
 ALTER TABLE "conversion" ADD CONSTRAINT "conversion_metricUnitId_fkey" FOREIGN KEY ("metricUnitId") REFERENCES "unit"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "direction" ADD CONSTRAINT "direction_section_id_section_recipe_id_fkey" FOREIGN KEY ("section_id", "section_recipe_id") REFERENCES "section"("id", "recipe_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "section" ADD CONSTRAINT "section_recipe_id_fkey" FOREIGN KEY ("recipe_id") REFERENCES "recipe"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "section_ingredient" ADD CONSTRAINT "section_ingredient_section_id_section_recipe_id_fkey" FOREIGN KEY ("section_id", "section_recipe_id") REFERENCES "section"("id", "recipe_id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -113,4 +172,4 @@ ALTER TABLE "section_ingredient" ADD CONSTRAINT "section_ingredient_unit_id_fkey
 ALTER TABLE "recipe" ADD CONSTRAINT "recipe_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "section" ADD CONSTRAINT "section_recipe_id_fkey" FOREIGN KEY ("recipe_id") REFERENCES "recipe"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "direction" ADD CONSTRAINT "direction_section_id_section_recipe_id_fkey" FOREIGN KEY ("section_id", "section_recipe_id") REFERENCES "section"("id", "recipe_id") ON DELETE RESTRICT ON UPDATE CASCADE;

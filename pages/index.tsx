@@ -75,7 +75,7 @@ const Home: NextPage<HomeProps> = ({ recipes }) => {
                 key={item.id}
                 title={item.title}
                 href={`recipe/${item.id}`}
-                userName={item.user.name}
+                userName={item.user.name || ""}
               />
             ))}
           </div>

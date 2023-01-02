@@ -4,13 +4,13 @@ import type { NextApiRequest, NextApiResponse } from "next";
 const getRecipe = async (param: string) => {
   return await prisma.recipe.findUnique({
     where: {
-      id: parseInt(param),
+      id: param,
     },
     include: {
       user: true,
       sections: {
         include: {
-          ingredients: {
+          sectionIngredients: {
             include: {
               ingredient: true,
               unit: true,

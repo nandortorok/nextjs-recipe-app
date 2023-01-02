@@ -1,9 +1,5 @@
 import { useContext } from "react";
-import {
-  SubmitErrorHandler,
-  SubmitHandler,
-  useFormContext,
-} from "react-hook-form";
+import { SubmitHandler, useFormContext } from "react-hook-form";
 
 import { FormStateProps } from "hooks/useUpload";
 import { UploadContext } from "lib/contexts";
@@ -16,11 +12,15 @@ export const Form = ({ children }: FormProps) => {
   const { page, setPage, formValue } = useContext(UploadContext);
   const { handleSubmit } = useFormContext();
 
-  const onSubmit: SubmitHandler<Partial<FormStateProps>> = (data) => {
+  const onSubmit: SubmitHandler<Partial<FormStateProps>> = async () => {
     if (page < 4) {
       setPage(page + 1);
     } else {
-      console.log("onSubmit", formValue);
+      fetch("/api/upload", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formValue),
+      }).then((res) => res.json());
     }
   };
 
