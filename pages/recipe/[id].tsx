@@ -20,14 +20,14 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
 type Props = {
   recipe: Recipe & {
-    user: User;
     sections: (Section & {
-      ingredients: (SectionIngredient & {
+      sectionIngredients: (SectionIngredient & {
         ingredient: Ingredient;
         unit: Unit | null;
       })[];
       directions: Direction[];
     })[];
+    user: User;
   };
 };
 
@@ -71,11 +71,9 @@ const Recipe: NextPage<Props> = ({ recipe }) => {
           <tbody>
             <tr>
               <td className="px-6 pb-3 text-gray-500">{recipe.prepTime} min</td>
+              <td className="px-6 pb-3 text-gray-500">{recipe.cookTime} min</td>
               <td className="px-6 pb-3 text-gray-500">
-                {recipe.cookingTime} min
-              </td>
-              <td className="px-6 pb-3 text-gray-500">
-                {recipe.prepTime + recipe.cookingTime} min
+                {recipe.prepTime + recipe.cookTime} min
               </td>
             </tr>
           </tbody>
@@ -84,17 +82,17 @@ const Recipe: NextPage<Props> = ({ recipe }) => {
         <h1 className="w-full text-left font-bold">Ingredients (1)</h1>
 
         <section className="w-full">
-          {recipe.sections.map(({ title, ingredients }, sectionIdx) => (
+          {recipe.sections.map(({ title, sectionIngredients }, sectionIdx) => (
             <div key={sectionIdx} className="">
               <h1 className="w-full text-left font-bold">{title}</h1>
               <ul className="space-y-5">
-                {ingredients.map(({ ingredient, amount, unit }, idx) => (
+                {sectionIngredients.map(({ ingredient, amount, unit }, idx) => (
                   <li
                     key={idx}
-                    className=" flex rounded-2xl bg-white py-4 font-bold capitalize"
+                    className=" flex rounded-2xl bg-white py-4 font-bold"
                   >
                     <p className="px-10">
-                      {amount} {!unit} {ingredient.name}
+                      {amount}{unit?.short} {ingredient.name}
                     </p>
                   </li>
                 ))}

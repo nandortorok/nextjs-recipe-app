@@ -18,6 +18,8 @@ async function main() {
       { id: 10, name: "cup" },
       { id: 11, name: "tablespoon", short: "tbsp" },
       { id: 12, name: "teaspoon", short: "tsp" },
+      { id: 13, name: "drop", short: "gt" },
+      { id: 14, name: "pinch", short: "pn" },
     ],
   });
 
