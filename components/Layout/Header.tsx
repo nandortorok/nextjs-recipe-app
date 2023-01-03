@@ -44,6 +44,8 @@ const Header = () => {
   // Reset navbar on route change
   const dynamicRoute = useRouter().asPath;
   useEffect(() => setIsNavOpen(false), [dynamicRoute]);
+  useEffect(() => setIsLoginOpen(false), [dynamicRoute]);
+  useEffect(() => setIsUploadOpen(false), [dynamicRoute]);
 
   return (
     <>

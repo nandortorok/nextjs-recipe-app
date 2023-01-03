@@ -51,11 +51,17 @@ const useUpload = () => {
   const [page, setPage] = useState(1);
   const [formValue, setFormValue] = useState<FormStateProps>(formStateInit);
 
+  const resetFormState = () => {
+    setPage(1);
+    setFormValue(formStateInit);
+  };
+
   return {
     page,
     setPage,
     formValue,
     setFormValue,
+    resetFormState,
   };
 };
 

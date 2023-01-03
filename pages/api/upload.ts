@@ -86,9 +86,9 @@ export default async function handler(
   }
 
   if (session && session.user?.email) {
-    creatRecipe(session.user.email, req.body);
+    const recipe = await creatRecipe(session.user.email, req.body);
 
-    res.status(200).send({ status: "success" });
+    res.status(200).send({ status: "success", recipeId: recipe.id });
   }
 
   res.end();

@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useContext } from "react";
 import { SubmitHandler, useFormContext } from "react-hook-form";
 
@@ -9,18 +10,24 @@ type FormProps = {
 };
 
 export const Form = ({ children }: FormProps) => {
-  const { page, setPage, formValue } = useContext(UploadContext);
+  const { page, setPage, formValue, resetFormState } =
+    useContext(UploadContext);
   const { handleSubmit } = useFormContext();
+  const router = useRouter();
 
   const onSubmit: SubmitHandler<Partial<FormStateProps>> = async () => {
     if (page < 4) {
       setPage(page + 1);
     } else {
-      fetch("/api/upload", {
+      const res = await fetch("/api/upload", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formValue),
-      }).then((res) => res.json());
+      });
+
+      const data = await res.json();
+      router.push(`/recipe/${data.recipeId}`);
+      // .then(() => resetFormState());
     }
   };
 
