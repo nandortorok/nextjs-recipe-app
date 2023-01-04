@@ -20,6 +20,7 @@ const formStateInit = {
 
 export const formSchema = z.object({
   title: z.string().min(3).max(64),
+  image: z.any(),
   servings: z.number().int().min(1).max(64),
   prepTime: z.number().int().min(1).max(60),
   cookTime: z.number().int().min(1).max(60),

@@ -12,7 +12,10 @@ type FormProps = {
 export const Form = ({ children }: FormProps) => {
   const { page, setPage, formValue, resetFormState } =
     useContext(UploadContext);
-  const { handleSubmit } = useFormContext();
+  const {
+    handleSubmit,
+    formState: { errors: formError },
+  } = useFormContext();
   const router = useRouter();
 
   const onSubmit: SubmitHandler<Partial<FormStateProps>> = async () => {
@@ -26,8 +29,7 @@ export const Form = ({ children }: FormProps) => {
       });
 
       const data = await res.json();
-      router.push(`/recipe/${data.recipeId}`);
-      // .then(() => resetFormState());
+      router.push(`/recipe/${data.recipeId}`).then(() => resetFormState());
     }
   };
 

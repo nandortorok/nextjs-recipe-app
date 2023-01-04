@@ -48,7 +48,7 @@ const Home: NextPage<HomeProps> = ({ recipes }) => {
       setRecipesList(data);
     };
 
-    getRecipesList(searchTerm).catch(console.error);
+    getRecipesList(searchTerm);
   }, [searchTerm]);
 
   return (

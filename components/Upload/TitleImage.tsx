@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { ChangeEvent, useContext } from "react";
 import {
   CloudArrowUpIcon,
   ExclamationTriangleIcon,
@@ -10,9 +10,25 @@ import { z } from "zod";
 import Form from "./Form";
 import { UploadContext } from "lib/contexts";
 
+const maxImageSize = 5 * 1024 * 1024;
+const validImageType = /image\/[j|p]/;
+
 const schema = z.object({
   title: z.string().min(3).max(64),
+  image: z.object({
+    size: z.number().max(maxImageSize, "Image's size must be less than 5 MB"),
+    imageType: z.string().regex(validImageType, "Image must be valid type"),
+  }),
 });
+
+const ImageObjectRequiredError: z.ZodErrorMap = (issue, ctx) => {
+  if (issue.code === z.ZodIssueCode.invalid_type) {
+    return { message: "Image is required" };
+  }
+
+  return { message: ctx.defaultError };
+};
+z.setErrorMap(ImageObjectRequiredError);
 
 type schemaT = z.infer<typeof schema>;
 
@@ -30,7 +46,26 @@ const TitleImage = () => {
     register,
     formState: { errors },
     watch,
+    clearErrors,
+    setValue,
+    trigger,
   } = methods;
+
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { files } = e.target;
+
+    if (files) {
+      const { type, size } = files[0];
+      setValue("image", { size, imageType: type });
+    }
+
+    setFormValue({ ...formValue, image: e.target.files });
+
+    if (schema.safeParse(watch())) {
+      clearErrors("image");
+      trigger("image");
+    }
+  };
 
   return (
     <FormProvider {...methods}>
@@ -62,21 +97,44 @@ const TitleImage = () => {
           <div className="flex h-full w-full items-center justify-center">
             <label
               htmlFor="image"
-              className="flex h-full w-full cursor-pointer flex-col items-center justify-center rounded-lg border border-gray-300 bg-gray-50 transition ease-in-out hover:bg-gray-100"
+              className={
+                errors.image
+                  ? "flex h-full w-full cursor-pointer flex-col items-center justify-center rounded-lg border border-red-500 bg-gray-50 text-red-500 transition ease-in-out hover:bg-gray-100"
+                  : "flex h-full w-full cursor-pointer flex-col items-center justify-center rounded-lg border border-gray-300 bg-gray-50 text-gray-500 transition ease-in-out hover:bg-gray-100"
+              }
             >
               <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                <CloudArrowUpIcon className="h-10 w-10 text-gray-500" />
-                <p className="mb-2 text-sm text-gray-500 ">
+                <CloudArrowUpIcon className="h-10 w-10" />
+                <p className="mb-2 text-sm ">
                   <span className="font-semibold">Click to upload</span> or drag
                   and drop
                 </p>
-                <p className="text-xs text-gray-500 ">
-                  SVG, PNG, JPG or GIF (MAX. 800x400px)
-                </p>
+                <p className="text-xs ">PNG, JPEG</p>
+                <p className="text-xs ">MIN 800x600 MAX 5 MB</p>
               </div>
-              <input className="hidden" id="image" type="file" />
+              <input
+                className="hidden"
+                id="image"
+                type="file"
+                name="image"
+                onChange={handleImageChange}
+              />
             </label>
           </div>
+          {errors?.image && (
+            <div className="flex items-center gap-1 p-1 text-red-600">
+              <ExclamationTriangleIcon className="h-4 w-4" />
+              {errors.image.message && (
+                <p className="text-sm">{errors.image.message}</p>
+              )}
+              {errors.image.size?.message && (
+                <p className="text-sm">{errors.image.size?.message}</p>
+              )}
+              {errors.image.imageType?.message && (
+                <p className="text-sm">{errors.image.imageType?.message}</p>
+              )}
+            </div>
+          )}
         </>
       </Form>
     </FormProvider>
