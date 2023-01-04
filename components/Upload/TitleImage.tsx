@@ -1,4 +1,4 @@
-import { ChangeEvent, useContext } from "react";
+import { ChangeEvent, useContext, useState } from "react";
 import {
   CloudArrowUpIcon,
   ExclamationTriangleIcon,
@@ -9,6 +9,7 @@ import { z } from "zod";
 
 import Form from "./Form";
 import { UploadContext } from "lib/contexts";
+import Image from "next/image";
 
 const maxImageSize = 5 * 1024 * 1024;
 const validImageType = /image\/[j|p]/;
@@ -33,7 +34,8 @@ z.setErrorMap(ImageObjectRequiredError);
 type schemaT = z.infer<typeof schema>;
 
 const TitleImage = () => {
-  const { formValue, setFormValue } = useContext(UploadContext);
+  const { formValue, setFormValue, preview, setPreview } =
+    useContext(UploadContext);
 
   const methods = useForm<schemaT>({
     resolver: zodResolver(schema),
@@ -57,6 +59,7 @@ const TitleImage = () => {
     if (files) {
       const { type, size } = files[0];
       setValue("image", { size, imageType: type });
+      setPreview(URL.createObjectURL(files[0]));
     }
 
     setFormValue({ ...formValue, image: e.target.files });
@@ -99,18 +102,25 @@ const TitleImage = () => {
               htmlFor="image"
               className={
                 errors.image
-                  ? "flex h-full w-full cursor-pointer flex-col items-center justify-center rounded-lg border border-red-500 bg-gray-50 text-red-500 transition ease-in-out hover:bg-gray-100"
-                  : "flex h-full w-full cursor-pointer flex-col items-center justify-center rounded-lg border border-gray-300 bg-gray-50 text-gray-500 transition ease-in-out hover:bg-gray-100"
+                  ? "relative flex h-full w-full cursor-pointer flex-col items-center justify-center rounded-lg border border-red-500 bg-gray-50 text-red-500 transition ease-in-out hover:bg-gray-100"
+                  : formValue.image && !errors.image
+                  ? "group relative z-10 flex h-full w-full cursor-pointer flex-col items-center justify-center rounded-lg border border-gray-300 text-gray-500 transition ease-in-out"
+                  : "relative flex h-full w-full cursor-pointer flex-col items-center justify-center rounded-lg border border-gray-300 bg-gray-50 text-gray-500 transition ease-in-out hover:bg-gray-100"
               }
             >
-              <div className="flex flex-col items-center justify-center pt-5 pb-6">
+              {formValue.image && !errors.image && (
+                <Image
+                  src={preview}
+                  alt={"preview-image"}
+                  className="absolute -z-10 rounded-md object-cover"
+                  fill={true}
+                />
+              )}
+              <div className="flex flex-col items-center justify-center pt-5 pb-6 transition-transform ease-in-out group-hover:text-gray-600">
                 <CloudArrowUpIcon className="h-10 w-10" />
-                <p className="mb-2 text-sm ">
-                  <span className="font-semibold">Click to upload</span> or drag
-                  and drop
-                </p>
-                <p className="text-xs ">PNG, JPEG</p>
-                <p className="text-xs ">MIN 800x600 MAX 5 MB</p>
+                <p className="mb-2 text-sm font-semibold">Click to upload</p>
+                <p className="text-xs">PNG, JPEG</p>
+                <p className="text-xs">MIN 800x600 MAX 5 MB</p>
               </div>
               <input
                 className="hidden"

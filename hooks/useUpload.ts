@@ -51,6 +51,7 @@ export const formSchema = z.object({
 const useUpload = () => {
   const [page, setPage] = useState(1);
   const [formValue, setFormValue] = useState<FormStateProps>(formStateInit);
+  const [preview, setPreview] = useState<any>();
 
   const resetFormState = () => {
     setPage(1);
@@ -63,6 +64,8 @@ const useUpload = () => {
     formValue,
     setFormValue,
     resetFormState,
+    preview,
+    setPreview,
   };
 };
 
