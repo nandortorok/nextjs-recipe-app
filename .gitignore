@@ -36,3 +36,6 @@ yarn-error.log*
 
 # docker volume
 /db-data
+
+# local images
+/img
