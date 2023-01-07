@@ -1,9 +1,9 @@
 import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
+
 import { prisma, Prisma } from "../lib/prisma";
 import RecipeElement from "components/RecipeElement";
-import SearchSection from "components/SearchSection";
-import { ChangeEvent, useEffect, useState } from "react";
+import { Search } from "components/Search";
 
 const getRecipes = async () => {
   return await prisma.recipe.findMany({
@@ -34,24 +34,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
 };
 
 const Home: NextPage<HomeProps> = ({ recipes }) => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [recipesList, setRecipesList] = useState([]);
-
-  const handleSearchTerm = async (event: ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
-  };
-
-  useEffect(() => {
-    const getRecipesList = async (params: string) => {
-      const req = await fetch(`api/search?title=${params}`);
-      const data = await req.json();
-
-      setRecipesList(data);
-    };
-
-    getRecipesList(searchTerm);
-  }, [searchTerm]);
-
   return (
     <>
       <Head>
@@ -60,16 +42,12 @@ const Home: NextPage<HomeProps> = ({ recipes }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <SearchSection
-        recipes={recipesList}
-        searchTerm={searchTerm}
-        onSearchTerm={handleSearchTerm}
-      />
+      <main className="bg-gray-100 px-4 pt-8">
+        <Search />
 
-      <main className="bg-zinc-100">
         <h2 className="py-10 text-center text-4xl font-bold">Recipes</h2>
 
-        <section className="container mx-auto px-4 md:px-6">
+        <section className="container mx-auto md:px-6">
           <div className="grid grid-cols-1 gap-6 py-6 md:grid-cols-2">
             {recipes.map((item) => (
               <RecipeElement

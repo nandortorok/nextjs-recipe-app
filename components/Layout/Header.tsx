@@ -15,6 +15,7 @@ import {
 import LoginForm from "components/LoginForm";
 import Upload from "components/Upload";
 import Image from "next/image";
+import { HeaderSearch } from "components/Search";
 
 const links = [
   {
@@ -35,13 +36,12 @@ const links = [
 ];
 
 const Header = () => {
+  const { data: session } = useSession();
+
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isUploadOpen, setIsUploadOpen] = useState(false);
 
-  const { data: session } = useSession();
-
-  // Reset navbar on route change
   const dynamicRoute = useRouter().asPath;
   useEffect(() => setIsNavOpen(false), [dynamicRoute]);
   useEffect(() => setIsLoginOpen(false), [dynamicRoute]);
@@ -49,33 +49,41 @@ const Header = () => {
 
   return (
     <>
-      {/* Header */}
-      <header className="sticky top-0 z-10 mx-auto border-b bg-white py-1 font-bold shadow-sm">
-        <div className="flex items-center justify-start gap-2 px-5 md:justify-between">
-          <button onClick={() => setIsNavOpen(!isNavOpen)}>
-            <Bars3Icon className="h-6 w-6 cursor-pointer hover:text-blue-500" />
-          </button>
+      <header className="sticky top-0 z-20 border-b bg-white bg-white/75 py-1 font-bold shadow-sm backdrop-blur-lg">
+        <div className="relative py-6 px-4 md:px-8">
+          <div className="float-left flex -translate-y-1/2">
+            <button onClick={() => setIsNavOpen(!isNavOpen)}>
+              <Bars3Icon className="h-7 w-7 cursor-pointer hover:text-blue-500" />
+            </button>
 
-          <Link href={"/"} passHref>
-            <p className="mx-auto cursor-pointer py-3 text-lg text-black">
-              Recipe App
-            </p>
-          </Link>
+            <Link href={"/"} passHref>
+              <p className="mx-auto cursor-pointer p-3 text-xl text-black">
+                recipe<span className="text-teal-500">app</span>
+              </p>
+            </Link>
+          </div>
 
-          <div className="group flex-nowrap rounded-full transition ease-in-out hover:bg-blue-100 active:bg-blue-200 active:text-blue-700">
-            {session ? (
-              <Link href="/login" passHref>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-sm:invisible">
+            <HeaderSearch />
+          </div>
+
+          <div className="group float-right -translate-y-1/2 flex-nowrap rounded-full transition ease-in-out hover:bg-blue-100 active:bg-blue-200 active:text-blue-700">
+            {session &&
+            session.user &&
+            session.user.image &&
+            session.user.name ? (
+              <Link className="max-sm:invisible" href="/login" passHref>
                 <Image
-                  src={session.user!.image!}
-                  alt={session.user!.name!}
+                  src={session.user.image}
+                  alt={session.user.name}
                   className="rounded-full border hover:scale-110 hover:bg-blue-100"
-                  width={24}
-                  height={24}
+                  width={26}
+                  height={26}
                 />
               </Link>
             ) : (
               <button
-                className="invisible p-2 align-middle md:visible"
+                className="p-2 align-middle max-md:invisible"
                 onClick={() => setIsLoginOpen(!isLoginOpen)}
               >
                 <UserIcon className="h-6 w-6 cursor-pointer group-hover:text-blue-500" />
@@ -88,22 +96,19 @@ const Header = () => {
       <LoginForm isOpen={isLoginOpen} setIsOpen={setIsLoginOpen} />
       <Upload isOpen={isUploadOpen} setIsOpen={setIsUploadOpen} />
 
-      {/* Sidebar menu */}
       <nav
         className={
           isNavOpen
-            ? "fixed top-0 z-20 h-full w-60 translate-x-0 overflow-auto border-r bg-white transition-transform duration-300 ease-in motion-reduce:transition-none"
-            : "fixed top-0 z-20 h-full w-60 -translate-x-full overflow-auto border-r bg-white transition-transform duration-300 ease-in motion-reduce:transition-none"
+            ? "fixed top-0 z-10 h-full w-60 translate-x-0 overflow-auto border-r bg-white/75 bg-white backdrop-blur-lg transition-transform duration-300 ease-in motion-reduce:transition-none"
+            : "fixed top-0 z-10 h-full w-60 -translate-x-full overflow-auto border-r bg-white/75 bg-white backdrop-blur-lg transition-transform duration-300 ease-in motion-reduce:transition-none"
         }
       >
         <button
-          onClick={() => setIsNavOpen(false)}
-          className="flex w-full items-center py-4 px-5"
+          onClick={() => setIsNavOpen(!isNavOpen)}
+          className="flex w-full items-center py-4 px-5 max-sm:invisible"
         >
           <Bars3Icon className="h-6 w-6 cursor-pointer hover:text-blue-500" />
-          <p className="visible px-2 text-lg font-bold md:invisible md:text-sm">
-            Recipe App
-          </p>
+          <p className="px-2 text-lg font-bold md:text-sm">Recipe App</p>
         </button>
 
         <section className="flex flex-col space-y-3 pt-3">
@@ -111,6 +116,7 @@ const Header = () => {
             {session ? (
               <NavLink href="/login">
                 <Image
+                  className="rounded-full"
                   src={session.user!.image!}
                   alt={session.user!.name!}
                   width={24}
@@ -151,7 +157,7 @@ const NavButton = ({ onClick, children }: ButtonProps) => {
     <div className="group flex">
       <span className="rounded-r-xl border-r-4 border-white transition ease-in-out group-hover:border-blue-500"></span>
       <button
-        className="ml-4 flex w-10/12 cursor-pointer space-x-4 self-start rounded-xl py-3 px-4 transition ease-in-out hover:bg-blue-100 active:bg-blue-200 active:text-blue-700 group-hover:text-blue-500"
+        className="flex w-10/12 cursor-pointer space-x-4 self-start rounded-xl py-3 px-4 transition ease-in-out hover:bg-blue-100 active:bg-blue-200 active:text-blue-700 group-hover:text-blue-500 md:ml-4"
         onClick={onClick}
       >
         {children}
@@ -169,7 +175,7 @@ const NavLink = ({ href, children }: LinkProps) => {
     <div className="group flex">
       <span className="rounded-r-xl border-r-4 border-white transition ease-in-out group-hover:border-blue-500"></span>
       <Link
-        className="ml-4 flex w-10/12 cursor-pointer space-x-4 self-start rounded-xl py-3 px-4 transition ease-in-out hover:bg-blue-100 active:bg-blue-200 active:text-blue-700 group-hover:text-blue-500"
+        className="flex w-10/12 cursor-pointer space-x-4 self-start rounded-xl py-3 px-4 transition ease-in-out hover:bg-blue-100 active:bg-blue-200 active:text-blue-700 group-hover:text-blue-500 md:ml-4"
         href={href}
         passHref
       >
