@@ -9,27 +9,42 @@ type FormProps = {
   children: JSX.Element;
 };
 
+const uploadImage = async ({ image }: FormStateProps) => {
+  const body = new FormData();
+  body.append("file", image[0]);
+
+  const res = await fetch("/api/upload-image", {
+    method: "POST",
+    body,
+  });
+
+  const { data } = await res.json();
+  return await data[0].newFilename;
+};
+
+const uploadRecipe = async (data: FormStateProps, imageName: string) => {
+  const res = await fetch("/api/upload", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ data, imageName }),
+  });
+
+  return await res.json();
+};
+
 export const Form = ({ children }: FormProps) => {
   const { page, setPage, formValue, resetFormState } =
     useContext(UploadContext);
-  const {
-    handleSubmit,
-    formState: { errors: formError },
-  } = useFormContext();
+  const { handleSubmit } = useFormContext();
   const router = useRouter();
 
   const onSubmit: SubmitHandler<Partial<FormStateProps>> = async () => {
     if (page < 4) {
       setPage(page + 1);
     } else {
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formValue),
-      });
-
-      const data = await res.json();
-      router.push(`/recipe/${data.recipeId}`).then(() => resetFormState());
+      const imageName = await uploadImage(formValue);
+      const { recipeId } = await uploadRecipe(formValue, imageName);
+      router.push(`/recipe/${recipeId}`).then(() => resetFormState());
     }
   };
 

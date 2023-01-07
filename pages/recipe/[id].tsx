@@ -50,8 +50,8 @@ const Recipe: NextPage<Props> = ({ recipe }) => {
 
         <div className="inline-block aspect-video overflow-hidden rounded-3xl">
           <Image
+            src={`/img/${recipe.imagePath}`}
             alt="image"
-            src={"/test-image.png"}
             className="block object-none"
             height={600}
             width={600}
@@ -92,7 +92,8 @@ const Recipe: NextPage<Props> = ({ recipe }) => {
                     className=" flex rounded-2xl bg-white py-4 font-bold"
                   >
                     <p className="px-10">
-                      {amount}{unit?.short} {ingredient.name}
+                      {amount}
+                      {unit?.short} {ingredient.name}
                     </p>
                   </li>
                 ))}

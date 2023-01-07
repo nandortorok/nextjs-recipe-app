@@ -98,6 +98,7 @@ CREATE TABLE "recipe" (
     "id" TEXT NOT NULL,
     "user_id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
+    "image_path" TEXT NOT NULL,
     "servings" INTEGER NOT NULL,
     "prep_time" INTEGER NOT NULL,
     "cook_time" INTEGER NOT NULL,

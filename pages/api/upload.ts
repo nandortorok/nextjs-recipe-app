@@ -5,7 +5,12 @@ import { unstable_getServerSession } from "next-auth/next";
 
 import { authOptions } from "./auth/[...nextauth]";
 
-const creatRecipe = async (email: string, data: FormStateProps) => {
+const creatRecipe = async (
+  email: string,
+  body: { data: FormStateProps; imageName: string }
+) => {
+  const { data, imageName } = body;
+
   const {
     title,
     servings,
@@ -22,6 +27,7 @@ const creatRecipe = async (email: string, data: FormStateProps) => {
         connect: { email },
       },
       title,
+      imagePath: imageName,
       servings,
       prepTime: prepTime * prepTimeUnit,
       cookTime: cookTime * cookTimeUnit,

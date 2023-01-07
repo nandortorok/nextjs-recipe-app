@@ -6,10 +6,12 @@ const RecipeElement = ({
   title,
   href,
   userName,
+  imagePath,
 }: {
   title: string;
   href: string;
   userName: string;
+  imagePath: string;
 }) => {
   return (
     <section className="relative max-w-md">
@@ -19,8 +21,8 @@ const RecipeElement = ({
         passHref
       >
         <Image
+          src={`/img/${imagePath}`}
           alt="recipe image"
-          src="/test-image.png"
           className="block object-none brightness-50 transition ease-in-out hover:scale-110"
           width={800}
           height={250}

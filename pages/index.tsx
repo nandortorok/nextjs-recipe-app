@@ -10,6 +10,7 @@ const getRecipes = async () => {
     select: {
       id: true,
       title: true,
+      imagePath: true,
       user: {
         select: {
           name: true,
@@ -76,6 +77,7 @@ const Home: NextPage<HomeProps> = ({ recipes }) => {
                 title={item.title}
                 href={`recipe/${item.id}`}
                 userName={item.user.name || ""}
+                imagePath={item.imagePath}
               />
             ))}
           </div>

@@ -38,4 +38,4 @@ yarn-error.log*
 /db-data
 
 # local images
-/img
+/public/img

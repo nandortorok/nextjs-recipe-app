@@ -122,6 +122,7 @@ model Recipe {
   id        String    @id @default(uuid())
   userId    String    @map("user_id")
   title     String
+  imagePath String    @map("image_path")
   servings  Int
   prepTime  Int       @map("prep_time")
   cookTime  Int       @map("cook_time")
