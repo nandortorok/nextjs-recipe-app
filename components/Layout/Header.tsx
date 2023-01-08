@@ -16,6 +16,7 @@ import LoginForm from "components/LoginForm";
 import Upload from "components/Upload";
 import Image from "next/image";
 import { HeaderSearch } from "components/Search";
+import useScrollPosition from "hooks/useScrollPosition";
 
 const links = [
   {
@@ -37,6 +38,7 @@ const links = [
 
 const Header = () => {
   const { data: session } = useSession();
+  const scrollPosition = useScrollPosition();
 
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -49,7 +51,7 @@ const Header = () => {
 
   return (
     <>
-      <header className="sticky top-0 z-20 border-b bg-white bg-white/75 py-1 font-bold shadow-sm backdrop-blur-lg">
+      <header className="sticky top-0 z-20 border-b bg-white py-1 font-bold shadow-sm">
         <div className="relative py-6 px-4 md:px-8">
           <div className="float-left flex -translate-y-1/2">
             <button onClick={() => setIsNavOpen(!isNavOpen)}>
@@ -57,7 +59,13 @@ const Header = () => {
             </button>
 
             <Link href={"/"} passHref>
-              <p className="mx-auto cursor-pointer p-3 text-xl text-black">
+              <p
+                className={
+                  scrollPosition > 45
+                    ? "mx-auto cursor-pointer p-3 text-xl max-sm:-translate-y-10 text-black transition-all"
+                    : "mx-auto cursor-pointer p-3 text-xl text-black transition-all"
+                }
+              >
                 recipe<span className="text-teal-500">app</span>
               </p>
             </Link>
@@ -72,7 +80,7 @@ const Header = () => {
             session.user &&
             session.user.image &&
             session.user.name ? (
-              <Link className="max-sm:invisible" href="/login" passHref>
+              <Link href="/login" passHref>
                 <Image
                   src={session.user.image}
                   alt={session.user.name}
@@ -83,7 +91,7 @@ const Header = () => {
               </Link>
             ) : (
               <button
-                className="p-2 align-middle max-md:invisible"
+                className="p-2 align-middle"
                 onClick={() => setIsLoginOpen(!isLoginOpen)}
               >
                 <UserIcon className="h-6 w-6 cursor-pointer group-hover:text-blue-500" />
@@ -99,38 +107,11 @@ const Header = () => {
       <nav
         className={
           isNavOpen
-            ? "fixed top-0 z-10 h-full w-60 translate-x-0 overflow-auto border-r bg-white/75 bg-white backdrop-blur-lg transition-transform duration-300 ease-in motion-reduce:transition-none"
-            : "fixed top-0 z-10 h-full w-60 -translate-x-full overflow-auto border-r bg-white/75 bg-white backdrop-blur-lg transition-transform duration-300 ease-in motion-reduce:transition-none"
+            ? "fixed top-0 z-50 mt-14 h-full w-60 translate-x-0 overflow-auto border-r bg-white/75  backdrop-blur-lg transition-transform duration-300 ease-in motion-reduce:transition-none"
+            : "fixed top-0 z-50 mt-14 h-full w-60 -translate-x-full overflow-auto border-r bg-white/75 backdrop-blur-lg transition-transform duration-300 ease-in motion-reduce:transition-none"
         }
       >
-        <button
-          onClick={() => setIsNavOpen(!isNavOpen)}
-          className="flex w-full items-center py-4 px-5 max-sm:invisible"
-        >
-          <Bars3Icon className="h-6 w-6 cursor-pointer hover:text-blue-500" />
-          <p className="px-2 text-lg font-bold md:text-sm">Recipe App</p>
-        </button>
-
         <section className="flex flex-col space-y-3 pt-3">
-          <span className="md:hidden">
-            {session ? (
-              <NavLink href="/login">
-                <Image
-                  className="rounded-full"
-                  src={session.user!.image!}
-                  alt={session.user!.name!}
-                  width={24}
-                  height={24}
-                />
-                <p>{session.user!.name!}</p>
-              </NavLink>
-            ) : (
-              <NavButton onClick={() => setIsLoginOpen(!isLoginOpen)}>
-                <ArrowLeftCircleIcon className="h-6 w-6" />
-                <p>Login</p>
-              </NavButton>
-            )}
-          </span>
           <NavButton onClick={() => setIsUploadOpen(!isUploadOpen)}>
             <ArrowUpOnSquareIcon className="h-6 w-6" />
             <p>Upload</p>
