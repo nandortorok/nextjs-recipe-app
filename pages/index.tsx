@@ -42,7 +42,7 @@ const Home: NextPage<HomeProps> = ({ recipes }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="bg-gray-100 px-4 pt-8">
+      <>
         <Search />
 
         <h2 className="py-10 text-center text-4xl font-bold">Recipes</h2>
@@ -65,7 +65,7 @@ const Home: NextPage<HomeProps> = ({ recipes }) => {
 
           <div className="py-6">{/*  */}</div>
         </section>
-      </main>
+      </>
     </>
   );
 };

@@ -37,7 +37,7 @@ export const Search = () => {
         className={
           scrollPosition > 20
             ? "visible sticky top-0 z-20 mx-auto flex w-4/5 items-center rounded-2xl py-4 text-gray-500 transition-all duration-75 ease-in hover:text-black sm:invisible"
-            : "visible sticky top-0 z-20 flex w-full items-center rounded-2xl bg-white p-4 text-gray-500 transition-all duration-75 ease-in hover:text-black sm:invisible"
+            : "visible sticky top-0 flex w-full items-center rounded-2xl bg-white p-4 text-gray-500 transition-all duration-75 ease-in hover:text-black sm:invisible"
         }
         type="button"
         onClick={() => setIsOpen(!isOpen)}

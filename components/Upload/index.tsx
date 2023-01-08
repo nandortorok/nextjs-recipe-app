@@ -28,18 +28,23 @@ const UploadForm = () => {
   }
 };
 
-export const LogIn = () => {
+const SignIn = ({
+  setIsOpen,
+}: {
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+}) => {
   return (
     <section className="flex h-screen">
       <div className="m-auto flex flex-col justify-center">
         <ArrowUpOnSquareIcon className="mx-auto h-24 w-24" />
-        <p className="p-10">Log in to upload your favorite recipes</p>
+        <p className="p-10">Sign in to upload your favorite recipes</p>
         <Link
           className="mx-auto rounded-xl bg-blue-500 py-2 px-5 text-white transition ease-in-out hover:bg-blue-600 active:ring"
-          href="/login"
+          href="/signin"
+          onClick={() => setIsOpen(false)}
           passHref
         >
-          Log in
+          Sign in
         </Link>
       </div>
     </section>
@@ -63,7 +68,7 @@ const Upload = ({ isOpen, setIsOpen }: UploadProps) => {
         >
           <XMarkIcon className="h-6 w-6" />
         </button>
-        {session ? <UploadForm /> : <LogIn />}
+        {session ? <UploadForm /> : <SignIn setIsOpen={setIsOpen} />}
       </main>
     </Modal>
   );
