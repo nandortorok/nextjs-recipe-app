@@ -2,8 +2,9 @@ import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 
 import { prisma, Prisma } from "../lib/prisma";
-import RecipeElement from "components/RecipeElement";
+import RecipeElement from "components/Home/RecipeElement";
 import { Search } from "components/Search";
+import Carousel from "components/Home/Carousel";
 
 const getRecipes = async () => {
   return await prisma.recipe.findMany({
@@ -44,8 +45,9 @@ const Home: NextPage<HomeProps> = ({ recipes }) => {
 
       <>
         <Search />
+        <Carousel />
 
-        <h2 className="py-10 text-center text-4xl font-bold">Recipes</h2>
+        <h2 className="py-5 text-4xl font-bold text-center">Recipes</h2>
 
         <section className="container mx-auto md:px-6">
           <div className="grid grid-cols-1 gap-6 py-6 md:grid-cols-2">
