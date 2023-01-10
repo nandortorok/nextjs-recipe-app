@@ -13,7 +13,7 @@ import { NavButton, NavLink } from "./NavElements";
 const links = [
   {
     icon: <BookmarkSquareIcon className="h-6 w-6" />,
-    href: "/libary",
+    href: "/library",
     name: "Saved recipes",
   },
   {
