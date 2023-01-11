@@ -2,7 +2,8 @@ import { useState } from "react";
 import Image from "next/image";
 import useSWR from "swr";
 import { CakeIcon, ClockIcon } from "@heroicons/react/24/outline";
-import { Recipe, Section, SectionIngredient } from "@prisma/client";
+import { Recipe, SectionIngredient } from "@prisma/client";
+import { motion } from "framer-motion";
 
 const CategoriesInit = [
   { name: "All", route: "/all", isSelected: true },
@@ -79,7 +80,12 @@ const Carousel = () => {
           <p className="text-center">Loading</p>
         </div>
       )}
-      <section className="-mx-4 flex space-x-5 overflow-x-auto whitespace-nowrap py-5">
+      <motion.div
+        key={categories.filter((v) => v.isSelected === true)[0].name}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 100, y: 0 }}
+        className="-mx-4 flex space-x-5 overflow-x-auto whitespace-nowrap py-5"
+      >
         <span />
         {data &&
           data.map(
@@ -109,7 +115,7 @@ const Carousel = () => {
             )
           )}
         <span />
-      </section>
+      </motion.div>
     </>
   );
 };

@@ -11,7 +11,7 @@ export const HeaderSearch = () => {
   return (
     <>
       <button
-        className="flex grow items-center rounded-2xl bg-gray-400/20 px-4 py-2 text-gray-500 transition ease-in-out hover:bg-gray-500/20 hover:text-black"
+        className="flex grow items-center rounded-3xl bg-gray-200/50 px-4 py-2 text-gray-400 transition ease-in-out hover:bg-gray-400/20 hover:text-gray-600"
         type="button"
         onClick={() => setIsOpen(!isOpen)}
       >
@@ -36,8 +36,8 @@ export const Search = () => {
       <button
         className={
           scrollPosition > 20
-            ? "visible sticky top-0 z-20 mx-auto flex w-4/5 items-center rounded-2xl py-4 text-gray-500 transition-all duration-75 ease-in hover:text-black sm:invisible"
-            : "visible sticky top-0 flex w-full items-center rounded-2xl bg-white p-4 text-gray-500 transition-all duration-75 ease-in hover:text-black sm:invisible"
+            ? "visible sticky top-0 z-20 mx-auto flex w-4/5 items-center py-4 text-gray-500 transition-all ease-in hover:text-black sm:invisible"
+            : "visible sticky top-0 flex w-full items-center rounded-3xl bg-white p-4 text-gray-500 transition-all ease-in hover:text-black sm:invisible"
         }
         type="button"
         onClick={() => setIsOpen(!isOpen)}

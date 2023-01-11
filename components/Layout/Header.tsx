@@ -55,8 +55,8 @@ const Header = () => {
                   src={session.user.image}
                   alt={session.user.name}
                   className="rounded-full border hover:scale-110 hover:bg-blue-100"
-                  width={26}
-                  height={26}
+                  width={28}
+                  height={28}
                 />
               </UserMenu>
             ) : (
