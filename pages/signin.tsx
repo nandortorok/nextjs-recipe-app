@@ -12,7 +12,7 @@ const SignIn: NextPage = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (!session)
+    if (session)
       router.push({
         pathname: "/",
       });
