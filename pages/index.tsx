@@ -3,8 +3,8 @@ import Head from "next/head";
 
 import { prisma, Prisma } from "../lib/prisma";
 import RecipeElement from "components/Home/RecipeElement";
-import { Search } from "components/Search";
-import Carousel from "components/Home/Carousel";
+import Search from "components/Search";
+import Featured from "components/Home/Featured";
 
 const getRecipes = async () => {
   return await prisma.recipe.findMany({
@@ -36,7 +36,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
 const Home: NextPage<HomeProps> = ({ recipes }) => {
   return (
-    <>
+    <main>
       <Head>
         <title>Recipe App</title>
         <meta name="description" content="Next.js Recipe App by BaconPardner" />
@@ -44,12 +44,11 @@ const Home: NextPage<HomeProps> = ({ recipes }) => {
       </Head>
 
       <>
-        <Search />
-        <Carousel />
+        <Featured />
 
-        <h2 className="py-5 text-4xl font-bold text-center">Recipes</h2>
+        <h2 className="py-5 text-center text-4xl font-bold">Recipes</h2>
 
-        <section className="container mx-auto md:px-6">
+        <section>
           <div className="grid grid-cols-1 gap-6 py-6 md:grid-cols-2">
             {recipes.map((item) => (
               <RecipeElement
@@ -68,7 +67,7 @@ const Home: NextPage<HomeProps> = ({ recipes }) => {
           <div className="py-6">{/*  */}</div>
         </section>
       </>
-    </>
+    </main>
   );
 };
 

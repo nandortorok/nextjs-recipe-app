@@ -45,8 +45,8 @@ const Sidebar = ({ isOpen }: SidebarProps) => {
       <nav
         className={
           isOpen
-            ? "fixed top-0 z-50 mt-14 h-full w-60 translate-x-0 overflow-auto border-r bg-white/75  backdrop-blur-lg transition-transform duration-300 ease-in motion-reduce:transition-none"
-            : "fixed top-0 z-50 mt-14 h-full w-60 -translate-x-full overflow-auto border-r bg-white/75 backdrop-blur-lg transition-transform duration-300 ease-in motion-reduce:transition-none"
+            ? "fixed top-0 z-50 md:mt-[60px] mt-12 h-full w-60 translate-x-0 overflow-auto border-r bg-white/75 backdrop-blur-lg transition-transform duration-300 ease-in motion-reduce:transition-none"
+            : "fixed top-0 z-50 md:mt-[60px] mt-12 h-full w-60 -translate-x-full overflow-auto border-r bg-white/75 backdrop-blur-lg transition-transform duration-300 ease-in motion-reduce:transition-none"
         }
       >
         <section className="flex flex-col space-y-3 pt-3">

@@ -9,7 +9,7 @@ type ButtonProps = {
 export const NavButton = ({ onClick, children }: ButtonProps) => {
   return (
     <div className="group flex">
-      <span className="rounded-r-xl border-r-4 border-white transition ease-in-out group-hover:border-blue-500"></span>
+      <span className="rounded-r-xl border-r-4 border-transparent transition ease-in-out group-hover:border-blue-500"></span>
       <button
         className="flex w-10/12 cursor-pointer space-x-4 self-start rounded-xl py-3 px-4 transition ease-in-out hover:bg-blue-100 active:bg-blue-200 active:text-blue-700 group-hover:text-blue-500 md:ml-4"
         onClick={onClick}
@@ -27,7 +27,7 @@ type LinkProps = {
 export const NavLink = ({ href, children }: LinkProps) => {
   return (
     <div className="group flex">
-      <span className="rounded-r-xl border-r-4 border-white transition ease-in-out group-hover:border-blue-500"></span>
+      <span className="rounded-r-xl border-r-4 border-transparent transition ease-in-out group-hover:border-blue-500"></span>
       <Link
         className="flex w-10/12 cursor-pointer space-x-4 self-start rounded-xl py-3 px-4 transition ease-in-out hover:bg-blue-100 active:bg-blue-200 active:text-blue-700 group-hover:text-blue-500 md:ml-4"
         href={href}

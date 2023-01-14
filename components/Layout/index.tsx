@@ -6,7 +6,8 @@ const Layout = ({ children }: PropsWithChildren) => {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-slate-100 px-4 pt-8">{children}</main>
+      {/* <main className="min-h-screen bg-slate-100 px-4 pt-8">{children}</main> */}
+      {children}
       <Footer />
     </>
   );

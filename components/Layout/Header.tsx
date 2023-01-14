@@ -5,69 +5,59 @@ import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { UserIcon, Bars3Icon } from "@heroicons/react/24/outline";
 
-import { HeaderSearch } from "components/Search";
-import useScrollPosition from "hooks/useScrollPosition";
 import Sidebar from "./Sidebar";
 import UserMenu from "./UserMenu";
+import Search from "components/Search";
 
 const Header = () => {
   const { data: session } = useSession();
   const router = useRouter();
   const [isNavOpen, setIsNavOpen] = useState(false);
-  const scrollPosition = useScrollPosition();
 
   const dynamicRoute = router.asPath;
   useEffect(() => setIsNavOpen(false), [dynamicRoute]);
 
   return (
     <>
-      <header className="sticky top-0 z-20 border-b bg-white py-1 font-bold shadow-sm">
-        <div className="relative py-6 px-4 md:px-8">
-          <div className="float-left flex -translate-y-1/2">
-            <button onClick={() => setIsNavOpen(!isNavOpen)}>
-              <Bars3Icon className="h-7 w-7 cursor-pointer hover:text-blue-500" />
-            </button>
+      <header className="sticky top-0 z-20 flex-1 flex items-center justify-between border-b bg-white px-5 md:px-8 py-1 font-bold shadow-sm">
+        <section className="flex flex-1">
+          <button onClick={() => setIsNavOpen(!isNavOpen)}>
+            <Bars3Icon className="h-7 w-7 cursor-pointer hover:text-blue-500" />
+          </button>
 
-            <Link href={"/"} passHref>
-              <p
-                className={
-                  router.pathname == "/" && scrollPosition > 45
-                    ? "mx-auto cursor-pointer p-3 text-xl text-black transition-all max-sm:-translate-y-10"
-                    : "mx-auto cursor-pointer p-3 text-xl text-black transition-all"
-                }
-              >
-                recipe<span className="text-teal-500">app</span>
-              </p>
+          <Link className="max-sm:hidden" href={"/"} passHref>
+            <p
+              className="mx-auto cursor-pointer p-3 text-xl text-black transition-all"
+            >
+              recipe<span className="text-teal-500">app</span>
+            </p>
+          </Link>
+        </section>
+
+        <Search />
+
+        <section className="flex justify-end flex-1 rounded-full transition ease-in-out">
+          {session &&
+          session.user &&
+          session.user.image &&
+          session.user.name ? (
+            <UserMenu>
+              <Image
+                src={session.user.image}
+                alt={session.user.name}
+                className="rounded-full border hover:scale-110 hover:bg-blue-100"
+                width={28}
+                height={28}
+              />
+            </UserMenu>
+          ) : (
+            <Link className="group" href="/signin" passHref>
+              <button className="p-2 align-middle group-hover:bg-blue-100 rounded-full transition ease-in-out">
+                <UserIcon className="h-6 w-6 cursor-pointer group-hover:text-blue-500 transition ease-in-out" />
+              </button>
             </Link>
-          </div>
-
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-sm:invisible">
-            <HeaderSearch />
-          </div>
-
-          <div className="group float-right -translate-y-1/2 flex-nowrap rounded-full transition ease-in-out hover:bg-blue-100 active:bg-blue-200 active:text-blue-700">
-            {session &&
-            session.user &&
-            session.user.image &&
-            session.user.name ? (
-              <UserMenu>
-                <Image
-                  src={session.user.image}
-                  alt={session.user.name}
-                  className="rounded-full border hover:scale-110 hover:bg-blue-100"
-                  width={28}
-                  height={28}
-                />
-              </UserMenu>
-            ) : (
-              <Link href="/signin" passHref>
-                <button className="p-2 align-middle">
-                  <UserIcon className="h-6 w-6 cursor-pointer group-hover:text-blue-500" />
-                </button>
-              </Link>
-            )}
-          </div>
-        </div>
+          )}
+        </section>
       </header>
       <Sidebar isOpen={isNavOpen} />
     </>
