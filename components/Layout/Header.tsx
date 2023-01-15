@@ -19,7 +19,7 @@ const Header = () => {
 
   return (
     <>
-      <header className="sticky top-0 z-20 flex-1 flex items-center justify-between border-b bg-white px-5 md:px-8 py-1 font-bold shadow-sm">
+      <header className="sticky top-0 z-20 flex-1 flex items-center justify-between border-b bg-white px-5 md:px-8 py-1 font-medium shadow-sm">
         <section className="flex flex-1">
           <button onClick={() => setIsNavOpen(!isNavOpen)}>
             <Bars3Icon className="h-7 w-7 cursor-pointer hover:text-blue-500" />
@@ -27,7 +27,7 @@ const Header = () => {
 
           <Link className="max-sm:hidden" href={"/"} passHref>
             <p
-              className="mx-auto cursor-pointer p-3 text-xl text-black transition-all"
+              className="mx-auto cursor-pointer p-3 text-xl transition-all"
             >
               recipe<span className="text-teal-500">app</span>
             </p>

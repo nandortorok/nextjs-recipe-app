@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import useSWR from "swr";
 import { CakeIcon, ClockIcon } from "@heroicons/react/24/outline";
 import { Recipe, SectionIngredient } from "@prisma/client";
@@ -105,39 +106,46 @@ const Featured = () => {
         )}
         <motion.div
           key={categories.filter((v) => v.isSelected === true)[0].name}
-          initial={{ opacity: 0.5 }}
-          animate={{ opacity: 1 }}
+          initial={{ opacity: 0.5, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
           className="overflow-x-auto py-5 max-xl:flex max-xl:space-x-5 xl:grid xl:grid-cols-3 xl:grid-rows-3 xl:gap-y-5 xl:gap-x-12 xl:px-5 2xl:gap-x-24 2xl:px-1"
         >
           <span className="xl:hidden" />
           {data &&
             data.map(
-              ({ id, title, imagePath, prepTime, cookTime, sections }, idx) => (
-                <article
-                  key={idx}
-                  className="rounded-2xl bg-white shadow-md xl:flex"
-                >
-                  <header className="relative py-20 px-28">
-                    <Image
-                      src={`/img/${imagePath}`}
-                      alt="recipe image"
-                      className="object-cover max-xl:rounded-t-2xl xl:rounded-l-2xl"
-                      sizes={"(max-width: 768px)"}
-                      fill={true}
-                    />
-                  </header>
-                  <main className="space-y-1 px-6 pb-2 lg:flex lg:flex-col">
-                    <h4 className="py-2 font-medium lg:mb-auto">{title}</h4>
-                    <div className="flex items-center gap-1 text-sm text-gray-400">
-                      <ClockIcon className="h-5 w-5" />
-                      <p>{prepTime + cookTime} min</p>
-                    </div>
-                    <div className="flex items-center gap-1 text-sm text-gray-400">
-                      <CakeIcon className="h-5 w-5" />
-                      <p>{getIngredientCount(sections)} ingredients</p>
-                    </div>
-                  </main>
-                </article>
+              (
+                { id, title, imagePath, prepTime, cookTime, sections, user },
+                idx
+              ) => (
+                <Link key={idx} href={`recipe/${id}`}>
+                  <article className="rounded-2xl bg-white shadow-md transition-all ease-in-out hover:shadow-lg hover:scale-105 xl:flex">
+                    <header className="relative py-20 px-28">
+                      <Image
+                        src={`/img/${imagePath}`}
+                        alt="recipe image"
+                        className="object-cover max-xl:rounded-t-2xl xl:rounded-l-2xl"
+                        sizes={"(max-width: 768px)"}
+                        fill={true}
+                      />
+                      <div className="absolute left-0 right-0 top-0 bg-gradient-to-b from-black/75 to-transparent py-8 max-xl:rounded-t-2xl xl:rounded-tl-2xl">
+                        <p className="absolute top-4 px-6 text-sm font-medium text-gray-200">
+                          {user.name}
+                        </p>
+                      </div>
+                    </header>
+                    <main className="space-y-1 px-6 pb-2 lg:flex lg:flex-col">
+                      <h4 className="py-2 font-medium lg:mb-auto">{title}</h4>
+                      <div className="flex items-center gap-1 text-sm text-gray-400">
+                        <ClockIcon className="h-5 w-5" />
+                        <p>{prepTime + cookTime} min</p>
+                      </div>
+                      <div className="flex items-center gap-1 text-sm text-gray-400">
+                        <CakeIcon className="h-5 w-5" />
+                        <p>{getIngredientCount(sections)} ingredients</p>
+                      </div>
+                    </main>
+                  </article>
+                </Link>
               )
             )}
           <span className="xl:hidden" />

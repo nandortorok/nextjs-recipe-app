@@ -12,11 +12,11 @@ const roboto = Roboto({
 
 const Layout = ({ children }: PropsWithChildren) => {
   return (
-    <>
+    <div className={roboto.className}>
       <Header />
-      <div className={roboto.className}>{children}</div>
+      {children}
       <Footer />
-    </>
+    </div>
   );
 };
 export default Layout;
