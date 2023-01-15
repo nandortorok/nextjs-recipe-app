@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 
 import GitHubLogo from "../public/github-mark-white.svg";
 import { useRouter } from "next/router";

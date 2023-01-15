@@ -1,10 +1,12 @@
 import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 
 import { prisma, Prisma } from "../lib/prisma";
 import Featured from "components/Home/Featured";
-import { ClockIcon } from "@heroicons/react/24/outline";
+import { CakeIcon, ClockIcon } from "@heroicons/react/24/outline";
+import getIngredientCount from "lib/getIngredientCount";
 
 const getRecipes = async () => {
   return await prisma.recipe.findMany({
@@ -12,13 +14,20 @@ const getRecipes = async () => {
       id: true,
       title: true,
       imagePath: true,
+      prepTime: true,
+      cookTime: true,
       user: {
         select: {
           name: true,
         },
       },
+      sections: {
+        select: {
+          sectionIngredients: true,
+        },
+      },
     },
-    take: 10,
+    take: 6,
   });
 };
 
@@ -46,38 +55,51 @@ const Home: NextPage<HomeProps> = ({ recipes }) => {
       <main>
         <Featured />
 
-        <section className="py-10 px-5">
-          <h1 className="pb-10 text-4xl font-bold md:text-center">Recipes</h1>
+        <section className="container mx-auto py-10 px-5 md:py-20">
+          <h1 className="pb-10 text-4xl font-bold sm:text-center md:pb-20">
+            Recipes
+          </h1>
 
-          <div className="flex flex-col space-y-5">
-            {recipes.map(({ id, imagePath, title, user }, idx) => (
-              <article
-                key={idx}
-                className="relative rounded-3xl py-24 px-28 text-white shadow-md"
-              >
-                <Image
-                  src={`/img/${imagePath}`}
-                  alt="recipe image"
-                  className="rounded-3xl object-cover"
-                  sizes={"(max-width: 768px)"}
-                  fill={true}
-                />
-                <header className="absolute top-0 left-0 right-0 rounded-t-3xl bg-gradient-to-b from-black/50 to-transparent py-8">
-                  <p className="absolute left-5 top-5 text-sm">{user.name}</p>
-                </header>
-                <footer className="absolute bottom-0 left-0 right-0 rounded-b-3xl bg-gradient-to-t from-black/50 to-transparent py-12">
-                  <h4 className="absolute left-5 top-6 text-lg font-black">
-                    {title}
-                  </h4>
-                  <div className="absolute left-5 top-14">
-                    <p className="flex items-center text-sm">
-                      <ClockIcon className="h-4 w-4 mr-1" />
-                      15 min
-                    </p>
-                  </div>
-                </footer>
-              </article>
-            ))}
+          <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
+            {recipes.map(
+              (
+                { id, imagePath, title, user, prepTime, cookTime, sections },
+                idx
+              ) => (
+                <Link key={idx} href={`recipe/${id}`}>
+                  <article
+                    key={idx}
+                    className="relative rounded-3xl py-28 text-white shadow-md transition-all ease-in-out hover:scale-105 hover:shadow-xl sm:py-40 lg:px-60 lg:py-44 2xl:px-80 2xl:py-56"
+                  >
+                    <Image
+                      src={`/img/${imagePath}`}
+                      alt="recipe image"
+                      className="rounded-3xl object-cover"
+                      sizes={"(max-width: 768px)"}
+                      fill={true}
+                    />
+                    <header className="absolute top-0 left-0 right-0 rounded-t-3xl bg-gradient-to-b from-black/50 to-transparent py-8">
+                      <p className="absolute left-5 top-5 text-sm font-medium xl:text-base">
+                        {user.name}
+                      </p>
+                    </header>
+                    <footer className="absolute bottom-0 left-0 right-0 rounded-b-3xl bg-gradient-to-t from-black/50 to-transparent py-12 xl:py-16  ">
+                      <h1 className="absolute left-5 top-6 text-lg font-black xl:top-10 xl:text-3xl">
+                        {title}
+                      </h1>
+                      <p className="absolute left-5 top-14 flex items-center text-sm xl:top-20">
+                        <ClockIcon className="mr-1 h-4 w-4" />
+                        {prepTime + cookTime} min
+                      </p>
+                      <p className="absolute right-5 top-14 flex items-center text-sm xl:top-20">
+                        <CakeIcon className="mr-1 h-4 w-4" />
+                        {getIngredientCount(sections)} ingredients
+                      </p>
+                    </footer>
+                  </article>
+                </Link>
+              )
+            )}
           </div>
         </section>
       </main>

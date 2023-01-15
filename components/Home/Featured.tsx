@@ -6,6 +6,8 @@ import { CakeIcon, ClockIcon } from "@heroicons/react/24/outline";
 import { Recipe, SectionIngredient } from "@prisma/client";
 import { motion } from "framer-motion";
 
+import getIngredientCount from "lib/getIngredientCount";
+
 const CategoriesInit = [
   { name: "All", route: "/all", isSelected: true },
   { name: "New", route: "/new", isSelected: false },
@@ -46,22 +48,10 @@ const Featured = () => {
     setCategories(newCategories);
   };
 
-  const getIngredientCount = (sections: SectionsProps) => {
-    let count = 0;
-
-    sections.map(({ sectionIngredients }) => {
-      return sectionIngredients.map(() => {
-        count++;
-      });
-    });
-
-    return count;
-  };
-
   return (
     <section className="bg-gradient-to-b from-gray-100 via-white to-gray-100 py-10">
       <div className="mx-auto xl:container">
-        <h1 className="px-5 pb-10 text-4xl font-bold md:text-center">
+        <h1 className="px-5 pb-10 text-4xl font-bold sm:text-center">
           Featured
         </h1>
         <div className="flex justify-start space-x-4 overflow-x-auto whitespace-nowrap px-5 md:justify-center">
@@ -80,7 +70,7 @@ const Featured = () => {
           ))}
         </div>
         {isLoading && (
-          <div className="overflow-x-auto py-5 max-lg:flex max-lg:space-x-5 max-lg:whitespace-nowrap lg:grid lg:grid-flow-col lg:grid-rows-3 lg:gap-y-5 lg:gap-x-12 lg:px-5 2xl:gap-x-24 2xl:px-1">
+          <div className="overflow-x-auto py-5 max-xl:flex max-xl:space-x-5 xl:grid xl:grid-cols-3 xl:grid-rows-3 xl:gap-y-5 xl:gap-x-12 xl:px-5 2xl:gap-x-24 2xl:px-5">
             <span className="md:hidden" />
             {[...Array(9)].map((n, idx) => (
               <article
@@ -108,7 +98,7 @@ const Featured = () => {
           key={categories.filter((v) => v.isSelected === true)[0].name}
           initial={{ opacity: 0.5, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="overflow-x-auto py-5 max-xl:flex max-xl:space-x-5 xl:grid xl:grid-cols-3 xl:grid-rows-3 xl:gap-y-5 xl:gap-x-12 xl:px-5 2xl:gap-x-24 2xl:px-1"
+          className="overflow-x-auto py-5 max-xl:flex max-xl:space-x-5 xl:grid xl:grid-cols-3 xl:grid-rows-3 xl:gap-y-5 xl:gap-x-12 xl:px-5 2xl:gap-x-24 2xl:px-5"
         >
           <span className="xl:hidden" />
           {data &&
@@ -118,7 +108,7 @@ const Featured = () => {
                 idx
               ) => (
                 <Link key={idx} href={`recipe/${id}`}>
-                  <article className="rounded-2xl bg-white shadow-md transition-all ease-in-out hover:shadow-lg hover:scale-105 xl:flex">
+                  <article className="rounded-2xl bg-white shadow-md transition-all ease-in-out hover:scale-105 hover:shadow-lg xl:flex">
                     <header className="relative py-20 px-28">
                       <Image
                         src={`/img/${imagePath}`}
