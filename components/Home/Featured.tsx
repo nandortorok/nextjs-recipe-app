@@ -127,7 +127,7 @@ const Featured = () => {
                     />
                   </header>
                   <main className="space-y-1 px-6 pb-2 lg:flex lg:flex-col">
-                    <p className="py-2 font-bold lg:mb-auto">{title}</p>
+                    <h4 className="py-2 font-medium lg:mb-auto">{title}</h4>
                     <div className="flex items-center gap-1 text-sm text-gray-400">
                       <ClockIcon className="h-5 w-5" />
                       <p>{prepTime + cookTime} min</p>
