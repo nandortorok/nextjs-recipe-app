@@ -15,7 +15,7 @@ const maxImageSize = 5 * 1024 * 1024;
 const validImageType = /image\/[j|p]/;
 
 const schema = z.object({
-  title: z.string().min(3).max(64),
+  title: z.string().min(3).max(32),
   image: z.object({
     size: z.number().max(maxImageSize, "Image's size must be less than 5 MB"),
     imageType: z.string().regex(validImageType, "Image must be valid type"),

@@ -59,7 +59,7 @@ const Featured = () => {
 
   return (
     <section className="bg-gradient-to-b from-gray-100 via-white to-gray-100 py-10">
-      <div className="container mx-auto">
+      <div className="mx-auto xl:container">
         <h1 className="px-5 pb-10 text-4xl font-bold md:text-center">
           Featured
         </h1>
@@ -70,7 +70,7 @@ const Featured = () => {
               className={
                 isSelected
                   ? "rounded-2xl bg-blue-500 px-6 py-2 text-sm text-white transition-all ease-in-out hover:bg-blue-600 hover:text-blue-50"
-                  : "rounded-2xl bg-gray-200 px-6 py-2 text-sm text-gray-400 transition-all ease-in-out hover:bg-blue-300 hover:text-gray-200"
+                  : "rounded-2xl bg-slate-200 px-6 py-2 text-sm text-slate-400 transition-all ease-in-out hover:bg-blue-200 hover:text-blue-500"
               }
               onClick={() => updateCategories(name)}
             >
@@ -79,48 +79,68 @@ const Featured = () => {
           ))}
         </div>
         {isLoading && (
-          <div className="flex items-center justify-center py-5 text-gray-500">
-            <Spinner />
-            <p className="text-center">Loading</p>
+          <div className="overflow-x-auto py-5 max-lg:flex max-lg:space-x-5 max-lg:whitespace-nowrap lg:grid lg:grid-flow-col lg:grid-rows-3 lg:gap-y-5 lg:gap-x-12 lg:px-5 2xl:gap-x-24 2xl:px-1">
+            <span className="md:hidden" />
+            {[...Array(9)].map((n, idx) => (
+              <article
+                key={idx}
+                className="animate-pulse rounded-2xl bg-white shadow-md lg:flex"
+              >
+                <header className="relative bg-gray-200 py-20 px-28 max-lg:rounded-t-2xl lg:rounded-l-2xl">
+                  <Spinner />
+                </header>
+                <main className="space-y-1 px-6 pb-2 lg:flex lg:flex-col">
+                  <p className="font bold my-4 h-4 rounded-full bg-gray-200 lg:mb-auto" />
+                  <div className="pb-1">
+                    <p className="h-3 w-14 rounded-full bg-gray-200" />
+                  </div>
+                  <div className="pb-1">
+                    <p className="h-3 w-20 rounded-full bg-gray-200" />
+                  </div>
+                </main>
+              </article>
+            ))}
+            <span className="md:hidden" />
           </div>
         )}
         <motion.div
           key={categories.filter((v) => v.isSelected === true)[0].name}
-          initial={{ opacity: 0.5, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="flex space-x-5 overflow-x-auto whitespace-nowrap py-5"
+          initial={{ opacity: 0.5 }}
+          animate={{ opacity: 1 }}
+          className="overflow-x-auto py-5 max-xl:flex max-xl:space-x-5 xl:grid xl:grid-cols-3 xl:grid-rows-3 xl:gap-y-5 xl:gap-x-12 xl:px-5 2xl:gap-x-24 2xl:px-1"
         >
-          <span />
+          <span className="xl:hidden" />
           {data &&
             data.map(
               ({ id, title, imagePath, prepTime, cookTime, sections }, idx) => (
-                <article key={idx} className="rounded-2xl bg-white shadow-md">
+                <article
+                  key={idx}
+                  className="rounded-2xl bg-white shadow-md xl:flex"
+                >
                   <header className="relative py-20 px-28">
                     <Image
                       src={`/img/${imagePath}`}
                       alt="recipe image"
-                      className="rounded-t-2xl object-cover"
-                      fill={true}
+                      className="object-cover max-xl:rounded-t-2xl xl:rounded-l-2xl"
                       sizes={"(max-width: 768px)"}
-                      placeholder="blur"
-                      blurDataURL={`/img/${imagePath}`}
+                      fill={true}
                     />
                   </header>
-                  <p className="px-4 py-2 font-bold">{title}</p>
-                  <footer className="space-y-1 px-4 pb-2 text-sm text-gray-400">
-                    <div className="flex items-center  gap-1">
+                  <main className="space-y-1 px-6 pb-2 lg:flex lg:flex-col">
+                    <p className="py-2 font-bold lg:mb-auto">{title}</p>
+                    <div className="flex items-center gap-1 text-sm text-gray-400">
                       <ClockIcon className="h-5 w-5" />
                       <p>{prepTime + cookTime} min</p>
                     </div>
-                    <div className="flex items-center gap-1 ">
+                    <div className="flex items-center gap-1 text-sm text-gray-400">
                       <CakeIcon className="h-5 w-5" />
                       <p>{getIngredientCount(sections)} ingredients</p>
                     </div>
-                  </footer>
+                  </main>
                 </article>
               )
             )}
-          <span />
+          <span className="xl:hidden" />
         </motion.div>
       </div>
     </section>
@@ -129,26 +149,28 @@ const Featured = () => {
 
 export const Spinner = () => {
   return (
-    <svg
-      className="-ml-1 mr-3 h-5 w-5 animate-spin"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-    >
-      <circle
-        className="opacity-25"
-        cx="12"
-        cy="12"
-        r="10"
-        stroke="currentColor"
-        strokeWidth="4"
-      ></circle>
-      <path
-        className="opacity-75"
-        fill="currentColor"
-        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-      ></path>
-    </svg>
+    <div className="absolute -translate-x-1/2 -translate-y-1/2 transform">
+      <svg
+        className="h-12 w-12 animate-spin"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <circle
+          className="opacity-25"
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          strokeWidth="4"
+        ></circle>
+        <path
+          className="opacity-50"
+          fill="currentColor"
+          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+        ></path>
+      </svg>
+    </div>
   );
 };
 

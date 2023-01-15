@@ -18,7 +18,7 @@ const getRecipes = async () => {
     orderBy: {
       createdAt: "desc",
     },
-    take: 12,
+    take: 9,
   });
 };
 

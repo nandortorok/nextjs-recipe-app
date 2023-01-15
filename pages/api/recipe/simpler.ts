@@ -20,7 +20,7 @@ const getRecipes = async () => {
         _count: "asc",
       },
     },
-    take: 12,
+    take: 9,
   });
 };
 

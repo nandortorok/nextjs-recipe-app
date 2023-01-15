@@ -15,7 +15,7 @@ const getRecipes = async () => {
         },
       },
     },
-    take: 12,
+    take: 9,
   });
 };
 

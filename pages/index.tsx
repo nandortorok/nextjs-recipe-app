@@ -36,23 +36,23 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
 const Home: NextPage<HomeProps> = ({ recipes }) => {
   return (
-    <main>
+    <>
       <Head>
         <title>Recipe App</title>
         <meta name="description" content="Next.js Recipe App by BaconPardner" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <>
+      <main>
         <Featured />
 
         <h2 className="py-5 text-center text-4xl font-bold">Recipes</h2>
 
         <section>
           <div className="grid grid-cols-1 gap-6 py-6 md:grid-cols-2">
-            {recipes.map((item) => (
+            {recipes.map((item, idx) => (
               <RecipeElement
-                key={item.id}
+                key={idx}
                 title={item.title}
                 href={`recipe/${item.id}`}
                 userName={item.user.name || ""}
@@ -66,8 +66,8 @@ const Home: NextPage<HomeProps> = ({ recipes }) => {
 
           <div className="py-6">{/*  */}</div>
         </section>
-      </>
-    </main>
+      </main>
+    </>
   );
 };
 
