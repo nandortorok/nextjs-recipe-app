@@ -1,6 +1,5 @@
 import { Fragment, useContext, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { UploadContext } from "lib/contexts";
 import {
   Controller,
   FormProvider,
@@ -13,6 +12,8 @@ import { Combobox, Transition } from "@headlessui/react";
 import useSWR from "swr";
 import { Unit } from "@prisma/client";
 
+import { UploadContext } from "lib/contexts";
+import fetcher from "lib/fetcher";
 import Form from "./Form";
 import { ErrorMessage, XButton } from "./Elements";
 
@@ -195,8 +196,6 @@ const IngredientsInput = () => {
     </FormProvider>
   );
 };
-
-const fetcher = (args: string) => fetch(args).then((res) => res.json());
 
 const Ingredient = ({ sectionIndex }: { sectionIndex: number }) => {
   const { formValue, setFormValue } = useContext(UploadContext);

@@ -1,35 +1,25 @@
 import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import {
-  Dispatch,
-  SetStateAction,
-  useState,
-  ChangeEvent,
-  useEffect,
-} from "react";
+import { Dispatch, SetStateAction, useState } from "react";
+import useSWR from "swr";
+
+import fetcher from "lib/fetcher";
 
 type ResultsProps = {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 };
 
+type RecipeProps = {
+  id: string;
+  title: string;
+}[];
+
 const Results = ({ setIsOpen }: ResultsProps) => {
-  const [query, setQuery] = useState("");
-  const [recipes, setRecipes] = useState([]);
-
-  const handleChange = async (event: ChangeEvent<HTMLInputElement>) => {
-    setQuery(event.target.value);
-  };
-
-  useEffect(() => {
-    const getRecipesList = async (params: string) => {
-      const req = await fetch(`api/search?title=${params}`);
-      const data = await req.json();
-
-      setRecipes(data);
-    };
-
-    getRecipesList(query);
-  }, [query]);
+  const [query, setQuery] = useState("a");
+  const { data, error, isLoading } = useSWR<RecipeProps>(
+    `/api/search?title=${query}`,
+    fetcher
+  );
 
   return (
     <>
@@ -41,7 +31,7 @@ const Results = ({ setIsOpen }: ResultsProps) => {
           <input
             className="w-full outline-none"
             value={query}
-            onChange={handleChange}
+            onChange={(e) => setQuery(e.target.value)}
             placeholder="Search recipes"
             autoComplete="off"
           />
@@ -54,12 +44,11 @@ const Results = ({ setIsOpen }: ResultsProps) => {
         </button>
       </header>
       <main className="overflow-auto">
-        {recipes.length > 0 ? (
+        {data && data.length > 0 ? (
           <>
             <h3 className="border-b p-4 font-bold">Recipes</h3>
             <ul className="divide-y">
-              {/* TODO give proper type */}
-              {recipes.map((item: any) => (
+              {data.map((item) => (
                 <Link key={item.id} href={`recipe/${item.id}`} passHref>
                   <li className="p-4 hover:bg-blue-50">{item.title}</li>
                 </Link>
