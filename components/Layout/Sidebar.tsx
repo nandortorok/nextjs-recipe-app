@@ -16,11 +16,11 @@ const links = [
     href: "/library",
     name: "Saved recipes",
   },
-  {
-    icon: <DocumentTextIcon className="h-6 w-6" />,
-    href: "/reviews",
-    name: "Reviews",
-  },
+  // {
+  //   icon: <DocumentTextIcon className="h-6 w-6" />,
+  //   href: "/reviews",
+  //   name: "Reviews",
+  // },
   {
     icon: <RectangleStackIcon className="h-6 w-6" />,
     href: "/user/recipes",

@@ -109,7 +109,7 @@ const Featured = () => {
               ) => (
                 <Link key={idx} href={`recipe/${id}`}>
                   <article className="rounded-2xl bg-white shadow-md transition-all ease-in-out hover:scale-105 hover:shadow-lg xl:flex">
-                    <header className="relative py-20 px-28">
+                    <header className="relative bg-gray-200 py-20 px-28 rounded-t-2xl xl:rounded-l-2xl">
                       <Image
                         src={`/img/${imagePath}`}
                         alt="recipe image"
