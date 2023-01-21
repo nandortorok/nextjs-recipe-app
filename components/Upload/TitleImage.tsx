@@ -1,4 +1,4 @@
-import { ChangeEvent, useContext, useState } from "react";
+import { ChangeEvent, useContext } from "react";
 import {
   CloudArrowUpIcon,
   ExclamationTriangleIcon,
@@ -12,27 +12,24 @@ import { UploadContext } from "lib/contexts";
 import Image from "next/image";
 
 const maxImageSize = 5 * 1024 * 1024;
-const validImageType = /image\/[j|p]/;
+const validImageTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
 
 const schema = z.object({
   title: z
     .string()
     .min(12, "Title must contain at least 12 character")
     .max(32, "Title must contain at most 32 character"),
-  image: z.object({
-    size: z.number().max(maxImageSize, "Image's size must be less than 5 MB"),
-    imageType: z.string().regex(validImageType, "Image must be valid type"),
-  }),
+  image: z
+    .any()
+    .refine(
+      (files) => files?.[0]?.size <= maxImageSize,
+      `Max image size is 5MB.`
+    )
+    .refine(
+      (files) => validImageTypes.includes(files?.[0]?.type),
+      "Only .jpg, .jpeg, .png and .webp formats are supported."
+    ),
 });
-
-const ImageObjectRequiredError: z.ZodErrorMap = (issue, ctx) => {
-  if (issue.code === z.ZodIssueCode.invalid_type) {
-    return { message: "Image is required" };
-  }
-
-  return { message: ctx.defaultError };
-};
-z.setErrorMap(ImageObjectRequiredError);
 
 type schemaT = z.infer<typeof schema>;
 
@@ -61,7 +58,7 @@ const TitleImage = () => {
 
     if (files) {
       const { type, size } = files[0];
-      setValue("image", { size, imageType: type });
+      setValue("image", files);
       setPreview(URL.createObjectURL(files[0]));
     }
 
@@ -138,14 +135,14 @@ const TitleImage = () => {
             <div className="flex items-center gap-1 p-1 text-red-600">
               <ExclamationTriangleIcon className="h-4 w-4" />
               {errors.image.message && (
-                <p className="text-sm">{errors.image.message}</p>
+                <p className="text-sm">{errors.image.message.toString()}</p>
               )}
-              {errors.image.size?.message && (
+              {/* {errors.image. && (
                 <p className="text-sm">{errors.image.size?.message}</p>
               )}
               {errors.image.imageType?.message && (
                 <p className="text-sm">{errors.image.imageType?.message}</p>
-              )}
+              )} */}
             </div>
           )}
         </>
