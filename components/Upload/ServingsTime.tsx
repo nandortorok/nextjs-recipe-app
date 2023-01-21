@@ -8,15 +8,27 @@ import {
   FieldErrorsImpl,
 } from "react-hook-form";
 import { z } from "zod";
+import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
 import { UploadContext } from "lib/contexts";
 import Form from "./Form";
-import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
 const schema = z.object({
-  servings: z.number().int().min(1).max(64),
-  prepTime: z.number().int().min(1).max(60),
-  cookTime: z.number().int().min(1).max(60),
+  servings: z
+    .number()
+    .int()
+    .min(1, "Servings must be greater than or equal to 1")
+    .max(64, "Servings must be less than or equal to 60"),
+  prepTime: z
+    .number()
+    .int()
+    .min(1, "Prep time must be greater than or equal to 1")
+    .max(60, "Prep time must be less than or equal to 60"),
+  cookTime: z
+    .number()
+    .int()
+    .min(1, "Cook time must be greater than or equal to 1")
+    .max(60, "Cook time must be less than or equal to 60"),
   prepTimeUnit: z.number().int().min(1).max(60),
   cookTimeUnit: z.number().int().min(1).max(60),
 });
@@ -57,7 +69,7 @@ const ServingsTime = () => {
     <FormProvider {...methods}>
       <Form>
         <>
-          <label className="block pt-5 pb-2 font-bold">Servings</label>
+          <label className="block pt-5 pb-2 font-medium">Servings</label>
           <Input name={"servings"} />
           <ErrorMessage name={"servings"} errors={errors} />
 

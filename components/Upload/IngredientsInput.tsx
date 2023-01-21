@@ -1,7 +1,8 @@
-import { Fragment, useContext, useState } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Controller,
+  FieldErrorsImpl,
   FormProvider,
   useFieldArray,
   useForm,
@@ -23,9 +24,16 @@ const schema = z.object({
       title: z.string().min(3).max(64),
       ingredients: z
         .object({
-          amount: z.number().min(1).max(999),
+          amount: z
+            .number()
+            .min(1, "Amount must be greater than or equal to 1")
+            .max(999, "Amount must be less than or equal to 999"),
           unit: z.string().optional(),
-          name: z.string().min(3).max(32),
+          name: z
+            .string()
+            .min(3, "Name must contain at least 3 character")
+            .max(32, "Name must contain at most 32 character")
+            .regex(/^[a-z]+$/i, "Name must contain only letters"),
         })
         .array()
         .min(1),
@@ -66,97 +74,100 @@ const IngredientsInput = () => {
     <FormProvider {...methods}>
       <Form>
         <section className="space-y-5">
-          <label className="text-md font-bold">Ingredients</label>
+          <label className="text-md font-medium">Ingredients</label>
           {fields.map((field, idx) => (
-            <div className="rounded-md border border-gray-300" key={field.id}>
-              <table className="w-full text-left">
-                <caption className="px-3 py-4 text-left text-lg font-bold">
-                  <div className="flex justify-between pr-3">
-                    <input
-                      className={
-                        fields.length > 1
-                          ? "border-0 align-middle text-lg transition ease-in-out focus:ring-0"
-                          : "invisible border-0 align-middle text-lg transition ease-in-out focus:ring-0"
-                      }
-                      type="text"
-                      placeholder="Title name"
-                      autoComplete="off"
-                      {...register(`sections.${idx}.title`, {
-                        onChange: () =>
-                          setFormValue({
-                            ...formValue,
-                            sections: [...watch().sections],
-                          }),
-                      })}
-                    />
-                    <XButton
-                      onClick={() => {
-                        remove(idx);
-                        setFormValue({
-                          ...formValue,
-                          sections: [...watch().sections],
-                        });
-                      }}
-                    />
-                  </div>
-                  {errors.sections && (
-                    <ErrorMessage
-                      error={errors.sections[idx]?.title?.message}
-                    />
-                  )}
-                </caption>
-                <thead className="bg-gray-100 text-sm uppercase text-gray-700">
-                  <tr>
-                    <th className="w-1/3 py-3 pl-6">Amount*</th>
-                    <th className="w-1/3 py-3 pl-3">Unit</th>
-                    <th className="w-1/3 py-3 pl-3">Name*</th>
-                    <th className="py-3 pl-10">
-                      <span className="invisible">Edit</span>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <Ingredient sectionIndex={idx} />
-                  <tr>
-                    <td colSpan={4} className="p-3 text-center">
-                      {errors.sections && (
-                        <ErrorMessage
-                          error={errors.sections[idx]?.ingredients?.message}
-                        />
-                      )}
-                      <button
-                        className="align-middle text-sm font-bold uppercase hover:text-blue-700"
-                        type="button"
+            <>
+              <div className="rounded-md border border-gray-300" key={field.id}>
+                <table className="w-full text-left">
+                  <caption className="px-3 py-4 text-left text-lg font-medium">
+                    <div className="flex justify-between pr-3">
+                      <input
+                        className={
+                          fields.length > 1
+                            ? "border-0 align-middle text-lg transition ease-in-out focus:ring-0"
+                            : "invisible border-0 align-middle text-lg transition ease-in-out focus:ring-0"
+                        }
+                        type="text"
+                        placeholder="Title name"
+                        autoComplete="off"
+                        {...register(`sections.${idx}.title`, {
+                          onChange: () =>
+                            setFormValue({
+                              ...formValue,
+                              sections: [...watch().sections],
+                            }),
+                        })}
+                      />
+                      <XButton
                         onClick={() => {
-                          clearErrors(`sections.${idx}.ingredients`);
-
-                          update(idx, {
-                            title: watch().sections[idx].title,
-                            ingredients: [
-                              ...watch().sections[idx].ingredients,
-                              { amount: 0, unit: "", name: "" },
-                            ],
-                            directions: [{ direction: "" }],
-                          });
-
+                          remove(idx);
                           setFormValue({
                             ...formValue,
                             sections: [...watch().sections],
                           });
                         }}
-                      >
-                        Add ingredient
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+                      />
+                    </div>
+                    {errors.sections && (
+                      <ErrorMessage
+                        error={errors.sections[idx]?.title?.message}
+                      />
+                    )}
+                  </caption>
+                  <thead className="bg-gray-100 text-sm uppercase text-gray-700">
+                    <tr>
+                      <th className="w-1/3 py-3 pl-6">Amount*</th>
+                      <th className="w-1/3 py-3 pl-3">Unit</th>
+                      <th className="w-1/3 py-3 pl-3">Name*</th>
+                      <th className="py-3 pl-10">
+                        <span className="invisible">Edit</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <Ingredient sectionIndex={idx} />
+                    <tr>
+                      <td colSpan={4} className="p-3 text-center">
+                        {errors.sections && (
+                          <ErrorMessage
+                            error={errors.sections[idx]?.ingredients?.message}
+                          />
+                        )}
+                        <button
+                          className="align-middle text-sm font-medium uppercase hover:text-blue-700"
+                          type="button"
+                          onClick={() => {
+                            clearErrors(`sections.${idx}.ingredients`);
+
+                            update(idx, {
+                              title: watch().sections[idx].title,
+                              ingredients: [
+                                ...watch().sections[idx].ingredients,
+                                { amount: 0, unit: "", name: "" },
+                              ],
+                              directions: [{ direction: "" }],
+                            });
+
+                            setFormValue({
+                              ...formValue,
+                              sections: [...watch().sections],
+                            });
+                          }}
+                        >
+                          Add ingredient
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <SectionErrorMessage errors={errors} idx={idx} />
+            </>
           ))}
 
           <div className="flex justify-center">
             <button
-              className="rounded-md bg-blue-500 py-3 px-5 text-sm font-bold uppercase text-white transition ease-in-out hover:bg-blue-600 active:ring"
+              className="rounded-md bg-blue-500 py-3 px-5 text-sm font-medium uppercase text-white transition ease-in-out hover:bg-blue-600 active:ring"
               type="button"
               onClick={() => {
                 clearErrors(`sections`);
@@ -176,24 +187,49 @@ const IngredientsInput = () => {
             </button>
           </div>
           {errors.sections && <ErrorMessage error={errors.sections.message} />}
-          {errors?.sections &&
-            errors?.sections?.map &&
-            errors?.sections?.map((section, sectionIdx) => (
-              <div key={sectionIdx}>
-                {section?.ingredients &&
-                  section?.ingredients.map &&
-                  section?.ingredients.map((ing, ingIdx) => (
-                    <div key={ingIdx}>
-                      <ErrorMessage error={ing?.amount?.message} />
-                      <ErrorMessage error={ing?.unit?.message} />
-                      <ErrorMessage error={ing?.name?.message} />
-                    </div>
-                  ))}
-              </div>
-            ))}
         </section>
       </Form>
     </FormProvider>
+  );
+};
+
+type SectionErrorProps = {
+  idx: number;
+  errors: Partial<
+    FieldErrorsImpl<{
+      sections: {
+        title: string;
+        ingredients: {
+          unit: string;
+          amount: number;
+          name: string;
+        }[];
+        directions: {
+          direction: string;
+        }[];
+      }[];
+    }>
+  >;
+};
+
+const SectionErrorMessage = ({ errors, idx }: SectionErrorProps) => {
+  const section =
+    errors.sections && errors.sections.at && errors.sections.at(idx);
+
+  return (
+    <div>
+      {section &&
+        section.ingredients &&
+        section.ingredients.map &&
+        section?.ingredients.map &&
+        section?.ingredients.map((ing, ingIdx) => (
+          <div key={ingIdx}>
+            <ErrorMessage error={ing?.amount?.message} />
+            <ErrorMessage error={ing?.unit?.message} />
+            <ErrorMessage error={ing?.name?.message} />
+          </div>
+        ))}
+    </div>
   );
 };
 
@@ -215,10 +251,22 @@ const Ingredient = ({ sectionIndex }: { sectionIndex: number }) => {
     fetcher
   );
   const [query, setQuery] = useState("");
-  const filteredList =
-    query === ""
-      ? data
-      : data?.filter((unit) => unit.name.includes(query.toLowerCase()));
+  const filteredList = () => {
+    if (!data) return [] as Unit[];
+
+    if (query === "") return data;
+
+    const filteredList = data.filter((unit) =>
+      unit.name.includes(query.toLowerCase())
+    );
+
+    if (filteredList.length < 1)
+      return data.filter(
+        (unit) => unit.short && unit.short.includes(query.toLowerCase())
+      );
+
+    return filteredList;
+  };
 
   const showError = (number: number) => {
     if (
@@ -286,13 +334,13 @@ const Ingredient = ({ sectionIndex }: { sectionIndex: number }) => {
                       afterLeave={() => setQuery("")}
                     >
                       <Combobox.Options className="absolute z-10 mt-1 max-h-60 w-44 overflow-auto rounded-md bg-gray-100 py-1 shadow-md md:w-full">
-                        {filteredList?.length === 0 && query !== "" ? (
+                        {filteredList().length === 0 && query !== "" ? (
                           <div className="px-4 py-1 text-gray-500">
                             Nothing found
                           </div>
                         ) : (
                           <>
-                            {filteredList?.map((unit, unitIdx) => (
+                            {filteredList().map((unit, unitIdx) => (
                               <Combobox.Option
                                 className={({ active }) =>
                                   active

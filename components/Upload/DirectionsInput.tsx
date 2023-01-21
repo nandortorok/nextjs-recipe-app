@@ -25,7 +25,10 @@ const schema = z.object({
         .array(),
       directions: z
         .object({
-          direction: z.string().min(8).max(256),
+          direction: z
+            .string()
+            .min(8, "Direction must contain at least 8 character")
+            .max(1024, "String must contain at most 1024 character"),
         })
         .array()
         .min(1),
@@ -61,11 +64,11 @@ const DirectionsInput = () => {
     <FormProvider {...methods}>
       <Form>
         <section className="space-y-5">
-          <label className="text-md font-bold">Directions</label>
+          <label className="text-md font-medium">Directions</label>
           {fields.map((field, idx) => (
             <div key={field.id} className="rounded-md border border-gray-300">
               <table className="w-full text-left">
-                <caption className="border-b px-3 py-4 text-left text-lg font-bold">
+                <caption className="border-b px-3 py-4 text-left text-lg font-medium">
                   <div className="flex justify-between pr-3">
                     <input
                       className={
@@ -106,7 +109,7 @@ const DirectionsInput = () => {
                   <tr>
                     <td colSpan={4} className="p-3 text-center ">
                       <button
-                        className="align-middle text-sm font-bold uppercase hover:text-blue-700"
+                        className="align-middle text-sm font-medium uppercase hover:text-blue-700"
                         type="button"
                         onClick={() => {
                           clearErrors(`sections.${idx}.directions`);
@@ -133,21 +136,6 @@ const DirectionsInput = () => {
           ))}
 
           {errors?.sections && <ErrorMessage error={errors.sections.message} />}
-          {errors?.sections &&
-            errors?.sections?.map &&
-            errors?.sections?.map((section, sectionIdx) => (
-              <div key={sectionIdx}>
-                <ErrorMessage error={section?.message} />
-                <ErrorMessage error={section?.directions?.message} />
-                {section?.directions?.map &&
-                  section?.directions?.map((dic, dicIdx) => (
-                    <div key={dicIdx}>
-                      <ErrorMessage error={dic?.message} />
-                      <ErrorMessage error={dic?.direction?.message} />
-                    </div>
-                  ))}
-              </div>
-            ))}
         </section>
       </Form>
     </FormProvider>
@@ -156,22 +144,38 @@ const DirectionsInput = () => {
 
 const Direction = ({ sectionIndex }: { sectionIndex: number }) => {
   const { formValue, setFormValue } = useContext(UploadContext);
-  const { register, control, watch } = useFormContext();
+  const {
+    register,
+    control,
+    watch,
+    formState: { errors },
+  } = useFormContext<schemaT>();
   const { remove, fields } = useFieldArray({
     control,
     name: `sections.${sectionIndex}.directions`,
   });
 
+  const showError = (number: number) => {
+    if (
+      errors.sections &&
+      errors.sections.at &&
+      errors.sections.at(sectionIndex) &&
+      errors.sections.at(sectionIndex)?.directions?.at &&
+      errors.sections.at(sectionIndex)?.directions?.[number]
+    )
+      return errors.sections.at(sectionIndex)?.directions?.[number];
+  };
+
   return (
     <>
       {fields.map((field, idx) => (
-        <tr className="border-b" key={field.id}>
+        <tr className="border-b transition-all ease-in-out" key={field.id}>
           <td>
             <div className="flex">
-              <p className="my-auto pl-6 text-gray-700">{idx + 1}</p>
-              <input
-                className="w-full border-0 focus:ring-0"
-                type="text"
+              <p className="pt-2 pl-6 text-gray-700">{idx + 1}</p>
+              <textarea
+                className="w-full resize-none border-0 bg-transparent transition-all ease-in-out placeholder:text-sm placeholder:leading-6 placeholder:text-red-500/80 focus:ring-0"
+                placeholder={showError(idx)?.direction?.message}
                 autoComplete="off"
                 {...register(
                   `sections.${sectionIndex}.directions.${idx}.direction`,

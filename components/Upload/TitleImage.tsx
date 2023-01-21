@@ -15,7 +15,10 @@ const maxImageSize = 5 * 1024 * 1024;
 const validImageType = /image\/[j|p]/;
 
 const schema = z.object({
-  title: z.string().min(3).max(32),
+  title: z
+    .string()
+    .min(12, "Title must contain at least 12 character")
+    .max(32, "Title must contain at most 32 character"),
   image: z.object({
     size: z.number().max(maxImageSize, "Image's size must be less than 5 MB"),
     imageType: z.string().regex(validImageType, "Image must be valid type"),
@@ -74,7 +77,7 @@ const TitleImage = () => {
     <FormProvider {...methods}>
       <Form>
         <>
-          <label className="block pt-5 pb-2 font-bold">Title</label>
+          <label className="block pt-5 pb-2 font-medium">Title</label>
           <input
             className={
               errors.title
@@ -96,7 +99,7 @@ const TitleImage = () => {
             </div>
           )}
 
-          <label className="block pt-5 pb-2 font-bold">Image</label>
+          <label className="block pt-5 pb-2 font-medium">Image</label>
           <div className="flex h-full w-full items-center justify-center">
             <label
               htmlFor="image"
@@ -118,7 +121,7 @@ const TitleImage = () => {
               )}
               <div className="flex flex-col items-center justify-center pt-5 pb-6 transition-transform ease-in-out group-hover:text-gray-600">
                 <CloudArrowUpIcon className="h-10 w-10" />
-                <p className="mb-2 text-sm font-semibold">Click to upload</p>
+                <p className="mb-2 text-sm font-bold">Click to upload</p>
                 <p className="text-xs">PNG, JPEG</p>
                 <p className="text-xs">MIN 800x600 MAX 5 MB</p>
               </div>
