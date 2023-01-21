@@ -21,7 +21,7 @@ import { ErrorMessage, XButton } from "./Elements";
 const schema = z.object({
   sections: z
     .object({
-      title: z.string().min(3).max(64),
+      title: z.string().min(3).max(32),
       ingredients: z
         .object({
           amount: z

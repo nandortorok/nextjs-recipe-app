@@ -130,7 +130,7 @@ model Recipe {
   updatedAt DateTime  @updatedAt @map("updated_at")
   sections  Section[]
   user      User      @relation(fields: [userId], references: [id])
-  feautured Featured?
+  featured  Featured?
 
   @@map("recipe")
 }

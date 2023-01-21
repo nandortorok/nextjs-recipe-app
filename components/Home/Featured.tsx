@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import useSWR from "swr";
 import { CakeIcon, ClockIcon } from "@heroicons/react/24/outline";
-import { Recipe, SectionIngredient } from "@prisma/client";
+import { Recipe, SectionIngredient, Featured } from "@prisma/client";
 import { motion } from "framer-motion";
 
 import getIngredientCount from "lib/getIngredientCount";
@@ -16,16 +16,16 @@ const CategoriesInit = [
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-type RecipeProps = (Recipe & {
-  user: {
-    name: string | null;
+type RecipeProps = (Featured & {
+  recipe: Recipe & {
+    user: {
+      name: string | null;
+    };
+    sections: {
+      sectionIngredients: SectionIngredient[];
+    }[];
   };
-  sections: SectionsProps;
 })[];
-
-type SectionsProps = {
-  sectionIngredients: SectionIngredient[];
-}[];
 
 const apiRouteInit = "/api/recipe";
 
@@ -104,12 +104,22 @@ const Featured = () => {
           {data &&
             data.map(
               (
-                { id, title, imagePath, prepTime, cookTime, sections, user },
+                {
+                  recipe: {
+                    id,
+                    imagePath,
+                    user,
+                    title,
+                    prepTime,
+                    cookTime,
+                    sections,
+                  },
+                },
                 idx
               ) => (
                 <Link key={idx} href={`recipe/${id}`}>
                   <article className="rounded-2xl bg-white shadow-md transition-all ease-in-out hover:scale-105 hover:shadow-lg xl:flex">
-                    <header className="relative bg-gray-200 py-20 px-28 rounded-t-2xl xl:rounded-l-2xl">
+                    <header className="relative rounded-t-2xl bg-gray-200 py-20 px-28 xl:rounded-l-2xl">
                       <Image
                         src={`/img/${imagePath}`}
                         alt="recipe image"

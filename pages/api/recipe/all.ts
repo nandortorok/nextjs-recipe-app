@@ -1,17 +1,21 @@
 import { Prisma, prisma } from "lib/prisma";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-const getRecipes = async () => {
-  return await prisma.recipe.findMany({
+const getFeatured = async () => {
+  return await prisma.featured.findMany({
     include: {
-      user: {
-        select: {
-          name: true,
-        },
-      },
-      sections: {
-        select: {
-          sectionIngredients: true,
+      recipe: {
+        include: {
+          user: {
+            select: {
+              name: true,
+            },
+          },
+          sections: {
+            select: {
+              sectionIngredients: true,
+            },
+          },
         },
       },
     },
@@ -19,12 +23,12 @@ const getRecipes = async () => {
   });
 };
 
-export type RecipeProps = Prisma.PromiseReturnType<typeof getRecipes>;
+export type RecipeProps = Prisma.PromiseReturnType<typeof getFeatured>;
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const searchResults = await getRecipes();
+  const searchResults = await getFeatured();
   res.status(200).send(searchResults);
 }
