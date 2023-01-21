@@ -130,16 +130,27 @@ model Recipe {
   updatedAt DateTime  @updatedAt @map("updated_at")
   sections  Section[]
   user      User      @relation(fields: [userId], references: [id])
+  feautured Featured?
 
   @@map("recipe")
 }
 
 model Direction {
-  stepNumber      Int     @id @default(autoincrement()) @map("step_number")
+  stepNumber      Int     @default(1) @map("step_number")
   direction       String
   section         Section @relation(fields: [sectionId, sectionRecipeId], references: [id, recipeId])
   sectionId       Int     @map("section_id")
   sectionRecipeId String  @map("section_recipe_id")
 
+  @@id([stepNumber, sectionId, sectionRecipeId])
   @@map("direction")
+}
+
+model Featured {
+  createdAt DateTime @default(now()) @map("created_at")
+  recipeId  String   @unique @map("recipe_id")
+  recipe    Recipe   @relation(fields: [recipeId], references: [id])
+
+  @@id([createdAt, recipeId])
+  @@map("featured")
 }

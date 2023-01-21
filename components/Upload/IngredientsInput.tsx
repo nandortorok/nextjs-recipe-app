@@ -33,7 +33,7 @@ const schema = z.object({
             .string()
             .min(3, "Name must contain at least 3 character")
             .max(32, "Name must contain at most 32 character")
-            .regex(/^[a-z]+$/i, "Name must contain only letters"),
+            .regex(/^[a-z\s]+$/i, "Name must contain only letters"),
         })
         .array()
         .min(1),

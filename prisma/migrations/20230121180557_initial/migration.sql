@@ -110,12 +110,20 @@ CREATE TABLE "recipe" (
 
 -- CreateTable
 CREATE TABLE "direction" (
-    "step_number" SERIAL NOT NULL,
+    "step_number" INTEGER NOT NULL DEFAULT 1,
     "direction" TEXT NOT NULL,
     "section_id" INTEGER NOT NULL,
     "section_recipe_id" TEXT NOT NULL,
 
-    CONSTRAINT "direction_pkey" PRIMARY KEY ("step_number")
+    CONSTRAINT "direction_pkey" PRIMARY KEY ("step_number","section_id","section_recipe_id")
+);
+
+-- CreateTable
+CREATE TABLE "featured" (
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "recipe_id" TEXT NOT NULL,
+
+    CONSTRAINT "featured_pkey" PRIMARY KEY ("created_at","recipe_id")
 );
 
 -- CreateIndex
@@ -144,6 +152,9 @@ CREATE UNIQUE INDEX "conversion_imperialUnitId_key" ON "conversion"("imperialUni
 
 -- CreateIndex
 CREATE UNIQUE INDEX "ingredient_name_key" ON "ingredient"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "featured_recipe_id_key" ON "featured"("recipe_id");
 
 -- AddForeignKey
 ALTER TABLE "account" ADD CONSTRAINT "account_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -174,3 +185,6 @@ ALTER TABLE "recipe" ADD CONSTRAINT "recipe_user_id_fkey" FOREIGN KEY ("user_id"
 
 -- AddForeignKey
 ALTER TABLE "direction" ADD CONSTRAINT "direction_section_id_section_recipe_id_fkey" FOREIGN KEY ("section_id", "section_recipe_id") REFERENCES "section"("id", "recipe_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "featured" ADD CONSTRAINT "featured_recipe_id_fkey" FOREIGN KEY ("recipe_id") REFERENCES "recipe"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

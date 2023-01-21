@@ -5,7 +5,7 @@ import { unstable_getServerSession } from "next-auth/next";
 
 import { authOptions } from "./auth/[...nextauth]";
 
-const creatRecipe = async (
+const createRecipe = async (
   email: string,
   body: { data: FormStateProps; imageName: string }
 ) => {
@@ -64,8 +64,8 @@ const creatRecipe = async (
               }),
             },
             directions: {
-              create: directions.map((direction) => {
-                return direction;
+              create: directions.map(({ direction }, idx) => {
+                return { stepNumber: idx + 1, direction };
               }),
             },
           };
@@ -92,7 +92,7 @@ export default async function handler(
   }
 
   if (session && session.user?.email) {
-    const recipe = await creatRecipe(session.user.email, req.body);
+    const recipe = await createRecipe(session.user.email, req.body);
 
     res.status(200).send({ status: "success", recipeId: recipe.id });
   }

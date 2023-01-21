@@ -133,7 +133,9 @@ const Recipe: NextPage<Props> = ({ recipe }) => {
                   <ul>
                     {directions.map(({ direction, stepNumber }) => (
                       <li key={stepNumber} className="pb-2 pl-3">
-                        <p className="py-2 font-medium">Step {stepNumber}</p>
+                        {directions.length > 1 && (
+                          <p className="py-2 font-medium">Step {stepNumber}</p>
+                        )}
                         <p>{direction}</p>
                       </li>
                     ))}
