@@ -73,7 +73,7 @@ const IngredientsInput = () => {
   return (
     <FormProvider {...methods}>
       <Form>
-        <section className="space-y-5">
+        <section className="space-y-5 pt-5">
           <label className="text-md font-medium">Ingredients</label>
           {fields.map((field, idx) => (
             <>

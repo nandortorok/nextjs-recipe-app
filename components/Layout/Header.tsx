@@ -19,16 +19,14 @@ const Header = () => {
 
   return (
     <>
-      <header className="sticky top-0 z-20 flex-1 flex items-center justify-between border-b bg-white px-5 md:px-8 py-1 font-medium shadow-sm">
+      <header className="sticky top-0 z-20 flex flex-1 items-center justify-between border-b bg-white px-5 py-1 font-medium shadow-sm md:px-8">
         <section className="flex flex-1">
           <button onClick={() => setIsNavOpen(!isNavOpen)}>
-            <Bars3Icon className="h-7 w-7 cursor-pointer hover:text-blue-500" />
+            <Bars3Icon className="h-6 w-6 cursor-pointer hover:text-blue-500 md:h-7 md:w-7" />
           </button>
 
           <Link className="max-sm:hidden" href={"/"} passHref>
-            <p
-              className="mx-auto cursor-pointer p-3 text-xl transition-all"
-            >
+            <p className="mx-auto cursor-pointer p-3 text-xl transition-all">
               recipe<span className="text-teal-500">app</span>
             </p>
           </Link>
@@ -36,7 +34,7 @@ const Header = () => {
 
         <Search />
 
-        <section className="flex justify-end flex-1 rounded-full transition ease-in-out">
+        <section className="flex flex-1 justify-end rounded-full transition ease-in-out">
           {session &&
           session.user &&
           session.user.image &&
@@ -52,8 +50,8 @@ const Header = () => {
             </UserMenu>
           ) : (
             <Link className="group" href="/signin" passHref>
-              <button className="p-2 align-middle group-hover:bg-blue-100 rounded-full transition ease-in-out">
-                <UserIcon className="h-6 w-6 cursor-pointer group-hover:text-blue-500 transition ease-in-out" />
+              <button className="rounded-full p-2 align-middle transition ease-in-out group-hover:bg-blue-100">
+                <UserIcon className="h-6 w-6 cursor-pointer transition ease-in-out group-hover:text-blue-500" />
               </button>
             </Link>
           )}

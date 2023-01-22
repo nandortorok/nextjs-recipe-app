@@ -1,7 +1,7 @@
 import {
   ArrowUpOnSquareIcon,
   BookmarkSquareIcon,
-  DocumentTextIcon,
+  HomeIcon,
   RectangleStackIcon,
 } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
@@ -45,11 +45,17 @@ const Sidebar = ({ isOpen }: SidebarProps) => {
       <nav
         className={
           isOpen
-            ? "fixed top-0 z-50 md:mt-[60px] mt-12 h-full w-60 translate-x-0 overflow-auto border-r bg-white/75 backdrop-blur-lg transition-transform duration-300 ease-in motion-reduce:transition-none"
-            : "fixed top-0 z-50 md:mt-[60px] mt-12 h-full w-60 -translate-x-full overflow-auto border-r bg-white/75 backdrop-blur-lg transition-transform duration-300 ease-in motion-reduce:transition-none"
+            ? "fixed top-0 z-50 mt-12 h-full w-60 translate-x-0 overflow-auto border-r bg-white/75 backdrop-blur-lg transition-transform duration-300 ease-in motion-reduce:transition-none md:mt-[60px]"
+            : "fixed top-0 z-50 mt-12 h-full w-60 -translate-x-full overflow-auto border-r bg-white/75 backdrop-blur-lg transition-transform duration-300 ease-in motion-reduce:transition-none md:mt-[60px]"
         }
       >
         <section className="flex flex-col space-y-3 pt-3">
+          <span className="md:hidden">
+            <NavLink href="/">
+              <HomeIcon className="h-6 w-6" />
+              <p>Home</p>
+            </NavLink>
+          </span>
           <NavButton onClick={() => setIsUploadOpen(!isUploadOpen)}>
             <ArrowUpOnSquareIcon className="h-6 w-6" />
             <p>Upload</p>
