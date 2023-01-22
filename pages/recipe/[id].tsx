@@ -11,12 +11,13 @@ import { GetServerSideProps, NextPage } from "next";
 import Image from "next/image";
 import Head from "next/head";
 import {
-  BookmarkIcon,
   CircleStackIcon,
   ClockIcon as ClockIconOutline,
 } from "@heroicons/react/24/outline";
-
-import { ClockIcon as ClockIconSolid } from "@heroicons/react/24/solid";
+import {
+  BookmarkIcon,
+  ClockIcon as ClockIconSolid,
+} from "@heroicons/react/24/solid";
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const req = await fetch(`http://localhost:3000/api/recipe?id=${params!.id}`);
@@ -46,8 +47,8 @@ const Recipe: NextPage<Props> = ({ recipe }) => {
       </Head>
 
       <main className="pb-10">
-        <section className="flex bg-gray-50">
-          <header className="relative h-[94vh] w-1/2">
+        <section className=" -mt-14 flex h-screen bg-gray-50 max-md:-mt-12 max-lg:flex-col max-md:justify-between">
+          <header className="relative h-full lg:w-1/2">
             <Image
               src={`/img/${recipe.imagePath}`}
               alt="recipe image"
@@ -56,9 +57,11 @@ const Recipe: NextPage<Props> = ({ recipe }) => {
               fill={true}
             />
           </header>
-          <main className="relative m-auto w-1/2">
-            <div className="my-20 text-center">
-              <h1 className="pb-4 text-5xl font-black">{recipe.title}</h1>
+          <main className="py-10 max-md:h-1/2 lg:relative lg:m-auto lg:w-1/2">
+            <div className="text-center lg:my-20">
+              <h1 className="pb-4 text-5xl font-black  2xl:text-6xl">
+                {recipe.title}
+              </h1>
               <p className="pb-1 uppercase text-gray-600">
                 By {recipe.user.name}
               </p>
@@ -72,7 +75,7 @@ const Recipe: NextPage<Props> = ({ recipe }) => {
                 Save recipe
               </button>
             </div>
-            <div className="absolute flex w-full justify-center gap-5">
+            <div className="flex w-full justify-center gap-10 pt-10 lg:absolute">
               <div className="flex flex-col items-center">
                 <ClockIconSolid className="h-6 w-6" />
                 <p className="font-medium">Prep time</p>
@@ -92,22 +95,22 @@ const Recipe: NextPage<Props> = ({ recipe }) => {
           </main>
         </section>
 
-        <section className="flex py-16">
-          <div className="w-full px-16">
-            <h1 className="border-b-2 border-gray-200 pt-5 pb-2 text-3xl font-bold">
+        <section className="md:flex lg:py-16">
+          <div className="w-full px-5 lg:px-16">
+            <h1 className="border-b-2 border-gray-200 pt-5 pb-2 text-4xl font-bold">
               Ingredients
             </h1>
-            <div className="flex pt-5">
+            <div className="pt-5 lg:flex">
               {recipe.sections.map(
                 ({ title, sectionIngredients }, sectionIdx) => (
                   <div key={sectionIdx} className="w-full">
-                    <h1 className="py-1 font-medium">{title}</h1>
-                    <ul>
+                    <h1 className="py-1 font-bold">{title}</h1>
+                    <ul className="max-sm:pb-3">
                       {sectionIngredients.map(
                         ({ ingredient, amount, unit }, idx) => (
                           <li
                             key={idx}
-                            className="flex items-baseline gap-1 rounded-3xl py-3 pl-3"
+                            className="flex items-baseline gap-1 rounded-3xl py-1 pl-3 lg:py-3"
                           >
                             <p>{amount}</p>
                             {unit && <p>{unit.short}</p>}
@@ -122,15 +125,15 @@ const Recipe: NextPage<Props> = ({ recipe }) => {
             </div>
           </div>
 
-          <div className="w-full px-16">
-            <h1 className="border-b-2 border-gray-200 pt-5 pb-2 text-3xl font-bold">
+          <div className="w-full px-5 max-sm:pt-5 md:px-16">
+            <h1 className="border-b-2 border-gray-200 pt-5 pb-2 text-4xl font-bold">
               Directions
             </h1>
             <div className="pt-5">
               {recipe.sections.map(({ title, directions }, idx) => (
                 <div key={idx}>
-                  <h1 className="py-1 font-medium">{title}</h1>
-                  <ul>
+                  <h1 className="py-1 font-bold">{title}</h1>
+                  <ul className="max-sm:pb-3">
                     {directions.map(({ direction, stepNumber }) => (
                       <li key={stepNumber} className="pb-2 pl-3">
                         {directions.length > 1 && (
