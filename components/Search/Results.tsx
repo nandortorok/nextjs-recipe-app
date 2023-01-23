@@ -1,25 +1,14 @@
 import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import Link from "next/link";
 import { Dispatch, SetStateAction, useState } from "react";
-import useSWR from "swr";
 
-import fetcher from "lib/fetcher";
+import RecipeList from "./RecipeList";
 
 type ResultsProps = {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 };
 
-type RecipeProps = {
-  id: string;
-  title: string;
-}[];
-
 const Results = ({ setIsOpen }: ResultsProps) => {
-  const [query, setQuery] = useState("a");
-  const { data, error, isLoading } = useSWR<RecipeProps>(
-    `/api/search?title=${query}`,
-    fetcher
-  );
+  const [query, setQuery] = useState("");
 
   return (
     <>
@@ -44,29 +33,10 @@ const Results = ({ setIsOpen }: ResultsProps) => {
         </button>
       </header>
       <main className="overflow-auto">
-        {data && data.length > 0 ? (
-          <>
-            <h3 className="border-b p-4 font-bold">Recipes</h3>
-            <ul className="divide-y">
-              {data.map((item) => (
-                <Link key={item.id} href={`recipe/${item.id}`} passHref>
-                  <li className="p-4 hover:bg-blue-50">{item.title}</li>
-                </Link>
-              ))}
-            </ul>
-          </>
-        ) : (
-          <ul className="divide-y">
-            <li className="hover:bg-slate-10 py-10 text-center text-gray-400">
-              No recipes found
-            </li>
-          </ul>
-        )}
+        <RecipeList setIsOpen={setIsOpen} query={query} />
       </main>
 
-      <footer className="p-4 text-center text-sm text-gray-400">
-        Recipe App
-      </footer>
+      <footer className="py-6 text-center text-sm text-gray-400"></footer>
     </>
   );
 };

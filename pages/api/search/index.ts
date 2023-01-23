@@ -6,13 +6,28 @@ const getSearchResults = async (params: string) => {
     where: {
       title: {
         contains: params,
+        mode: "insensitive",
       },
     },
     select: {
       id: true,
       title: true,
+      user: {
+        select: {
+          name: true,
+        },
+      },
+      sections: {
+        select: {
+          sectionIngredients: {
+            select: {
+              ingredient: true,
+            },
+          },
+        },
+      },
     },
-    take: 10,
+    take: 32,
   });
 };
 
@@ -22,7 +37,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  // TODO find a better way to handle exception
   const { title } = req.query;
   const searchQuery = Array.isArray(title) ? title[0] : title || "";
 
