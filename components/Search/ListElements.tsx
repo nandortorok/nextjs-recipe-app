@@ -1,4 +1,4 @@
-import { Ingredient } from "@prisma/client";
+import { Ingredient, Section, SectionIngredient } from "@prisma/client";
 import { useEffect, useState } from "react";
 
 type HighlightProps = {
@@ -43,13 +43,13 @@ export const IngredientItems = ({ sections }: IngredientItemsProps) => {
             idx < 6 && (
               <p
                 key={idx}
-                className="rounded-full bg-gray-100 px-2 py-1 text-xs"
+                className="rounded-full bg-gray-100 px-2 py-1 text-xs first-letter:capitalize"
               >
                 {item}
               </p>
             )
         )}
-        {ingredients.length - 6 > 1 && (
+        {ingredients.length > 7 && (
           <p className="rounded-full bg-gray-100 px-2 py-1 text-xs font-medium">
             {ingredients.length - 6} more
           </p>
@@ -59,11 +59,65 @@ export const IngredientItems = ({ sections }: IngredientItemsProps) => {
     );
 
   return (
-    <div className="flex gap-2">
-      <p className="rounded-full bg-gray-100 px-2 py-1 text-xs font-medium">
-        {ingredients.length} ingredients
-      </p>
-    </div>
+    <p className="rounded-full bg-gray-100 px-2 py-1 text-xs font-medium">
+      {ingredients.length} ingredients
+    </p>
+  );
+};
+
+type RecipeTitleListProps = {
+  sectionIngredients: (SectionIngredient & {
+    section: Section & {
+      recipe: {
+        title: string;
+      };
+    };
+  })[];
+};
+
+export const RecipeTitleList = ({
+  sectionIngredients,
+}: RecipeTitleListProps) => {
+  const [width, setWidth] = useState(window.innerWidth);
+
+  const recipes = sectionIngredients.flatMap(({ section: { recipe } }) => {
+    return recipe.title;
+  });
+
+  useEffect(() => {
+    const handleResizeWindow = () => setWidth(window.innerWidth);
+    window.addEventListener("resize", handleResizeWindow);
+    return () => {
+      window.removeEventListener("resize", handleResizeWindow);
+    };
+  }, []);
+
+  if (width > 768)
+    return (
+      <>
+        {recipes.map(
+          (title, idx) =>
+            idx < 2 && (
+              <p
+                key={idx}
+                className="rounded-full bg-gray-100 px-2 py-1 text-xs font-medium first-letter:capitalize"
+              >
+                {title}
+              </p>
+            )
+        )}
+        {recipes.length > 2 && (
+          <p className="rounded-full bg-gray-100 px-2 py-1 text-xs font-medium">
+            {recipes.length - 2} more
+          </p>
+        )}
+      </>
+    );
+
+  return (
+    <p className="rounded-full bg-gray-100 px-2 py-1 text-xs font-medium">
+      {recipes.length} recipes
+    </p>
   );
 };
 
@@ -79,8 +133,8 @@ export const Arrow = () => {
         d="M0 0L3 3L0 6"
         fill="none"
         stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
+        strokeWidth="2"
+        strokeLinecap="round"
       ></path>
     </svg>
   );
