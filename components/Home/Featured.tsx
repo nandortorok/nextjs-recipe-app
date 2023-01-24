@@ -128,13 +128,15 @@ const Featured = () => {
                         fill={true}
                       />
                       <div className="absolute left-0 right-0 top-0 bg-gradient-to-b from-black/75 to-transparent py-8 max-xl:rounded-t-2xl xl:rounded-tl-2xl">
-                        <p className="absolute top-4 px-6 text-sm font-medium text-gray-200">
+                        <p className="absolute top-4 px-4 text-sm font-medium text-gray-200">
                           {user.name}
                         </p>
                       </div>
                     </header>
                     <main className="space-y-1 px-6 pb-2 lg:flex lg:flex-col">
-                      <h4 className="py-2 font-medium lg:mb-auto">{title}</h4>
+                      <h4 className="py-2 font-medium first-letter:capitalize lg:mb-auto">
+                        {title}
+                      </h4>
                       <div className="flex items-center gap-1 text-sm text-gray-400">
                         <ClockIcon className="h-5 w-5" />
                         <p>{prepTime + cookTime} min</p>
