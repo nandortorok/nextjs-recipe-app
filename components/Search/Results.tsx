@@ -1,8 +1,7 @@
 import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Dispatch, SetStateAction, useState } from "react";
 
-import IngredientList from "./IngredientList";
-import RecipeList from "./RecipeList";
+import List from "./List";
 
 type ResultsProps = {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
@@ -33,11 +32,7 @@ const Results = ({ setIsOpen }: ResultsProps) => {
           <XMarkIcon className="h-6 w-6" />
         </button>
       </header>
-      <main className="grow overflow-auto">
-        <RecipeList setIsOpen={setIsOpen} query={query} />
-        <IngredientList setIsOpen={setIsOpen} query={query} />
-      </main>
-
+      <List query={query} setIsOpen={setIsOpen} />
       <footer className="py-6 text-center text-sm text-gray-400"></footer>
     </>
   );

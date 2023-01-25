@@ -31,7 +31,41 @@ const getSearchResults = async (params: string) => {
   });
 };
 
+const getIngredients = async (params: string) => {
+  return await prisma.ingredient.findMany({
+    where: {
+      name: {
+        contains: params,
+        mode: "insensitive",
+      },
+    },
+    include: {
+      sectionIngredients: {
+        distinct: ["sectionRecipeId"],
+        include: {
+          section: {
+            include: {
+              recipe: {
+                select: {
+                  title: true,
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    take: 32,
+  });
+};
+
 export type RecipeProps = Prisma.PromiseReturnType<typeof getSearchResults>;
+export type IngredientProps = Prisma.PromiseReturnType<typeof getIngredients>;
+
+export type SearchProps = {
+  recipes: RecipeProps;
+  ingredients: IngredientProps;
+};
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { title } = req.query;
@@ -39,8 +73,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (typeof title !== "string")
     return res.status(400).send({ message: "title must be a string." });
 
-  const searchResults = await getSearchResults(title);
-  res.status(200).send(searchResults);
+  const recipes = await getSearchResults(title);
+  const ingredients = await getIngredients(title);
+  res.status(200).send({ recipes, ingredients });
 };
 
 export default handler;
