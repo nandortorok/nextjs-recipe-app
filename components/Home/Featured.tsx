@@ -7,14 +7,13 @@ import { Recipe, SectionIngredient, Featured } from "@prisma/client";
 import { motion } from "framer-motion";
 
 import getIngredientCount from "lib/getIngredientCount";
+import fetcher from "lib/fetcher";
 
 const CategoriesInit = [
   { name: "All", route: "/all", isSelected: true },
   { name: "New", route: "/new", isSelected: false },
   { name: "Simpler First", route: "/simpler", isSelected: false },
 ];
-
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 type RecipeProps = (Featured & {
   recipe: Recipe & {
@@ -117,7 +116,7 @@ const Featured = () => {
                 },
                 idx
               ) => (
-                <Link key={idx} href={`recipe/${id}`}>
+                <Link key={idx} href={`/recipe/${id}`}>
                   <article className="rounded-2xl bg-white shadow-md transition-all ease-in-out hover:scale-105 hover:shadow-lg xl:flex">
                     <header className="relative rounded-t-2xl bg-gray-200 py-20 px-28 xl:rounded-l-2xl">
                       <Image

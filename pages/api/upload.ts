@@ -75,27 +75,19 @@ const createRecipe = async (
   });
 };
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await unstable_getServerSession(req, res, authOptions);
 
-  if (req.method !== "POST") {
-    res.status(405).send({ message: "Only POST requests allowed" });
-    return;
-  }
+  if (req.method !== "POST")
+    return res.status(405).send({ message: "Only POST requests allowed" });
 
-  if (!session) {
-    res.status(401).send({ message: "You must be logged in." });
-    return;
-  }
+  if (!session || !session.user?.email)
+    return res.status(401).send({ message: "You must be logged in." });
 
-  if (session && session.user?.email) {
-    const recipe = await createRecipe(session.user.email, req.body);
-
-    res.status(200).send({ status: "success", recipeId: recipe.id });
-  }
+  const recipe = await createRecipe(session.user.email, req.body);
+  res.status(201).send({ status: "success", recipeId: recipe.id });
 
   res.end();
-}
+};
+
+export default handler;

@@ -120,7 +120,7 @@ const TitleImage = () => {
                 <CloudArrowUpIcon className="h-10 w-10" />
                 <p className="mb-2 text-sm font-bold">Click to upload</p>
                 <p className="text-xs">PNG, JPEG</p>
-                <p className="text-xs">MIN 800x600 MAX 5 MB</p>
+                <p className="text-xs">MAX 5 MB</p>
               </div>
               <input
                 className="hidden"

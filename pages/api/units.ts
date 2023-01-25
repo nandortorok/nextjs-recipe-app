@@ -7,7 +7,6 @@ const getUnits = async () => {
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const units = await getUnits();
-
   res.status(200).send(units);
 };
 

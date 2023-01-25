@@ -31,13 +31,13 @@ const getIngredients = async (params: string) => {
 
 export type IngredientProps = Prisma.PromiseReturnType<typeof getIngredients>;
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { name } = req.query;
-  const searchQuery = Array.isArray(name) ? name[0] : name || "";
+  if (typeof name !== "string")
+    return res.status(400).send({ message: "name must be a string." });
 
-  const searchResults = await getIngredients(searchQuery);
+  const searchResults = await getIngredients(name);
   res.status(200).send(searchResults);
-}
+};
+
+export default handler;

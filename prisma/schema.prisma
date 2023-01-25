@@ -94,7 +94,7 @@ model Ingredient {
 
 model Section {
   id                 Int                 @default(0)
-  recipe             Recipe              @relation(fields: [recipeId], references: [id])
+  recipe             Recipe              @relation(fields: [recipeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   recipeId           String              @map("recipe_id")
   title              String?             @map("title")
   sectionIngredients SectionIngredient[]
@@ -106,7 +106,7 @@ model Section {
 
 model SectionIngredient {
   sectionId       Int        @map("section_id")
-  section         Section    @relation(fields: [sectionId, sectionRecipeId], references: [id, recipeId])
+  section         Section    @relation(fields: [sectionId, sectionRecipeId], references: [id, recipeId], onDelete: Cascade, onUpdate: Cascade)
   sectionRecipeId String     @map("section_recipe_id")
   ingredient      Ingredient @relation(fields: [ingredientId], references: [id])
   ingredientId    Int        @map("ingredient_id")
@@ -138,7 +138,7 @@ model Recipe {
 model Direction {
   stepNumber      Int     @default(1) @map("step_number")
   direction       String
-  section         Section @relation(fields: [sectionId, sectionRecipeId], references: [id, recipeId])
+  section         Section @relation(fields: [sectionId, sectionRecipeId], references: [id, recipeId], onDelete: Cascade, onUpdate: Cascade)
   sectionId       Int     @map("section_id")
   sectionRecipeId String  @map("section_recipe_id")
 
@@ -149,7 +149,7 @@ model Direction {
 model Featured {
   createdAt DateTime @default(now()) @map("created_at")
   recipeId  String   @unique @map("recipe_id")
-  recipe    Recipe   @relation(fields: [recipeId], references: [id])
+  recipe    Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   @@id([createdAt, recipeId])
   @@map("featured")

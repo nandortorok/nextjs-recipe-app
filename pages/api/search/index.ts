@@ -33,13 +33,14 @@ const getSearchResults = async (params: string) => {
 
 export type RecipeProps = Prisma.PromiseReturnType<typeof getSearchResults>;
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { title } = req.query;
-  const searchQuery = Array.isArray(title) ? title[0] : title || "";
 
-  const searchResults = await getSearchResults(searchQuery);
+  if (typeof title !== "string")
+    return res.status(400).send({ message: "title must be a string." });
+
+  const searchResults = await getSearchResults(title);
   res.status(200).send(searchResults);
-}
+};
+
+export default handler;

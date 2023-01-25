@@ -26,10 +26,9 @@ const getFeatured = async () => {
   });
 };
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const searchResults = await getFeatured();
   res.status(200).send(searchResults);
-}
+};
+
+export default handler;

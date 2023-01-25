@@ -25,10 +25,11 @@ const getRecipe = async (param: string) => {
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;
-  const parsedId = Array.isArray(id) ? id[0] : id || "";
 
-  const recipe = await getRecipe(parsedId);
+  if (typeof id !== "string")
+    return res.status(400).send({ message: "id must be a string." });
 
+  const recipe = await getRecipe(id);
   res.status(200).send(recipe);
 };
 

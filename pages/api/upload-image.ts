@@ -10,10 +10,7 @@ export const config = {
   },
 };
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await unstable_getServerSession(req, res, authOptions);
 
   if (req.method !== "POST")
@@ -33,4 +30,6 @@ export default async function handler(
     res.status(200).send({ status: "success", data: files.file });
     res.end();
   });
-}
+};
+
+export default handler;
