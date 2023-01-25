@@ -5,6 +5,13 @@ import { authOptions } from "pages/api/auth/[...nextauth]";
 
 const getRecipes = async (userName: string) => {
   return await prisma.recipe.findMany({
+    where: {
+      user: {
+        name: {
+          equals: userName,
+        },
+      },
+    },
     select: {
       id: true,
       title: true,
@@ -22,12 +29,8 @@ const getRecipes = async (userName: string) => {
         },
       },
     },
-    where: {
-      user: {
-        name: {
-          equals: userName,
-        },
-      },
+    orderBy: {
+      createdAt: "desc",
     },
     take: 12,
   });
