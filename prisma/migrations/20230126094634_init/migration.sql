@@ -126,6 +126,14 @@ CREATE TABLE "featured" (
     CONSTRAINT "featured_pkey" PRIMARY KEY ("created_at","recipe_id")
 );
 
+-- CreateTable
+CREATE TABLE "saved_recipe" (
+    "user_id" TEXT NOT NULL,
+    "recipe_id" TEXT NOT NULL,
+
+    CONSTRAINT "saved_recipe_pkey" PRIMARY KEY ("user_id","recipe_id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "account_provider_provider_account_id_key" ON "account"("provider", "provider_account_id");
 
@@ -169,10 +177,10 @@ ALTER TABLE "conversion" ADD CONSTRAINT "conversion_imperialUnitId_fkey" FOREIGN
 ALTER TABLE "conversion" ADD CONSTRAINT "conversion_metricUnitId_fkey" FOREIGN KEY ("metricUnitId") REFERENCES "unit"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "section" ADD CONSTRAINT "section_recipe_id_fkey" FOREIGN KEY ("recipe_id") REFERENCES "recipe"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "section" ADD CONSTRAINT "section_recipe_id_fkey" FOREIGN KEY ("recipe_id") REFERENCES "recipe"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "section_ingredient" ADD CONSTRAINT "section_ingredient_section_id_section_recipe_id_fkey" FOREIGN KEY ("section_id", "section_recipe_id") REFERENCES "section"("id", "recipe_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "section_ingredient" ADD CONSTRAINT "section_ingredient_section_id_section_recipe_id_fkey" FOREIGN KEY ("section_id", "section_recipe_id") REFERENCES "section"("id", "recipe_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "section_ingredient" ADD CONSTRAINT "section_ingredient_ingredient_id_fkey" FOREIGN KEY ("ingredient_id") REFERENCES "ingredient"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -184,7 +192,13 @@ ALTER TABLE "section_ingredient" ADD CONSTRAINT "section_ingredient_unit_id_fkey
 ALTER TABLE "recipe" ADD CONSTRAINT "recipe_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "direction" ADD CONSTRAINT "direction_section_id_section_recipe_id_fkey" FOREIGN KEY ("section_id", "section_recipe_id") REFERENCES "section"("id", "recipe_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "direction" ADD CONSTRAINT "direction_section_id_section_recipe_id_fkey" FOREIGN KEY ("section_id", "section_recipe_id") REFERENCES "section"("id", "recipe_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "featured" ADD CONSTRAINT "featured_recipe_id_fkey" FOREIGN KEY ("recipe_id") REFERENCES "recipe"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "featured" ADD CONSTRAINT "featured_recipe_id_fkey" FOREIGN KEY ("recipe_id") REFERENCES "recipe"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "saved_recipe" ADD CONSTRAINT "saved_recipe_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "saved_recipe" ADD CONSTRAINT "saved_recipe_recipe_id_fkey" FOREIGN KEY ("recipe_id") REFERENCES "recipe"("id") ON DELETE CASCADE ON UPDATE CASCADE;

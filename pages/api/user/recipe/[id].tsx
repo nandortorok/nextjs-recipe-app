@@ -21,7 +21,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (typeof id !== "string")
     return res.status(400).send({ message: "id must be a string." });
 
-  if (!session || !session.user?.name)
+  if (!session || !session.user?.name || !session.user?.email)
     return res.status(401).send({ message: "You must be logged in." });
 
   if (req.method === "DELETE") {

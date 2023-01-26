@@ -76,8 +76,8 @@ const IngredientsInput = () => {
         <section className="space-y-5 pt-5">
           <label className="text-md font-medium">Ingredients</label>
           {fields.map((field, idx) => (
-            <>
-              <div className="rounded-md border border-gray-300" key={field.id}>
+            <div key={field.id}>
+              <div className="rounded-md border border-gray-300">
                 <table className="w-full text-left">
                   <caption className="px-3 py-4 text-left text-lg font-medium">
                     <div className="flex justify-between pr-3">
@@ -162,7 +162,7 @@ const IngredientsInput = () => {
                 </table>
               </div>
               <SectionErrorMessage errors={errors} idx={idx} />
-            </>
+            </div>
           ))}
 
           <div className="flex justify-center">

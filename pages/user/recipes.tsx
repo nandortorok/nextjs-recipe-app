@@ -52,9 +52,9 @@ const Recipes: NextPage = () => {
               <p className="h-3 w-16 rounded-full bg-gray-200" />
             </div>
           </section>
-          <section className="w-full max-lg:py-5 max-sm:space-y-5 lg:p-5 flex flex-col">
-            <h1 className="py-3 text-center text-3xl md:text-5xl font-bold">
-              Sign in to view your recipes
+          <section className="flex w-full flex-col max-lg:py-5 max-sm:space-y-5 lg:p-5">
+            <h1 className="py-3 text-center text-3xl font-bold md:text-5xl">
+              Sign in to view your uploaded recipes
             </h1>
             <Link
               className="mx-auto rounded-xl bg-blue-500 py-2 px-5 text-white transition ease-in-out hover:bg-blue-600 active:ring"
@@ -104,6 +104,28 @@ const Recipes: NextPage = () => {
                 </section>
               </article>
             ))}
+          </section>
+        </div>
+      </main>
+    );
+
+  if (data.length < 1)
+    return (
+      <main className="min-h-screen bg-gray-100 px-5">
+        <div className="container mx-auto flex py-8 max-lg:flex-col lg:pl-8">
+          <section className="whitespace-nowrap rounded-3xl bg-white p-5 lg:sticky lg:top-28 lg:self-start">
+            <h1 className="pb-6 text-5xl font-bold md:pb-10">Your Recipes</h1>
+            <p className="text-sm font-medium text-gray-500">
+              {session.user.name}
+            </p>
+            <p className="text-sm text-gray-500">{data.length} recipes</p>
+          </section>
+          <section className="w-full max-lg:py-5 max-sm:space-y-5 lg:p-5">
+            <article className="group rounded-2xl py-3 max-sm:relative max-sm:px-5 sm:flex">
+              <p className="w-full text-center text-gray-500 md:py-14 ">
+                It seems your list is empty...
+              </p>
+            </article>
           </section>
         </div>
       </main>

@@ -20,8 +20,7 @@ model Account {
   scope             String?
   id_token          String? @db.Text
   session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
   @@map("account")
@@ -38,16 +37,17 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String        @id @default(cuid())
   name          String?
-  email         String?   @unique
-  emailVerified DateTime? @map("email_verified")
+  email         String?       @unique
+  emailVerified DateTime?     @map("email_verified")
   image         String?
   recipes       Recipe[]
   accounts      Account[]
   sessions      Session[]
-  createdAt     DateTime  @default(now()) @map("created_at")
-  updatedAt     DateTime  @updatedAt @map("updated_at")
+  createdAt     DateTime      @default(now()) @map("created_at")
+  updatedAt     DateTime      @updatedAt @map("updated_at")
+  savedRecipe   SavedRecipe[]
 
   @@map("user")
 }
@@ -94,11 +94,11 @@ model Ingredient {
 
 model Section {
   id                 Int                 @default(0)
-  recipe             Recipe              @relation(fields: [recipeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   recipeId           String              @map("recipe_id")
   title              String?             @map("title")
   sectionIngredients SectionIngredient[]
   directions         Direction[]
+  recipe             Recipe              @relation(fields: [recipeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   @@id([id, recipeId])
   @@map("section")
@@ -106,31 +106,32 @@ model Section {
 
 model SectionIngredient {
   sectionId       Int        @map("section_id")
-  section         Section    @relation(fields: [sectionId, sectionRecipeId], references: [id, recipeId], onDelete: Cascade, onUpdate: Cascade)
   sectionRecipeId String     @map("section_recipe_id")
-  ingredient      Ingredient @relation(fields: [ingredientId], references: [id])
   ingredientId    Int        @map("ingredient_id")
-  unit            Unit?      @relation(fields: [unitId], references: [id])
   unitId          Int?       @map("unit_id")
   amount          Int?
+  section         Section    @relation(fields: [sectionId, sectionRecipeId], references: [id, recipeId], onDelete: Cascade, onUpdate: Cascade)
+  ingredient      Ingredient @relation(fields: [ingredientId], references: [id])
+  unit            Unit?      @relation(fields: [unitId], references: [id])
 
   @@id([sectionId, sectionRecipeId, ingredientId])
   @@map("section_ingredient")
 }
 
 model Recipe {
-  id        String    @id @default(uuid())
-  userId    String    @map("user_id")
-  title     String
-  imagePath String    @map("image_path")
-  servings  Int
-  prepTime  Int       @map("prep_time")
-  cookTime  Int       @map("cook_time")
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @updatedAt @map("updated_at")
-  sections  Section[]
-  user      User      @relation(fields: [userId], references: [id])
-  featured  Featured?
+  id          String        @id @default(uuid())
+  userId      String        @map("user_id")
+  title       String
+  imagePath   String        @map("image_path")
+  servings    Int
+  prepTime    Int           @map("prep_time")
+  cookTime    Int           @map("cook_time")
+  createdAt   DateTime      @default(now()) @map("created_at")
+  updatedAt   DateTime      @updatedAt @map("updated_at")
+  sections    Section[]
+  featured    Featured?
+  savedRecipe SavedRecipe[]
+  user        User          @relation(fields: [userId], references: [id])
 
   @@map("recipe")
 }
@@ -138,9 +139,9 @@ model Recipe {
 model Direction {
   stepNumber      Int     @default(1) @map("step_number")
   direction       String
-  section         Section @relation(fields: [sectionId, sectionRecipeId], references: [id, recipeId], onDelete: Cascade, onUpdate: Cascade)
   sectionId       Int     @map("section_id")
   sectionRecipeId String  @map("section_recipe_id")
+  section         Section @relation(fields: [sectionId, sectionRecipeId], references: [id, recipeId], onDelete: Cascade, onUpdate: Cascade)
 
   @@id([stepNumber, sectionId, sectionRecipeId])
   @@map("direction")
@@ -153,4 +154,14 @@ model Featured {
 
   @@id([createdAt, recipeId])
   @@map("featured")
+}
+
+model SavedRecipe {
+  userId   String @map("user_id")
+  recipeId String @map("recipe_id")
+  user     User   @relation(fields: [userId], references: [id])
+  recipe   Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([userId, recipeId])
+  @@map("saved_recipe")
 }

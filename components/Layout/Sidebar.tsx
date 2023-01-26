@@ -50,12 +50,10 @@ const Sidebar = ({ isOpen }: SidebarProps) => {
         }
       >
         <section className="flex flex-col space-y-3 pt-3">
-          <span className="md:hidden">
-            <NavLink href="/">
-              <HomeIcon className="h-6 w-6" />
-              <p>Home</p>
-            </NavLink>
-          </span>
+          <NavLink href="/">
+            <HomeIcon className="h-6 w-6" />
+            <p>Home</p>
+          </NavLink>
           <NavButton onClick={() => setIsUploadOpen(!isUploadOpen)}>
             <ArrowUpOnSquareIcon className="h-6 w-6" />
             <p>Upload</p>

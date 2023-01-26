@@ -47,8 +47,6 @@ const List = ({ query, setIsOpen }: ListProps) => {
     fetcher
   );
 
-  console.log(data);
-
   if (!data || isLoading)
     return (
       <main className="mx-auto flex grow animate-pulse items-center">
