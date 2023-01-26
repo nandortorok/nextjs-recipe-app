@@ -15,6 +15,7 @@ import {
   BookmarkSlashIcon,
   CircleStackIcon,
   ClockIcon as ClockIconOutline,
+  PencilIcon,
 } from "@heroicons/react/24/outline";
 import {
   BookmarkIcon,
@@ -22,6 +23,8 @@ import {
 } from "@heroicons/react/24/solid";
 import useSWR, { mutate } from "swr";
 import fetcher from "lib/fetcher";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const req = await fetch(`http://localhost:3000/api/recipe?id=${params!.id}`);
@@ -80,7 +83,7 @@ const Recipe: NextPage<Props> = ({ recipe }) => {
                   Date.parse(recipe.createdAt.toString())
                 ).toDateString()}
               </p>
-              <Button recipeId={recipe.id} />
+              <Buttons recipeId={recipe.id} />
             </div>
             <div className="flex w-full justify-center gap-10 pt-10 lg:absolute">
               <div className="flex flex-col items-center">
@@ -158,13 +161,23 @@ const Recipe: NextPage<Props> = ({ recipe }) => {
     </>
   );
 };
+type FetchProps = {
+  savedRecipe: SavedRecipe | null;
+  userName: {
+    user: {
+      name: string | null;
+    };
+  } | null;
+};
 
 type ButtonProps = {
   recipeId: string;
 };
 
-const Button = ({ recipeId }: ButtonProps) => {
-  const { data, error, isLoading } = useSWR<SavedRecipe | null>(
+const Buttons = ({ recipeId }: ButtonProps) => {
+  const { data: session } = useSession();
+  const router = useRouter();
+  const { data, error, isLoading } = useSWR<FetchProps>(
     `/api/library/${recipeId}`,
     fetcher
   );
@@ -187,6 +200,8 @@ const Button = ({ recipeId }: ButtonProps) => {
     return await await res.json();
   };
 
+  if (!session) return null;
+
   if (isLoading)
     return (
       <button
@@ -198,7 +213,48 @@ const Button = ({ recipeId }: ButtonProps) => {
       </button>
     );
 
-  if (!data?.recipeId)
+  if (session?.user?.name === data?.userName?.user.name) {
+    if (!data?.savedRecipe?.recipeId)
+      return (
+        <div className="flex justify-center">
+          <button
+            className="ml-10 flex rounded-3xl border border-blue-500 px-4 py-2 text-blue-500 transition ease-in-out hover:bg-blue-500 hover:text-white"
+            onClick={handleSave}
+            title="Save to saved recipes"
+          >
+            <BookmarkIcon className="mr-2 h-6 w-6" />
+            Save recipe
+          </button>
+          <button
+            className="ml-2 transition ease-in-out hover:text-blue-500 active:text-blue-600"
+            title="Edit recipe"
+          >
+            <PencilIcon className="h-8 w-8" />
+          </button>
+        </div>
+      );
+
+    return (
+      <div className="flex justify-center">
+        <button
+          className="ml-10 flex rounded-3xl border border-blue-500 px-4 py-2 text-blue-500 transition ease-in-out hover:bg-blue-500 hover:text-white"
+          onClick={handleRemove}
+          title="Remove form saved recipes"
+        >
+          <BookmarkSlashIcon className="mr-2 h-6 w-6" />
+          Remove recipe
+        </button>
+        <button
+          className="ml-2 transition ease-in-out hover:text-blue-500 active:text-blue-600"
+          title="Edit recipe"
+        >
+          <PencilIcon className="h-8 w-8 " />
+        </button>
+      </div>
+    );
+  }
+
+  if (!data?.savedRecipe?.recipeId)
     return (
       <button
         className="mx-auto flex rounded-3xl border border-blue-500 px-4 py-2 text-blue-500 transition ease-in-out hover:bg-blue-500 hover:text-white"

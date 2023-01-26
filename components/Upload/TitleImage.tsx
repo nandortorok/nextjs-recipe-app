@@ -104,7 +104,7 @@ const TitleImage = () => {
                 errors.image
                   ? "relative flex h-full w-full cursor-pointer flex-col items-center justify-center rounded-lg border border-red-500 bg-gray-50 text-red-500 transition ease-in-out hover:bg-gray-100"
                   : formValue.image && !errors.image
-                  ? "group relative z-10 flex h-full w-full cursor-pointer flex-col items-center justify-center rounded-lg border border-gray-300 text-gray-500 transition ease-in-out"
+                  ? "group relative z-10 flex h-full w-full cursor-pointer flex-col items-center justify-center rounded-lg border border-gray-300 text-white transition ease-in-out"
                   : "relative flex h-full w-full cursor-pointer flex-col items-center justify-center rounded-lg border border-gray-300 bg-gray-50 text-gray-500 transition ease-in-out hover:bg-gray-100"
               }
             >
@@ -116,7 +116,13 @@ const TitleImage = () => {
                   fill={true}
                 />
               )}
-              <div className="flex flex-col items-center justify-center pt-5 pb-6 transition-transform ease-in-out group-hover:text-gray-600">
+              <div
+                className={
+                  formValue.image && !errors.image
+                    ? "flex h-full w-full flex-col items-center justify-center bg-gradient-to-b from-black/20 via-black/40 to-black/20 pt-5 pb-6 transition-transform ease-in-out group-hover:text-gray-200"
+                    : "flex h-full w-full flex-col items-center justify-center pt-5 pb-6 transition-transform ease-in-out group-hover:text-gray-600"
+                }
+              >
                 <CloudArrowUpIcon className="h-10 w-10" />
                 <p className="mb-2 text-sm font-bold">Click to upload</p>
                 <p className="text-xs">PNG, JPEG</p>

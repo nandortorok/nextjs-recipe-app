@@ -3,6 +3,20 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { unstable_getServerSession } from "next-auth/next";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 
+const getUserName = async (recipeId: string) =>
+  await prisma.recipe.findUnique({
+    where: {
+      id: recipeId,
+    },
+    select: {
+      user: {
+        select: {
+          name: true,
+        },
+      },
+    },
+  });
+
 const getSavedRecipe = async (recipeId: string, email: string) => {
   const userId = await prisma.user.findUnique({
     where: {
@@ -15,7 +29,7 @@ const getSavedRecipe = async (recipeId: string, email: string) => {
 
   if (!userId) return null;
 
-  return await prisma.savedRecipe.findUnique({
+  const savedRecipe = await prisma.savedRecipe.findUnique({
     where: {
       userId_recipeId: {
         recipeId,
@@ -23,6 +37,8 @@ const getSavedRecipe = async (recipeId: string, email: string) => {
       },
     },
   });
+
+  return savedRecipe;
 };
 
 const saveRecipe = async (recipeId: string, email: string) => {
@@ -63,15 +79,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (typeof id !== "string")
     return res.status(400).send({ message: "id must be a string." });
 
-  if (!session || !session.user?.name || !session.user?.email)
-    return res.status(401).send({ message: "You must be logged in." });
+  if (!session || !session.user?.name || !session.user?.email) return res.end();
+  // return res.status(401).send({ message: "You must be logged in." });
 
   if (req.method === "GET") {
-    const save = await getSavedRecipe(id, session.user.email);
+    const savedRecipe = await getSavedRecipe(id, session.user.email);
+    const userName = await getUserName(id);
 
-    if (!save) return res.status(200).send({});
+    if (!savedRecipe)
+      return res.status(200).send({ savedRecipe: {}, userName });
 
-    return res.status(200).send(save);
+    return res.status(200).send({ savedRecipe, userName });
   }
 
   if (req.method === "PUT") {
