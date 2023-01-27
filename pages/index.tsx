@@ -7,6 +7,7 @@ import { prisma, Prisma } from "../lib/prisma";
 import Featured from "components/Home/Featured";
 import { CakeIcon, ClockIcon } from "@heroicons/react/24/outline";
 import getIngredientCount from "lib/getIngredientCount";
+import RecipeImage from "components/RecipeImage";
 
 const getRecipes = async () => {
   return await prisma.recipe.findMany({
@@ -71,12 +72,9 @@ const Home: NextPage<HomeProps> = ({ recipes }) => {
                     key={idx}
                     className="relative rounded-3xl py-28 text-white shadow-md transition-all ease-in-out hover:scale-105 hover:shadow-xl sm:py-40 lg:px-60 lg:py-44 2xl:px-80 2xl:py-56"
                   >
-                    <Image
-                      src={`/img/${imagePath}`}
-                      alt="recipe image"
+                    <RecipeImage
                       className="rounded-3xl object-cover"
-                      sizes={"(max-width: 768px)"}
-                      fill={true}
+                      imagePath={imagePath}
                     />
                     <header className="absolute top-0 left-0 right-0 rounded-t-3xl bg-gradient-to-b from-black/50 to-transparent py-8">
                       <p className="absolute left-5 top-5 text-sm font-medium xl:text-base">
@@ -84,7 +82,7 @@ const Home: NextPage<HomeProps> = ({ recipes }) => {
                       </p>
                     </header>
                     <footer className="absolute bottom-0 left-0 right-0 rounded-b-3xl bg-gradient-to-t from-black/50 to-transparent py-12 xl:py-16  ">
-                      <h1 className="absolute left-5 top-6 text-lg font-black xl:top-10 xl:text-3xl first-letter:capitalize">
+                      <h1 className="absolute left-5 top-6 text-lg font-black first-letter:capitalize xl:top-10 xl:text-3xl">
                         {title}
                       </h1>
                       <p className="absolute left-5 top-14 flex items-center text-sm xl:top-20">

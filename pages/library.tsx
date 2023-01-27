@@ -19,6 +19,7 @@ import {
 
 import fetcher from "lib/fetcher";
 import getIngredientCount from "lib/getIngredientCount";
+import RecipeImage from "components/RecipeImage";
 
 const deleteSavedRecipe = async (recipeId: string) => {
   const res = await fetch(`/api/library/${recipeId}`, {
@@ -174,12 +175,9 @@ const Recipes: NextPage = () => {
                 </p>
                 <Link className="sm:flex" href={`/recipe/${id}`}>
                   <header className="relative py-20 px-28 sm:py-16 sm:px-24">
-                    <Image
-                      src={`/img/${imagePath}`}
-                      alt="recipe image"
+                    <RecipeImage
                       className="rounded-xl object-cover"
-                      sizes={"(max-width: 768px)"}
-                      fill={true}
+                      imagePath={imagePath}
                     />
                   </header>
                   <section className="flex flex-col px-2 pt-5 sm:px-5">

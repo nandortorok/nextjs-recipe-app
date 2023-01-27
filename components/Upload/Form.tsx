@@ -4,14 +4,27 @@ import { SubmitHandler, useFormContext } from "react-hook-form";
 
 import { FormStateProps } from "hooks/useUpload";
 import { UploadContext } from "lib/contexts";
+import supabase from "lib/supabaseClient";
 
 type FormProps = {
   children: JSX.Element;
 };
 
 const uploadImage = async ({ image }: FormStateProps) => {
+  const recipeImage = image[0];
+
+  if (process.env.NODE_ENV === "production") {
+    const { data, error } = await supabase.storage
+      .from("recipe-images")
+      .upload(`src/${recipeImage.name}`, recipeImage);
+
+    if (!data) return "";
+
+    return data.path;
+  }
+
   const body = new FormData();
-  body.append("file", image[0]);
+  body.append("file", recipeImage);
 
   const res = await fetch("/api/upload-image", {
     method: "POST",
@@ -44,7 +57,8 @@ export const Form = ({ children }: FormProps) => {
     } else {
       const imageName = await uploadImage(formValue);
       const { recipeId } = await uploadRecipe(formValue, imageName);
-      router.push(`/recipe/${recipeId}`).then(() => resetFormState());
+      router.push(`/recipe/${recipeId}`);
+      // .then(() => resetFormState());
     }
   };
 

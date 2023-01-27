@@ -9,6 +9,7 @@ import { motion } from "framer-motion";
 import getIngredientCount from "lib/getIngredientCount";
 import fetcher from "lib/fetcher";
 import Spinner from "components/Spinner";
+import RecipeImage from "components/RecipeImage";
 
 const CategoriesInit = [
   { name: "All", route: "/all", isSelected: true },
@@ -120,12 +121,9 @@ const Featured = () => {
                 <Link key={idx} href={`/recipe/${id}`}>
                   <article className="rounded-2xl bg-white shadow-md transition-all ease-in-out hover:scale-105 hover:shadow-lg xl:flex">
                     <header className="relative rounded-t-2xl bg-gray-200 py-20 px-28 xl:rounded-l-2xl">
-                      <Image
-                        src={`/img/${imagePath}`}
-                        alt="recipe image"
+                      <RecipeImage
                         className="object-cover max-xl:rounded-t-2xl xl:rounded-l-2xl"
-                        sizes={"(max-width: 768px)"}
-                        fill={true}
+                        imagePath={imagePath}
                       />
                       <div className="absolute left-0 right-0 top-0 bg-gradient-to-b from-black/75 to-transparent py-8 max-xl:rounded-t-2xl xl:rounded-tl-2xl">
                         <p className="absolute top-4 px-4 text-sm font-medium text-gray-200">

@@ -7,12 +7,21 @@ import { SectionIngredient } from "@prisma/client";
 import { CakeIcon, ClockIcon, TrashIcon } from "@heroicons/react/24/outline";
 
 import fetcher from "lib/fetcher";
+import supabase from "lib/supabaseClient";
 import getIngredientCount from "lib/getIngredientCount";
+import RecipeImage from "components/RecipeImage";
 
-const deleteRecipe = async (recipeId: string) => {
+const deleteRecipe = async (recipeId: string, imagePath: string) => {
+  if (process.env.NODE_ENV === "production") {
+    const { data, error } = await supabase.storage
+      .from("recipe-images")
+      .remove([imagePath]);
+  }
+
   const res = await fetch(`/api/user/recipe/${recipeId}`, {
     method: "DELETE",
   });
+
   await mutate("/api/user/recipe");
 
   return await await res.json();
@@ -156,12 +165,9 @@ const Recipes: NextPage = () => {
                 </p>
                 <Link className="sm:flex" href={`/recipe/${id}`}>
                   <header className="relative py-20 px-28 sm:py-16 sm:px-24">
-                    <Image
-                      src={`/img/${imagePath}`}
-                      alt="recipe image"
+                    <RecipeImage
                       className="rounded-xl object-cover"
-                      sizes={"(max-width: 768px)"}
-                      fill={true}
+                      imagePath={imagePath}
                     />
                   </header>
                   <section className="flex flex-col px-2 pt-5 sm:px-5">
@@ -192,7 +198,7 @@ const Recipes: NextPage = () => {
                   <button
                     className="rounded-full p-2 text-red-500 transition ease-in-out hover:bg-red-100 hover:text-red-500 max-sm:bg-red-100  sm:text-gray-500"
                     title={`Delete ${title}`}
-                    onClick={() => deleteRecipe(id)}
+                    onClick={() => deleteRecipe(id, imagePath)}
                   >
                     <TrashIcon className="h-6 w-6" />
                   </button>
