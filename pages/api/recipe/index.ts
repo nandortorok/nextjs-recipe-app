@@ -1,4 +1,5 @@
-import { Prisma, prisma } from "lib/prisma";
+import { Prisma } from "@prisma/client";
+import { prisma } from "lib/prisma";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const getRecipe = async (param: string) => {

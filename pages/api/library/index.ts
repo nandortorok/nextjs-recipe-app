@@ -1,4 +1,5 @@
-import { Prisma, prisma } from "lib/prisma";
+import { Prisma } from "@prisma/client";
+import { prisma } from "lib/prisma";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { unstable_getServerSession } from "next-auth/next";
 import { authOptions } from "pages/api/auth/[...nextauth]";
