@@ -54,17 +54,19 @@ const Recipes: NextPage = () => {
         <div className="container mx-auto flex py-8 max-lg:flex-col lg:pl-8">
           <section className="whitespace-nowrap rounded-3xl bg-white p-5 lg:sticky lg:top-28 lg:self-start">
             <h1 className="pb-6 text-5xl font-bold md:pb-10">Your Recipes</h1>
-            <div className="pb-1">
-              <p className="h-3 w-28 rounded-full bg-gray-200" />
-            </div>
-            <div className="pb-1">
-              <p className="h-3 w-16 rounded-full bg-gray-200" />
-            </div>
+            <span className="animate-pulse">
+              <div className="pb-1">
+                <p className="h-3 w-28 rounded-full bg-gray-200" />
+              </div>
+              <div className="pb-1">
+                <p className="h-3 w-16 rounded-full bg-gray-200" />
+              </div>
+            </span>
           </section>
           <section className="flex w-full flex-col max-lg:py-5 max-sm:space-y-5 lg:p-5">
-            <h1 className="py-3 text-center text-3xl font-bold md:text-5xl">
+            <h3 className="py-5 text-center">
               Sign in to view your uploaded recipes
-            </h1>
+            </h3>
             <Link
               className="mx-auto rounded-xl bg-blue-500 py-2 px-5 text-white transition ease-in-out hover:bg-blue-600 active:ring"
               href="/signin"

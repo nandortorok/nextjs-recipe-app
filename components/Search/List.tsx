@@ -49,8 +49,10 @@ const List = ({ query, setIsOpen }: ListProps) => {
 
   if (!data || isLoading)
     return (
-      <main className="mx-auto flex grow animate-pulse items-center">
-        <Spinner />
+      <main className="flex h-full grow animate-pulse flex-col justify-center">
+        <span className="mx-auto">
+          <Spinner />
+        </span>
       </main>
     );
 
@@ -112,7 +114,7 @@ const List = ({ query, setIsOpen }: ListProps) => {
               data.ingredients.map(({ name, sectionIngredients }, idx) => (
                 <li
                   key={idx}
-                  className="overflow-x-hidden border-t px-5 py-3 text-gray-700 transition ease-in-out last:border-b"
+                  className="overflow-x-hidden border-t px-5 py-3 text-gray-700 transition ease-in-out"
                 >
                   <div className="flex items-center space-x-2 whitespace-nowrap">
                     <Highlighter

@@ -172,11 +172,11 @@ const Direction = ({ sectionIndex }: { sectionIndex: number }) => {
         <tr className="border-b transition-all ease-in-out" key={field.id}>
           <td>
             <div className="flex">
-              <p className="pt-2 pl-6 text-gray-700">{idx + 1}</p>
-              <textarea
-                className="w-full resize-none border-0 bg-transparent transition-all ease-in-out placeholder:text-sm placeholder:leading-6 placeholder:text-red-500/80 focus:ring-0"
+              <p className="my-auto px-4 text-gray-700">{idx + 1}</p>
+              <div
+                className="w-full py-3 resize-none border-0 bg-transparent outline-none transition-all ease-in-out placeholder:text-sm placeholder:leading-6 placeholder:text-red-500/80 focus:ring-0"
                 placeholder={showError(idx)?.direction?.message}
-                autoComplete="off"
+                contentEditable={"true"}
                 {...register(
                   `sections.${sectionIndex}.directions.${idx}.direction`,
                   {
@@ -190,7 +190,7 @@ const Direction = ({ sectionIndex }: { sectionIndex: number }) => {
               />
             </div>
           </td>
-          <td className="py-3 px-6 text-right">
+          <td className="py-3 px-6 text-right w-3">
             <XButton
               onClick={() => {
                 remove(idx);

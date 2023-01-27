@@ -32,8 +32,7 @@ export type RecipeProps = Prisma.PromiseReturnType<typeof getSavedRecipes>;
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await unstable_getServerSession(req, res, authOptions);
 
-  if (!session || !session.user?.name || !session.user?.email)
-    return res.status(401).send({ message: "You must be logged in." });
+  if (!session || !session.user?.name || !session.user?.email) return res.end();
 
   if (req.method === "GET") {
     const recipes = await getSavedRecipes(session.user.email);

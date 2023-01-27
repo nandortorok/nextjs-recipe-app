@@ -1,9 +1,9 @@
 import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
-import Image from "next/image";
 import Link from "next/link";
+import { Prisma } from "@prisma/client";
 
-import { prisma, Prisma } from "../lib/prisma";
+import { prisma } from "../lib/prisma";
 import Featured from "components/Home/Featured";
 import { CakeIcon, ClockIcon } from "@heroicons/react/24/outline";
 import getIngredientCount from "lib/getIngredientCount";

@@ -143,12 +143,6 @@ const TitleImage = () => {
               {errors.image.message && (
                 <p className="text-sm">{errors.image.message.toString()}</p>
               )}
-              {/* {errors.image. && (
-                <p className="text-sm">{errors.image.size?.message}</p>
-              )}
-              {errors.image.imageType?.message && (
-                <p className="text-sm">{errors.image.imageType?.message}</p>
-              )} */}
             </div>
           )}
         </>

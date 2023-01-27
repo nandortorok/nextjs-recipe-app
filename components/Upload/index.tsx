@@ -68,7 +68,8 @@ const Upload = ({ isOpen, setIsOpen }: UploadProps) => {
         >
           <XMarkIcon className="h-6 w-6" />
         </button>
-        {session ? <UploadForm /> : <SignIn setIsOpen={setIsOpen} />}
+        <UploadForm />
+        {/* {session ? <UploadForm /> : <SignIn setIsOpen={setIsOpen} />} */}
       </main>
     </Modal>
   );

@@ -131,7 +131,7 @@ const Featured = () => {
                         </p>
                       </div>
                     </header>
-                    <main className="space-y-1 px-6 pb-2 lg:flex lg:flex-col">
+                    <main className="space-y-1 pl-6 pb-2 lg:flex lg:flex-col">
                       <h4 className="py-2 font-medium first-letter:capitalize lg:mb-auto">
                         {title}
                       </h4>

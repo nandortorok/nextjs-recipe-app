@@ -9,7 +9,6 @@ import {
   User,
 } from "@prisma/client";
 import { GetServerSideProps, NextPage } from "next";
-import Image from "next/image";
 import Head from "next/head";
 import {
   BookmarkSlashIcon,
@@ -26,9 +25,15 @@ import { useSession } from "next-auth/react";
 import fetcher from "lib/fetcher";
 import RecipeImage from "components/RecipeImage";
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const req = await fetch(`http://localhost:3000/api/recipe?id=${params!.id}`);
-  const recipe = await req.json();
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { req, params } = context;
+
+  const request = await fetch(
+    process.env.NODE_ENV === "production"
+      ? `https://${req?.headers.host}/api/recipe?id=${params!.id}`
+      : `http://${req?.headers.host}/api/recipe?id=${params!.id}`
+  );
+  const recipe = await request.json();
 
   return { props: { recipe } };
 };
@@ -50,10 +55,8 @@ type Props = {
   recipe: RecipeProps;
 };
 
-const Recipe: NextPage<Props> = ({ recipe }) => {
+const RecipePage: NextPage<Props> = ({ recipe }) => {
   if (!recipe) return null;
-
-  console.log(recipe.imagePath);
 
   return (
     <>
@@ -276,4 +279,4 @@ const Buttons = ({ recipeId }: ButtonProps) => {
   );
 };
 
-export default Recipe;
+export default RecipePage;

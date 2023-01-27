@@ -57,8 +57,7 @@ export const Form = ({ children }: FormProps) => {
     } else {
       const imageName = await uploadImage(formValue);
       const { recipeId } = await uploadRecipe(formValue, imageName);
-      router.push(`/recipe/${recipeId}`);
-      // .then(() => resetFormState());
+      router.push(`/recipe/${recipeId}`).then(() => resetFormState());
     }
   };
 

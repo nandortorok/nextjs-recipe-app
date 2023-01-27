@@ -74,18 +74,18 @@ const ServingsTime = () => {
           <ErrorMessage name={"servings"} errors={errors} />
 
           <section className="grid grid-cols-2 gap-x-5 md:grid-cols-3">
-            <p className="bold my-auto pb-1 max-sm:col-span-2">Prep Time</p>
+            <p className="bold my-auto pb-1 max-md:col-span-2">Prep Time</p>
             <Input name={"prepTime"} />
             <Select name={"prepTimeUnit"} />
             <ErrorMessage name={"prepTime"} errors={errors} />
-            <p className="bold my-auto pb-1 max-sm:col-span-2">Cook Time</p>
+            <p className="bold my-auto pb-1 max-md:col-span-2">Cook Time</p>
             <Input name={"cookTime"} />
             <Select name={"cookTimeUnit"} />
             <ErrorMessage name={"cookTime"} errors={errors} />
             <p className="bold my-auto pb-1 text-center max-sm:col-span-2 md:text-left">
               Total
             </p>
-            <p className="col-span-2 my-auto text-center md:p-4 md:text-left">
+            <p className="max-sm:col-span-2 my-auto text-center md:p-4 md:text-left">
               {totalTime()}
             </p>
           </section>

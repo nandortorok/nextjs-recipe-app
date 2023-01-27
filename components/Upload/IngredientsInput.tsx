@@ -26,7 +26,7 @@ const schema = z.object({
         .object({
           amount: z
             .number()
-            .min(1, "Amount must be greater than or equal to 1")
+            .min(0.1, "Amount must be greater than or equal to 1")
             .max(999, "Amount must be less than or equal to 999"),
           unit: z.string().optional(),
           name: z
@@ -291,6 +291,7 @@ const Ingredient = ({ sectionIndex }: { sectionIndex: number }) => {
                   : "w-full border-0 align-middle focus:ring-0"
               }
               type="number"
+              step={0.1}
               autoComplete="off"
               {...register(
                 `sections.${sectionIndex}.ingredients.${idx}.amount`,
