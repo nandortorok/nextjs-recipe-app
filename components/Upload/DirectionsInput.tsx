@@ -1,3 +1,4 @@
+import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UploadContext } from "lib/contexts";
 import { useContext } from "react";
@@ -171,26 +172,20 @@ const Direction = ({ sectionIndex }: { sectionIndex: number }) => {
       {fields.map((field, idx) => (
         <tr className="border-b transition-all ease-in-out" key={field.id}>
           <td>
-            <div className="flex">
-              <p className="my-auto px-4 text-gray-700">{idx + 1}</p>
-              <div
-                className="w-full py-3 resize-none border-0 bg-transparent outline-none transition-all ease-in-out placeholder:text-sm placeholder:leading-6 placeholder:text-red-500/80 focus:ring-0"
-                placeholder={showError(idx)?.direction?.message}
-                contentEditable={"true"}
-                {...register(
-                  `sections.${sectionIndex}.directions.${idx}.direction`,
-                  {
-                    onBlur: () =>
-                      setFormValue({
-                        ...formValue,
-                        sections: [...watch().sections],
-                      }),
-                  }
+            <div className="flex px-2">
+              <div className="my-auto">
+                {showError(idx) ? (
+                  <div className="border-l border-transparent ">
+                    <ExclamationTriangleIcon className=" ml-1 h-5 w-5 text-red-500" />
+                  </div>
+                ) : (
+                  <p className="px-2 text-gray-700">{idx + 1}</p>
                 )}
-              />
+              </div>
+              <TextArea sectionIndex={sectionIndex} idx={idx} />
             </div>
           </td>
-          <td className="py-3 px-6 text-right w-3">
+          <td className="w-3 py-3 px-6 text-right">
             <XButton
               onClick={() => {
                 remove(idx);
@@ -204,6 +199,45 @@ const Direction = ({ sectionIndex }: { sectionIndex: number }) => {
         </tr>
       ))}
     </>
+  );
+};
+
+type TextAreaProps = {
+  sectionIndex: number;
+  idx: number;
+};
+
+export const TextArea = ({ sectionIndex, idx }: TextAreaProps) => {
+  const { formValue, setFormValue } = useContext(UploadContext);
+  const {
+    register,
+    watch,
+    formState: { errors },
+  } = useFormContext<schemaT>();
+
+  const showError = (number: number) => {
+    if (
+      errors.sections &&
+      errors.sections.at &&
+      errors.sections.at(sectionIndex) &&
+      errors.sections.at(sectionIndex)?.directions?.at &&
+      errors.sections.at(sectionIndex)?.directions?.[number]
+    )
+      return errors.sections.at(sectionIndex)?.directions?.[number];
+  };
+
+  return (
+    <textarea
+      className="w-full resize-none border-0 bg-transparent py-3 outline-none transition-all ease-in-out placeholder:text-sm placeholder:leading-6 placeholder:text-red-500/80 focus:ring-0"
+      placeholder={showError(idx)?.direction?.message}
+      {...register(`sections.${sectionIndex}.directions.${idx}.direction`, {
+        onBlur: () =>
+          setFormValue({
+            ...formValue,
+            sections: [...watch().sections],
+          }),
+      })}
+    />
   );
 };
 

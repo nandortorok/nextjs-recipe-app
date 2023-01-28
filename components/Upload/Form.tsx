@@ -10,13 +10,13 @@ type FormProps = {
   children: JSX.Element;
 };
 
-const uploadImage = async ({ image }: FormStateProps) => {
+const uploadImage = async ({ image, title }: FormStateProps) => {
   const recipeImage = image[0];
 
   if (process.env.NODE_ENV === "production") {
     const { data, error } = await supabase.storage
       .from("recipe-images")
-      .upload(`src/${recipeImage.name}`, recipeImage);
+      .upload(`src/${recipeImage.name}-${title}`, recipeImage);
 
     if (!data) return "";
 

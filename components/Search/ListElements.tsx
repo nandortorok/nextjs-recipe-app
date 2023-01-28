@@ -100,7 +100,7 @@ export const RecipeTitleList = ({
             idx < 2 && (
               <p
                 key={idx}
-                className="rounded-full bg-gray-100 px-2 py-1 text-xs font-medium first-letter:capitalize"
+                className="rounded-full bg-gray-100 px-2 py-1 text-xs font-medium capitalize"
               >
                 {title}
               </p>

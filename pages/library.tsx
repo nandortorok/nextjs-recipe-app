@@ -177,7 +177,7 @@ const Recipes: NextPage = () => {
                   <section className="flex flex-col px-2 pt-5 sm:px-5">
                     <div>
                       <h4
-                        className="font-medium first-letter:capitalize lg:mb-auto"
+                        className="font-medium capitalize lg:mb-auto"
                         title={title}
                       >
                         {title}

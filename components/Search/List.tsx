@@ -84,7 +84,7 @@ const List = ({ query, setIsOpen }: ListProps) => {
                 <li className="overflow-x-hidden border-b px-5 py-3 text-gray-700 transition ease-in-out hover:bg-slate-50">
                   <div className="flex items-center space-x-2 whitespace-nowrap">
                     <Highlighter
-                      className="first-letter:capitalize"
+                      className="capitalize"
                       searchWords={[query]}
                       autoEscape={true}
                       textToHighlight={title}

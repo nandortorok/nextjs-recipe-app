@@ -82,7 +82,7 @@ const Home: NextPage<HomeProps> = ({ recipes }) => {
                       </p>
                     </header>
                     <footer className="absolute bottom-0 left-0 right-0 rounded-b-3xl bg-gradient-to-t from-black/50 to-transparent py-12 xl:py-16  ">
-                      <h1 className="absolute left-5 top-6 text-lg font-black first-letter:capitalize xl:top-10 xl:text-3xl">
+                      <h1 className="absolute left-5 top-6 text-lg font-black capitalize xl:top-10 xl:text-3xl">
                         {title}
                       </h1>
                       <p className="absolute left-5 top-14 flex items-center text-sm xl:top-20">
