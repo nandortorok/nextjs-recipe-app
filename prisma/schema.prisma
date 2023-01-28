@@ -109,7 +109,7 @@ model SectionIngredient {
   sectionRecipeId String     @map("section_recipe_id")
   ingredientId    Int        @map("ingredient_id")
   unitId          Int?       @map("unit_id")
-  amount          Int?
+  amount          Float?
   section         Section    @relation(fields: [sectionId, sectionRecipeId], references: [id, recipeId], onDelete: Cascade, onUpdate: Cascade)
   ingredient      Ingredient @relation(fields: [ingredientId], references: [id])
   unit            Unit?      @relation(fields: [unitId], references: [id])

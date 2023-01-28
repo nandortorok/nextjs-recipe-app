@@ -88,7 +88,7 @@ CREATE TABLE "section_ingredient" (
     "section_recipe_id" TEXT NOT NULL,
     "ingredient_id" INTEGER NOT NULL,
     "unit_id" INTEGER,
-    "amount" INTEGER,
+    "amount" DOUBLE PRECISION,
 
     CONSTRAINT "section_ingredient_pkey" PRIMARY KEY ("section_id","section_recipe_id","ingredient_id")
 );
