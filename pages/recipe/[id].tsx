@@ -70,6 +70,7 @@ const RecipePage: NextPage<Props> = ({ recipe }) => {
             <RecipeImage
               className="object-cover"
               imagePath={recipe.imagePath}
+              alt={recipe.title}
             />
           </header>
           <main className="py-10 max-md:h-1/2 lg:relative lg:m-auto lg:w-1/2">

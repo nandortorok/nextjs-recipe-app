@@ -27,23 +27,17 @@ export default function MyApp({
   const router = useRouter();
 
   useEffect(() => {
-    const handleStart = (url: string) => {
-      console.log(`Loading: ${url}`);
-      NProgress.start();
-    };
-
-    const handleStop = () => {
-      NProgress.done();
-    };
+    const handleStart = () => NProgress.start();
+    const handleComplete = () => NProgress.done();
 
     router.events.on("routeChangeStart", handleStart);
-    router.events.on("routeChangeComplete", handleStop);
-    router.events.on("routeChangeError", handleStop);
+    router.events.on("routeChangeComplete", handleComplete);
+    router.events.on("routeChangeError", handleComplete);
 
     return () => {
       router.events.off("routeChangeStart", handleStart);
-      router.events.off("routeChangeComplete", handleStop);
-      router.events.off("routeChangeError", handleStop);
+      router.events.off("routeChangeComplete", handleComplete);
+      router.events.off("routeChangeError", handleComplete);
     };
   }, [router]);
 

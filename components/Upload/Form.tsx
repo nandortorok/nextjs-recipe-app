@@ -11,28 +11,28 @@ type FormProps = {
   children: JSX.Element;
 };
 
-const uploadImage = async ({ image, title }: FormStateProps) => {
+const uploadImage = async ({ image }: FormStateProps) => {
   const recipeImage = image[0];
 
-  if (process.env.NODE_ENV === "production") {
-    const { data, error } = await supabase.storage
-      .from("recipe-images")
-      .upload(`src/${recipeImage.name}-${title}`, recipeImage);
+  if (process.env.NODE_ENV !== "production") {
+    const body = new FormData();
+    body.append("file", recipeImage);
 
-    if (!data) return "";
-    return data.path;
+    const res = await fetch("/api/upload-image", {
+      method: "POST",
+      body,
+    });
+
+    const { data } = await res.json();
+    return await data[0].newFilename;
   }
 
-  const body = new FormData();
-  body.append("file", recipeImage);
+  const { data, error } = await supabase.storage
+    .from("recipe-images")
+    .upload(`${Date.now()}-${recipeImage.name}`, recipeImage);
 
-  const res = await fetch("/api/upload-image", {
-    method: "POST",
-    body,
-  });
-
-  const { data } = await res.json();
-  return await data[0].newFilename;
+  if (!data) return "";
+  return data.path;
 };
 
 const uploadRecipe = async (data: FormStateProps, imageName: string) => {

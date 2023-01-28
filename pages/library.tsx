@@ -172,6 +172,7 @@ const Recipes: NextPage = () => {
                     <RecipeImage
                       className="rounded-xl object-cover"
                       imagePath={imagePath}
+                      alt={title}
                     />
                   </header>
                   <section className="flex flex-col px-2 pt-5 sm:px-5">

@@ -1,4 +1,6 @@
+import { PhotoIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
+import { useState } from "react";
 
 type RecipeImageProps = {
   imagePath: string;
@@ -7,11 +9,17 @@ type RecipeImageProps = {
 };
 
 const RecipeImage = ({ className, imagePath, alt }: RecipeImageProps) => {
-  if (process.env.NODE_ENV === "production")
+  const [isLoading, setIsLoading] = useState(true);
+
+  if (process.env.NODE_ENV !== "production")
     return (
       <Image
         className={className}
-        src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/recipe-images/${imagePath}`}
+        src={
+          imagePath.startsWith("1")
+            ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/recipe-images/${imagePath}`
+            : `/img/${imagePath}`
+        }
         alt={alt || "Recipe image"}
         sizes={"(max-width: 768px)"}
         fill={true}
@@ -20,15 +28,16 @@ const RecipeImage = ({ className, imagePath, alt }: RecipeImageProps) => {
 
   return (
     <Image
-      className={className}
-      src={
-        imagePath.startsWith("src")
-          ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/recipe-images/${imagePath}`
-          : `/img/${imagePath}`
+      className={
+        isLoading
+          ? `${className} flex animate-pulse items-center justify-center bg-gray-200 text-sm text-gray-500`
+          : className
       }
+      src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/recipe-images/${imagePath}`}
       alt={alt || "Recipe image"}
       sizes={"(max-width: 768px)"}
       fill={true}
+      onLoad={() => setIsLoading(false)}
     />
   );
 };
