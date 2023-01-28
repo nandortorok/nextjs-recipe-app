@@ -1,10 +1,11 @@
 import { useRouter } from "next/router";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { SubmitHandler, useFormContext } from "react-hook-form";
 
 import { FormStateProps } from "hooks/useUpload";
 import { UploadContext } from "lib/contexts";
 import supabase from "lib/supabaseClient";
+import { ButtonGroup } from "./Elements";
 
 type FormProps = {
   children: JSX.Element;
@@ -19,7 +20,6 @@ const uploadImage = async ({ image, title }: FormStateProps) => {
       .upload(`src/${recipeImage.name}-${title}`, recipeImage);
 
     if (!data) return "";
-
     return data.path;
   }
 
@@ -50,21 +50,19 @@ export const Form = ({ children }: FormProps) => {
     useContext(UploadContext);
   const { handleSubmit } = useFormContext();
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit: SubmitHandler<Partial<FormStateProps>> = async () => {
-    if (page < 4) {
-      setPage(page + 1);
-    } else {
-      const imageName = await uploadImage(formValue);
-      const { recipeId } = await uploadRecipe(formValue, imageName);
-      router.push(`/recipe/${recipeId}`).then(() => resetFormState());
-    }
-  };
+    if (page < 4) return setPage(page + 1);
 
-  const handleBack = () => {
-    if (page > 1) {
-      setPage(page - 1);
-    }
+    setIsLoading(true);
+    const imageName = await uploadImage(formValue);
+    const { recipeId } = await uploadRecipe(formValue, imageName);
+
+    router.push(`/recipe/${recipeId}`).then(() => {
+      setIsLoading(false);
+      resetFormState();
+    });
   };
 
   return (
@@ -75,22 +73,7 @@ export const Form = ({ children }: FormProps) => {
       <h1 className="mb-5 pt-5 text-center font-bold">Upload recipe</h1>
 
       {children}
-      <section className="mt-auto flex justify-between px-5 pt-5">
-        <button
-          className="rounded-md bg-white py-2 px-5 text-blue-500 transition ease-in-out hover:bg-blue-50 active:ring disabled:invisible"
-          type="button"
-          disabled={page > 1 ? false : true}
-          onClick={handleBack}
-        >
-          Back
-        </button>
-        <button
-          className="rounded-md bg-blue-500 py-2 px-5 text-white transition ease-in-out hover:bg-blue-600 active:ring"
-          type="submit"
-        >
-          {page < 4 ? "Next" : "Submit"}
-        </button>
-      </section>
+      <ButtonGroup isLoading={isLoading} />
     </form>
   );
 };

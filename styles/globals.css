@@ -13,3 +13,7 @@
     @apply text-lg
   }
 }
+
+.spinner-icon {
+  @apply hidden
+}

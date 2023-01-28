@@ -124,7 +124,9 @@ const RecipePage: NextPage<Props> = ({ recipe }) => {
                             className="flex items-baseline gap-1 rounded-3xl py-1 pl-3 lg:py-3"
                           >
                             <p>{amount}</p>
-                            {unit && <p>{unit.short}</p>}
+                            {unit && (
+                              <p>{unit.short ? unit.short : unit.name}</p>
+                            )}
                             <div>{ingredient.name}</div>
                           </li>
                         )
