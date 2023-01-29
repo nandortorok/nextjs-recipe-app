@@ -40,7 +40,7 @@ export const IngredientItems = ({ sections }: IngredientItemsProps) => {
       <div className="flex gap-2">
         {ingredients.map(
           (item, idx) =>
-            idx < 6 && (
+            idx < 5 && (
               <p
                 key={idx}
                 className="rounded-full bg-gray-100 px-2 py-1 text-xs first-letter:capitalize"

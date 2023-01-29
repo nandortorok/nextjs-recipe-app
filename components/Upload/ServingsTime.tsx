@@ -53,16 +53,16 @@ const ServingsTime = () => {
   const total = prepTime * prepTimeUnit + cookTime * cookTimeUnit;
 
   const totalTime = () => {
-    if (total < 60) {
-      return `${total} ${total > 1 ? "minutes" : "minute"}`;
-    } else {
-      const minutes = total % 60;
-      const hours = Math.floor(total / 60);
+    if (!(total / 1)) return null;
 
-      return `${hours} ${hours > 1 ? "hours" : "hour"} and ${minutes} ${
-        minutes > 1 ? "minutes" : "minute"
-      }`;
-    }
+    if (total < 60) return `${total} ${total > 1 ? "minutes" : "minute"}`;
+
+    const minutes = total % 60;
+    const hours = Math.floor(total / 60);
+
+    return `${hours} ${hours > 1 ? "hours" : "hour"} and ${minutes} ${
+      minutes > 1 ? "minutes" : "minute"
+    }`;
   };
 
   return (
@@ -85,7 +85,7 @@ const ServingsTime = () => {
             <p className="bold my-auto pb-1 text-center max-sm:col-span-2 md:text-left">
               Total
             </p>
-            <p className="max-sm:col-span-2 my-auto text-center md:p-4 md:text-left">
+            <p className="my-auto text-center max-sm:col-span-2 md:p-4 md:text-left">
               {totalTime()}
             </p>
           </section>

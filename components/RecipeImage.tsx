@@ -14,6 +14,7 @@ const RecipeImage = ({ className, imagePath, alt }: RecipeImageProps) => {
   if (process.env.NODE_ENV !== "production")
     return (
       <Image
+        key={imagePath}
         className={className}
         src={
           imagePath.startsWith("1")
@@ -28,6 +29,7 @@ const RecipeImage = ({ className, imagePath, alt }: RecipeImageProps) => {
 
   return (
     <Image
+      key={imagePath}
       className={
         isLoading
           ? `${className} flex animate-pulse items-center justify-center bg-gray-200 text-sm text-gray-500`

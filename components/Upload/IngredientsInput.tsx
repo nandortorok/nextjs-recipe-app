@@ -116,12 +116,10 @@ const IngredientsInput = () => {
                   </caption>
                   <thead className="bg-gray-100 text-sm uppercase text-gray-700">
                     <tr>
-                      <th className="w-1/3 py-3 pl-6">Amount*</th>
-                      <th className="w-1/3 py-3 pl-3">Unit</th>
-                      <th className="w-1/3 py-3 pl-3">Name*</th>
-                      <th className="py-3 pl-10">
-                        <span className="invisible">Edit</span>
-                      </th>
+                      <th className="w-1/6 py-3 pl-3 md:pl-6">Amount*</th>
+                      <th className="w-2/5 py-3 pl-2 md:w-1/4 md:pl-3">Unit</th>
+                      <th className="w-1/2 py-3 pl-2 md:pl-3">Name*</th>
+                      <th className="py-3"></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -383,7 +381,7 @@ const Ingredient = ({ sectionIndex }: { sectionIndex: number }) => {
               })}
             />
           </td>
-          <td className="py-3 px-6 text-right transition-colors ease-in-out hover:text-red-500">
+          <td className="py-3 pr-2 text-right transition-colors ease-in-out hover:text-red-500 md:pr-6">
             <XButton onClick={() => remove(idx)} />
           </td>
         </tr>

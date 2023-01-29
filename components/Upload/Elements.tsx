@@ -50,34 +50,46 @@ export const ButtonGroup = ({ isLoading }: ButtonGroupProps) => {
     }
   };
 
+  const handleBackButtonDisabled = () => {
+    if (page <= 1) return true;
+    if (isLoading) return true;
+
+    return false;
+  };
+
   return (
-    <section className="mt-auto flex justify-between px-5 pt-5 text-sm font-medium">
-      <button
-        className="rounded-lg bg-white py-2.5 px-5 text-blue-500 transition ease-in-out hover:bg-blue-50 active:ring disabled:invisible"
-        type="button"
-        disabled={page > 1 ? false : true}
-        onClick={handleBack}
-      >
-        Back
-      </button>
-      {isLoading ? (
-        <button
-          disabled
-          type="button"
-          className="inline-flex cursor-wait items-center rounded-lg bg-blue-500 px-5 py-2.5 text-center text-white transition ease-in-out hover:bg-blue-600 active:ring"
-        >
-          <ButtonSpinner />
-          Loading...
-        </button>
-      ) : (
-        <button
-          className="rounded-lg bg-blue-500 py-2.5 px-5 text-white transition ease-in-out hover:bg-blue-600 active:ring"
-          type="submit"
-        >
-          {page < 4 ? "Next" : "Submit"}
-        </button>
+    <>
+      {isLoading && (
+        <div className="absolute z-50 -ml-5 h-full w-full rounded-xl bg-black/10 transition ease-in-out" />
       )}
-    </section>
+      <section className="mt-auto flex justify-between px-5 pt-5 text-sm font-medium">
+        <button
+          className="rounded-lg bg-white py-2.5 px-5 text-blue-500 transition ease-in-out hover:bg-blue-50 active:ring disabled:invisible"
+          type="button"
+          disabled={handleBackButtonDisabled()}
+          onClick={handleBack}
+        >
+          Back
+        </button>
+        {isLoading ? (
+          <button
+            disabled
+            type="button"
+            className="inline-flex cursor-wait items-center rounded-lg bg-blue-500 px-5 py-2.5 text-center text-white transition ease-in-out hover:bg-blue-600 active:ring"
+          >
+            <ButtonSpinner />
+            Loading...
+          </button>
+        ) : (
+          <button
+            className="rounded-lg bg-blue-500 py-2.5 px-5 text-white transition ease-in-out hover:bg-blue-600 active:ring"
+            type="submit"
+          >
+            {page < 4 ? "Next" : "Submit"}
+          </button>
+        )}
+      </section>
+    </>
   );
 };
 
