@@ -28,7 +28,10 @@ const getSearchResults = async (params: string) => {
         },
       },
     },
-    take: 32,
+    take: 16,
+    orderBy: {
+      createdAt: "desc",
+    },
   });
 };
 

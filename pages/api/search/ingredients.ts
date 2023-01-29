@@ -26,7 +26,7 @@ const getIngredients = async (params: string) => {
         },
       },
     },
-    take: 32,
+    take: 16,
   });
 };
 

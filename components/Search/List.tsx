@@ -69,7 +69,7 @@ const List = ({ query, setIsOpen }: ListProps) => {
 
   return (
     <main className="grow overflow-auto">
-      {data.ingredients.length > 1 && (
+      {data.recipes.length >= 1 && (
         <>
           <h3 className="px-5 py-4 font-bold">Recipes</h3>
           <ul className="border-t">
@@ -106,7 +106,7 @@ const List = ({ query, setIsOpen }: ListProps) => {
         </>
       )}
 
-      {query !== "" && (
+      {query !== "" && data.ingredients.length > 1 && (
         <>
           <h3 className=" px-5 py-4 font-bold">Ingredients</h3>
           <ul className="">
