@@ -60,7 +60,7 @@ export const ButtonGroup = ({ isLoading }: ButtonGroupProps) => {
   return (
     <>
       {isLoading && (
-        <div className="absolute z-50 -ml-5 h-full w-full rounded-xl bg-black/10 transition ease-in-out" />
+        <div className="absolute z-50 -ml-10 h-full w-full rounded-xl bg-black/10 transition ease-in-out" />
       )}
       <section className="mt-auto flex justify-between px-5 pt-5 text-sm font-medium">
         <button

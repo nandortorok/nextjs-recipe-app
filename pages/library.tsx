@@ -40,7 +40,7 @@ const Recipes: NextPage = () => {
     fetcher
   );
 
-  if (!session)
+  if (!session || !session?.user?.name)
     return (
       <main className="min-h-screen bg-gray-100 px-5">
         <div className="container mx-auto flex py-8 max-lg:flex-col lg:pl-8">
@@ -71,9 +71,7 @@ const Recipes: NextPage = () => {
       </main>
     );
 
-  if (!data || !session?.user?.name) return null;
-
-  if (isLoading)
+  if (isLoading || !data)
     return (
       <main className="min-h-screen animate-pulse bg-gray-100 px-5">
         <div className="container mx-auto flex py-8 max-lg:flex-col lg:pl-8">
