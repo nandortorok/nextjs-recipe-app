@@ -33,7 +33,7 @@ const Modal = ({ children, isOpen, setIsOpen }: ModalProps) => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Dialog.Panel className="relative z-50 mx-auto flex min-h-full w-full max-w-[95vw] flex-col divide-y rounded-xl bg-white shadow-xl transition-opacity md:max-w-3xl">
+          <Dialog.Panel className="relative z-50 mx-auto flex min-h-full w-full max-w-[95vw] flex-col divide-y rounded-xl bg-white shadow-xl transition-opacity dark:divide-zinc-700 dark:bg-zinc-800 md:max-w-3xl">
             {children}
           </Dialog.Panel>
         </Transition.Child>

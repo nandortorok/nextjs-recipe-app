@@ -64,7 +64,7 @@ export const ButtonGroup = ({ isLoading }: ButtonGroupProps) => {
       )}
       <section className="mt-auto flex justify-between px-5 pt-5 text-sm font-medium">
         <button
-          className="rounded-lg bg-white py-2.5 px-5 text-blue-500 transition ease-in-out hover:bg-blue-50 active:ring disabled:invisible"
+          className="rounded-lg bg-white py-2.5 px-5 text-blue-500 transition ease-in-out hover:bg-blue-50 active:ring disabled:invisible dark:bg-gray-400/10 dark:text-white hover:dark:bg-blue-50/10"
           type="button"
           disabled={handleBackButtonDisabled()}
           onClick={handleBack}

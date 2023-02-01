@@ -63,7 +63,7 @@ const Upload = ({ isOpen, setIsOpen }: UploadProps) => {
     <Modal value={isOpen} onClose={setIsOpen}>
       <main className="flex h-full w-full flex-col overflow-auto">
         <button
-          className="absolute top-0 right-0 p-4 text-slate-400 hover:text-slate-700"
+          className="absolute top-0 right-0 p-4 text-gray-400 hover:text-gray-700 dark:hover:text-white"
           onClick={() => setIsOpen(false)}
         >
           <XMarkIcon className="h-6 w-6" />

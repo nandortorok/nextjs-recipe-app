@@ -112,7 +112,7 @@ const Input = ({ name }: InputProps) => {
       className={
         errors?.[name]
           ? "rounded-md border-red-500 p-4 transition-colors ease-in-out focus:border-red-500 focus:ring-red-500 md:w-full"
-          : "rounded-md border-gray-300 p-4 transition-colors ease-in-out md:w-full"
+          : "rounded-md border-gray-300 p-4 transition-colors ease-in-out dark:border-black/20 dark:bg-zinc-900 md:w-full"
       }
       type="number"
       min={0}
@@ -130,7 +130,7 @@ const Select = ({ name }: InputProps) => {
   const { register, watch } = useFormContext<schemaT>();
   return (
     <select
-      className="rounded-md border-gray-300 p-4 transition ease-in-out focus:border-opacity-0 md:w-full"
+      className="rounded-md border-gray-300 p-4 transition ease-in-out focus:border-opacity-0 dark:border-black/20 dark:bg-zinc-900 md:w-full"
       {...register(name, {
         valueAsNumber: true,
         onChange: () => setFormValue({ ...formValue, [name]: watch()[name] }),

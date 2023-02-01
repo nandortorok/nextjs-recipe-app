@@ -14,11 +14,11 @@ const Results = ({ setIsOpen }: ResultsProps) => {
     <>
       <header className="flex p-4">
         <form className="flex flex-auto">
-          <label htmlFor="searchInput">
-            <MagnifyingGlassIcon className="mr-3 h-6 w-6 text-slate-700" />
+          <label>
+            <MagnifyingGlassIcon className="mr-3 h-6 w-6 text-gray-700 dark:text-white" />
           </label>
           <input
-            className="w-full outline-none"
+            className="w-full bg-inherit outline-none"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search recipes"
@@ -26,7 +26,7 @@ const Results = ({ setIsOpen }: ResultsProps) => {
           />
         </form>
         <button
-          className="text-slate-400 hover:text-slate-700"
+          className="hover:text-gray-70 text-gray-400 dark:hover:text-white"
           onClick={() => setIsOpen(false)}
         >
           <XMarkIcon className="h-6 w-6" />

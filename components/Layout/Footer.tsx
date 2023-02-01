@@ -2,10 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 
 import GitHubLogo from "../../public/github-mark.svg";
+import GitHubDarkLogo from "../../public/github-mark-white.svg";
 
 const Footer = () => {
   return (
-    <footer className="py-10 text-center">
+    <footer className="pt-40 pb-20 text-center dark:bg-zinc-800">
       <div className="flex flex-col space-y-2">
         <p>
           Created by <strong>Nándor Török</strong>
@@ -21,7 +22,12 @@ const Footer = () => {
             <Image
               src={GitHubLogo}
               alt="GitHub"
-              className="h-6 w-6 hover:text-slate-900"
+              className="h-6 w-6 hover:text-slate-900 dark:hidden"
+            />
+            <Image
+              src={GitHubDarkLogo}
+              alt="GitHub"
+              className="h-6 w-6 hover:text-slate-900 hidden dark:block"
             />
           </Link>
         </div>

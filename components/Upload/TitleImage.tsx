@@ -78,8 +78,8 @@ const TitleImage = () => {
           <input
             className={
               errors.title
-                ? "w-full rounded-md border-red-500 p-4 transition-colors ease-in-out focus:border-red-500 focus:ring-red-500"
-                : "w-full rounded-md border-gray-300 p-4 transition-colors ease-in-out"
+                ? "w-full rounded-md border-red-500 p-4 transition-colors ease-in-out focus:border-red-500 focus:ring-red-500 dark:bg-zinc-900"
+                : "w-full rounded-md border-gray-300 p-4 transition-colors ease-in-out dark:border-black/20 dark:bg-zinc-900"
             }
             type="text"
             placeholder="Recipe title"
@@ -102,10 +102,10 @@ const TitleImage = () => {
               htmlFor="image"
               className={
                 errors.image
-                  ? "relative flex h-full w-full cursor-pointer flex-col items-center justify-center rounded-lg border border-red-500 bg-gray-50 text-red-500 transition ease-in-out hover:bg-gray-100"
+                  ? "relative flex h-full w-full cursor-pointer flex-col items-center justify-center rounded-lg border border-red-500 bg-gray-50 text-red-500 transition ease-in-out hover:bg-gray-100 dark:bg-zinc-900 dark:hover:bg-black/20"
                   : formValue.image && !errors.image
-                  ? "group relative z-10 flex h-full w-full cursor-pointer flex-col items-center justify-center rounded-lg border border-gray-300 text-white transition ease-in-out"
-                  : "relative flex h-full w-full cursor-pointer flex-col items-center justify-center rounded-lg border border-gray-300 bg-gray-50 text-gray-500 transition ease-in-out hover:bg-gray-100"
+                  ? "group relative z-10 flex h-full w-full cursor-pointer flex-col items-center justify-center rounded-lg border border-gray-300 text-white transition ease-in-out dark:border-black/20 dark:bg-zinc-900"
+                  : "relative flex h-full w-full cursor-pointer flex-col items-center justify-center rounded-lg border border-gray-300 bg-gray-50 text-gray-500 transition ease-in-out hover:bg-gray-100 dark:border-black/20 dark:bg-zinc-900"
               }
             >
               {formValue.image && !errors.image && (

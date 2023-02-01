@@ -5,6 +5,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import NProgress from "nprogress";
+import { ThemeProvider } from "next-themes";
 import "nprogress/nprogress.css";
 
 import "styles/globals.css";
@@ -51,13 +52,15 @@ export default function MyApp({
           --font-roboto: ${roboto.style.fontFamily};
         }
       `}</style>
-      <SessionProvider session={session}>
-        <UploadContext.Provider value={providerValue}>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </UploadContext.Provider>
-      </SessionProvider>
+      <ThemeProvider enableSystem={true} attribute="class">
+        <SessionProvider session={session}>
+          <UploadContext.Provider value={providerValue}>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </UploadContext.Provider>
+        </SessionProvider>
+      </ThemeProvider>
     </>
   );
 }

@@ -7,7 +7,7 @@ type HighlightProps = {
 };
 
 export const Highlight = ({ children, highlightIndex }: HighlightProps) => (
-  <strong>{children}</strong>
+  <strong className="dark:text-white">{children}</strong>
 );
 
 type IngredientItemsProps = {
@@ -43,23 +43,23 @@ export const IngredientItems = ({ sections }: IngredientItemsProps) => {
             idx < 5 && (
               <p
                 key={idx}
-                className="rounded-full bg-gray-100 px-2 py-1 text-xs first-letter:capitalize"
+                className="rounded-full bg-gray-100 px-2 py-1 text-xs first-letter:capitalize dark:bg-gray-100/10"
               >
                 {item}
               </p>
             )
         )}
         {ingredients.length > 7 && (
-          <p className="rounded-full bg-gray-100 px-2 py-1 text-xs font-medium">
+          <p className="rounded-full bg-gray-100 px-2 py-1 text-xs font-medium dark:bg-gray-100/10">
             {ingredients.length - 6} more
           </p>
         )}
-        <div className="absolute right-0 bg-gradient-to-r from-transparent via-white to-white py-3 px-5 md:hidden"></div>
+        <div className="absolute right-0 bg-gradient-to-r from-transparent via-white to-white py-3 px-5 dark:via-inherit dark:to-inherit md:hidden"></div>
       </div>
     );
 
   return (
-    <p className="rounded-full bg-gray-100 px-2 py-1 text-xs font-medium">
+    <p className="rounded-full bg-gray-100 px-2 py-1 text-xs font-medium dark:bg-gray-100/10">
       {ingredients.length} ingredients
     </p>
   );
@@ -100,14 +100,14 @@ export const RecipeTitleList = ({
             idx < 2 && (
               <p
                 key={idx}
-                className="rounded-full bg-gray-100 px-2 py-1 text-xs font-medium capitalize"
+                className="rounded-full bg-gray-100 px-2 py-1 text-xs font-medium capitalize dark:bg-gray-100/10"
               >
                 {title}
               </p>
             )
         )}
         {recipes.length > 2 && (
-          <p className="rounded-full bg-gray-100 px-2 py-1 text-xs font-medium">
+          <p className="rounded-full bg-gray-100 px-2 py-1 text-xs font-medium dark:bg-gray-100/10">
             {recipes.length - 2} more
           </p>
         )}
@@ -115,7 +115,7 @@ export const RecipeTitleList = ({
     );
 
   return (
-    <p className="rounded-full bg-gray-100 px-2 py-1 text-xs font-medium">
+    <p className="rounded-full bg-gray-100 px-2 py-1 text-xs font-medium dark:bg-gray-100/10">
       {recipes.length} recipes
     </p>
   );
@@ -127,7 +127,7 @@ export const Arrow = () => {
       width="6"
       height="6"
       aria-hidden="true"
-      className="overflow-visible pl-1 pr-2"
+      className="overflow-visible pl-1 pr-2 dark:text-gray-500"
     >
       <path
         d="M0 0L3 3L0 6"

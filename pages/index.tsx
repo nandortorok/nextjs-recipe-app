@@ -53,7 +53,7 @@ const Home: NextPage<HomeProps> = ({ recipes }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
+      <main className="dark:bg-zinc-800 bg-white">
         <Featured />
 
         <section className="container mx-auto py-10 px-5 md:py-20">

@@ -50,7 +50,7 @@ const Featured = () => {
   };
 
   return (
-    <section className="bg-gradient-to-b from-gray-100 via-white to-gray-100 py-10">
+    <section className="bg-zinc-100 bg-gradient-to-b py-10 dark:bg-zinc-900">
       <div className="mx-auto xl:container">
         <h1 className="px-5 pb-10 text-4xl font-bold sm:text-center">
           Featured
@@ -61,8 +61,8 @@ const Featured = () => {
               key={idx}
               className={
                 isSelected
-                  ? "rounded-2xl bg-blue-500 px-6 py-2 text-sm text-white transition-all ease-in-out hover:bg-blue-600 hover:text-blue-50"
-                  : "rounded-2xl bg-slate-200 px-6 py-2 text-sm text-slate-400 transition-all ease-in-out hover:bg-blue-200 hover:text-blue-500"
+                  ? "rounded-2xl bg-blue-500 px-6 py-2 text-sm text-white transition-all ease-in-out hover:bg-blue-600 hover:text-blue-50 dark:bg-blue-600"
+                  : "rounded-2xl bg-slate-200 px-6 py-2 text-sm text-slate-400 dark:text-gray-100 transition-all ease-in-out hover:bg-blue-200 hover:text-blue-500 dark:bg-black dark:hover:bg-blue-200/10 dark:hover:text-blue-50"
               }
               onClick={() => updateCategories(name)}
             >
@@ -119,8 +119,8 @@ const Featured = () => {
                 idx
               ) => (
                 <Link key={idx} href={`/recipe/${id}`}>
-                  <article className="rounded-2xl bg-white shadow-md transition-all ease-in-out hover:scale-105 hover:shadow-lg xl:flex">
-                    <header className="relative rounded-t-2xl bg-gray-200 py-20 px-28 xl:rounded-l-2xl">
+                  <article className="rounded-2xl bg-white shadow-md transition-all ease-in-out hover:scale-105 hover:shadow-lg dark:bg-zinc-800 xl:flex">
+                    <header className="relative rounded-t-2xl bg-gray-200 py-20 px-28 dark:bg-zinc-700 xl:rounded-l-2xl">
                       <RecipeImage
                         className="object-cover max-xl:rounded-t-2xl xl:rounded-l-2xl"
                         imagePath={imagePath}
@@ -131,15 +131,15 @@ const Featured = () => {
                         </p>
                       </div>
                     </header>
-                    <main className="space-y-1 pl-6 pb-2 lg:flex lg:flex-col">
+                    <main className="space-y-1 pl-6 pb-3 lg:flex lg:flex-col">
                       <h4 className="py-2 font-medium capitalize lg:mb-auto">
                         {title}
                       </h4>
-                      <div className="flex items-center gap-1 text-sm text-gray-400">
+                      <div className="flex items-center gap-1 text-sm text-gray-400 dark:text-gray-300">
                         <ClockIcon className="h-5 w-5" />
                         <p>{prepTime + cookTime} min</p>
                       </div>
-                      <div className="flex items-center gap-1 text-sm text-gray-400">
+                      <div className="flex items-center gap-1 text-sm text-gray-400 dark:text-gray-300">
                         <CakeIcon className="h-5 w-5" />
                         <p>{getIngredientCount(sections)} ingredients</p>
                       </div>
