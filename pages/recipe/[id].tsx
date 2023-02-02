@@ -64,8 +64,8 @@ const RecipePage: NextPage<Props> = ({ recipe }) => {
         <title>{recipe.title}</title>
       </Head>
 
-      <main className="pb-10">
-        <section className=" -mt-14 flex h-screen bg-gray-50 max-lg:flex-col max-md:-mt-12 max-md:justify-between">
+      <main className="pb-10 dark:bg-zinc-800">
+        <section className=" -mt-14 flex h-screen bg-gray-50 dark:bg-zinc-900 max-lg:flex-col max-md:-mt-12 max-md:justify-between">
           <header className="relative h-full lg:w-1/2">
             <RecipeImage
               className="object-cover"
@@ -109,7 +109,7 @@ const RecipePage: NextPage<Props> = ({ recipe }) => {
         </section>
         <section className="md:flex lg:py-16">
           <div className="w-full px-5 lg:px-16">
-            <h1 className="border-b-2 border-gray-200 pt-5 pb-2 text-4xl font-bold">
+            <h1 className="border-b-2 border-gray-200 md:pt-5 pt-20 pb-2 text-4xl font-bold">
               Ingredients
             </h1>
             <div className="pt-5 lg:flex">
@@ -140,7 +140,7 @@ const RecipePage: NextPage<Props> = ({ recipe }) => {
           </div>
 
           <div className="w-full px-5 max-sm:pt-5 md:px-16">
-            <h1 className="border-b-2 border-gray-200 pt-5 pb-2 text-4xl font-bold">
+            <h1 className="border-b-2 border-gray-200 md:pt-5 pt-20 pb-2 text-4xl font-bold">
               Directions
             </h1>
             <div className="pt-5">

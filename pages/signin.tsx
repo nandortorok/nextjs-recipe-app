@@ -27,7 +27,7 @@ const SignIn: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="h-screen py-5 md:pt-10">
+      <main className="h-screen py-5 md:pt-10 dark:bg-zinc-900 bg-white">
         <div className="py-10">
           <h1 className="py-2 text-center font-bold">Sign in</h1>
           <p className="text-center">Sign in with one of the providers</p>

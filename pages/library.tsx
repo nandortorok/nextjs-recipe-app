@@ -42,13 +42,13 @@ const Recipes: NextPage = () => {
 
   if (!session || !session?.user?.name)
     return (
-      <main className="min-h-screen bg-gray-100 px-5">
+      <main className="min-h-screen bg-gray-100 px-5 dark:bg-zinc-800">
         <div className="container mx-auto flex py-8 max-lg:flex-col lg:pl-8">
-          <section className="whitespace-nowrap rounded-3xl bg-white p-5 lg:sticky lg:top-28 lg:self-start">
+          <section className="whitespace-nowrap rounded-3xl bg-white p-5 dark:bg-zinc-900/75 lg:sticky lg:top-28 lg:self-start">
             <h1 className="pb-6 text-5xl font-bold md:pb-10">Saved Recipes</h1>
             <span className="animate-pulse">
               <div className="pb-1">
-                <p className="h-3 w-28 rounded-full bg-gray-200" />
+                <p className="h-3 w-28 rounded-full bg-gray-200 " />
               </div>
               <div className="pb-1">
                 <p className="h-3 w-16 rounded-full bg-gray-200" />
@@ -73,18 +73,20 @@ const Recipes: NextPage = () => {
 
   if (isLoading || !data)
     return (
-      <main className="min-h-screen animate-pulse bg-gray-100 px-5">
+      <main className="min-h-screen bg-gray-100 px-5 dark:bg-zinc-800">
         <div className="container mx-auto flex py-8 max-lg:flex-col lg:pl-8">
-          <section className="whitespace-nowrap rounded-3xl bg-white p-5 lg:sticky lg:top-28 lg:self-start">
+          <section className="whitespace-nowrap rounded-3xl bg-white p-5 dark:bg-zinc-900/75 lg:sticky lg:top-28 lg:self-start">
             <h1 className="pb-6 text-5xl font-bold md:pb-10">Saved Recipes</h1>
-            <div className="pb-1">
-              <p className="h-3 w-28 rounded-full bg-gray-200" />
-            </div>
-            <div className="pb-1">
-              <p className="h-3 w-16 rounded-full bg-gray-200" />
-            </div>
+            <span className="animate-pulse">
+              <div className="pb-1">
+                <p className="h-3 w-28 rounded-full bg-gray-200" />
+              </div>
+              <div className="pb-1">
+                <p className="h-3 w-16 rounded-full bg-gray-200" />
+              </div>
+            </span>
           </section>
-          <section className="w-full max-lg:py-5 max-sm:space-y-5 lg:p-5">
+          <section className="w-full animate-pulse max-lg:py-5 max-sm:space-y-5 lg:p-5">
             {[...Array(9)].map((n, idx) => (
               <article key={idx} className="flex py-3">
                 <div className="my-auto px-5">
@@ -112,9 +114,9 @@ const Recipes: NextPage = () => {
 
   if (data.length < 1)
     return (
-      <main className="min-h-screen bg-gray-100 px-5">
+      <main className="min-h-screen bg-gray-100 px-5 dark:bg-zinc-800">
         <div className="container mx-auto flex py-8 max-lg:flex-col lg:pl-8">
-          <section className="whitespace-nowrap rounded-3xl bg-white p-5 lg:sticky lg:top-28 lg:self-start">
+          <section className="whitespace-nowrap rounded-3xl bg-white p-5 dark:bg-zinc-900/75 lg:sticky lg:top-28 lg:self-start">
             <h1 className="pb-6 text-5xl font-bold md:pb-10">Saved Recipes</h1>
             <p className="text-sm font-medium text-gray-500">
               {session.user.name}
@@ -133,9 +135,9 @@ const Recipes: NextPage = () => {
     );
 
   return (
-    <main className="min-h-screen bg-gray-100 px-5">
+    <main className="min-h-screen bg-gray-100 px-5 dark:bg-zinc-800">
       <div className="container mx-auto flex py-8 max-lg:flex-col lg:pl-8">
-        <section className="whitespace-nowrap rounded-3xl bg-white p-5 lg:sticky lg:top-28 lg:self-start">
+        <section className="whitespace-nowrap rounded-3xl bg-white p-5 dark:bg-zinc-900/75 lg:sticky lg:top-28 lg:self-start">
           <h1 className="pb-6 text-5xl font-bold md:pb-10">Saved Recipes</h1>
           <p className="text-sm font-medium text-gray-500">
             {session.user.name}
@@ -160,9 +162,9 @@ const Recipes: NextPage = () => {
             ) => (
               <article
                 key={idx}
-                className="group rounded-2xl py-3 hover:bg-white max-sm:relative max-sm:bg-white max-sm:px-5 sm:flex"
+                className="group rounded-2xl py-3 hover:bg-white dark:hover:bg-zinc-900/75 max-sm:relative max-sm:bg-white max-sm:px-5 dark:max-sm:bg-zinc-900/75 sm:flex"
               >
-                <p className="px-5 font-bold text-gray-600 group-hover:text-black max-sm:pb-1 max-sm:text-center sm:my-auto">
+                <p className="px-5 font-bold text-gray-600 group-hover:text-black dark:group-hover:text-white max-sm:pb-1 max-sm:text-center sm:my-auto">
                   {idx + 1}
                 </p>
                 <Link className="sm:flex" href={`/recipe/${id}`}>
@@ -199,7 +201,7 @@ const Recipes: NextPage = () => {
                 </Link>
                 <div className="group-hover:visible max-sm:absolute max-sm:bottom-5 max-sm:right-5 sm:invisible sm:my-auto sm:ml-auto sm:pr-5">
                   <button
-                    className="rounded-full p-2 text-red-500 transition ease-in-out hover:bg-red-100 hover:text-red-500 max-sm:bg-red-100  sm:text-gray-500"
+                    className="rounded-full p-2 text-red-500 transition ease-in-out hover:bg-red-100 hover:text-red-500 dark:hover:bg-red-100/10 dark:max-sm:bg-red-100/10  sm:text-gray-500"
                     title="Remove recipe from saved recipes"
                     onClick={() => deleteSavedRecipe(id)}
                   >

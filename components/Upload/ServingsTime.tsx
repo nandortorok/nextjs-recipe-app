@@ -111,7 +111,7 @@ const Input = ({ name }: InputProps) => {
     <input
       className={
         errors?.[name]
-          ? "rounded-md border-red-500 p-4 transition-colors ease-in-out focus:border-red-500 focus:ring-red-500 md:w-full"
+          ? "rounded-md border-red-500 p-4 transition-colors ease-in-out focus:border-red-500 focus:ring-red-500 dark:bg-zinc-900 md:w-full"
           : "rounded-md border-gray-300 p-4 transition-colors ease-in-out dark:border-black/20 dark:bg-zinc-900 md:w-full"
       }
       type="number"
