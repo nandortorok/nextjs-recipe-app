@@ -1,21 +1,36 @@
-<h1 align="center">
-   Next.js Recipe App
-</h1>
+<h1 align="center">Next.js Recipe App</h1>
+<h3 align="center">A full stack recipe web app built with: </h3>
+<div align="center">
 
-<h4 align="center">A recipe web app built with <a href="http://electron.atom.io" target="_blank">Next.js</a>.</h4>
+[![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org)
+[![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com)
+[![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org)
+[![Prisma](https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white)](https://www.prisma.io)
+
+</div>
 
 <p align="center">
   <a href="#features">Features</a> •
+  <a href="#deployment">Deployment</a> •
   <a href="#local-development">Local Development</a> •
-  <a href="#credits">Credits</a>
+  <a href="#dependencies">Dependencies</a>
 </p>
+
+![(caption)](https://lmwppfmblpohvtuaqneo.supabase.co/storage/v1/object/public/recipe-images/gifs/showcase.gif?t=2023-02-03T20%3A12%3A40.021Z)
 
 ## Features
 
-- Users can sign in using [third party providers](https://next-auth.js.org/v3/configuration/providers) like:
-  - GitHub
-- Users can search for recipes
-- Users can create recipes
+- Users can sign in using [third party providers](https://next-auth.js.org/v3/configuration/providers) (GitHub, Google)
+- Users can search, view, create, delete and save recipes
+- Supports mobile screens
+- Dark/Light mode
+
+## Deployment
+
+- This web application is deployed to [Vercel](https://vercel.com)
+  - [Visit live demo app](https://nextjs-recipe-app-omega.vercel.app/)
+- The database and file storage is handled by [Supabase](https://supabase.com)
 
 ## Local Development
 
@@ -69,7 +84,7 @@ To run this web application follow the instructions listed below:
 
 4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-### Credits
+## Dependencies
 
 This web app uses the following packages:
 
