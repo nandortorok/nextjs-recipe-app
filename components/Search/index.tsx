@@ -7,9 +7,9 @@ import Results from "./Results";
 const Search = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <section className="absolute inset-x-0 max-sm:right-10 mx-auto w-3/5 sm:w-1/2 md:w-1/3">
+    <section className="absolute inset-x-0 mx-auto w-3/5 max-sm:right-10 sm:w-1/2 md:w-1/3">
       <button
-        className="flex w-full items-center rounded-3xl px-4 py-2 font-normal text-gray-500 transition ease-in-out hover:text-gray-600 dark:bg-zinc-900 dark:hover:bg-zinc-900/75 dark:hover:text-gray-200 md:bg-gray-100 md:text-gray-400 md:hover:bg-gray-400/20"
+        className="flex w-full items-center rounded-3xl px-4 py-2 font-normal text-gray-500 transition ease-in-out hover:text-gray-600 dark:hover:bg-zinc-900/75 dark:hover:text-gray-200 md:bg-gray-100 md:text-gray-400 md:hover:bg-gray-400/20 dark:md:bg-zinc-900 dark:max-sm:text-gray-100"
         type="button"
         onClick={() => setIsOpen(!isOpen)}
       >
