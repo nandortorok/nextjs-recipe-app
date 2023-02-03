@@ -11,6 +11,9 @@ import RecipeImage from "components/RecipeImage";
 
 const getRecipes = async () => {
   return await prisma.recipe.findMany({
+    where: {
+      NOT: [{ featured: { recipeId: {} } }],
+    },
     select: {
       id: true,
       title: true,
@@ -53,7 +56,7 @@ const Home: NextPage<HomeProps> = ({ recipes }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="dark:bg-zinc-800 bg-white">
+      <main className="bg-white dark:bg-zinc-800">
         <Featured />
 
         <section className="container mx-auto py-10 px-5 md:py-20">

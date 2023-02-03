@@ -23,12 +23,12 @@ const schema = z.object({
     .number()
     .int()
     .min(1, "Prep time must be greater than or equal to 1")
-    .max(60, "Prep time must be less than or equal to 60"),
+    .max(256, "Prep time must be less than or equal to 60"),
   cookTime: z
     .number()
     .int()
     .min(1, "Cook time must be greater than or equal to 1")
-    .max(60, "Cook time must be less than or equal to 60"),
+    .max(256, "Cook time must be less than or equal to 60"),
   prepTimeUnit: z.number().int().min(1).max(60),
   cookTimeUnit: z.number().int().min(1).max(60),
 });
@@ -85,7 +85,7 @@ const ServingsTime = () => {
             <p className="bold my-auto pb-1 text-center max-sm:col-span-2 md:text-left">
               Total
             </p>
-            <p className="my-auto text-center max-sm:col-span-2 md:p-4 md:text-left">
+            <p className="col-span-2 my-auto text-center sm:col-span-1 md:col-span-2 md:p-4 md:text-left">
               {totalTime()}
             </p>
           </section>

@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client";
-import { prisma } from "lib/prisma";
 import type { NextApiRequest, NextApiResponse } from "next";
+import { prisma } from "lib/prisma";
 
 const getRecipe = async (param: string) => {
   return await prisma.recipe.findUnique({

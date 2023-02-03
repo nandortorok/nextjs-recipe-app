@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client";
-import { prisma } from "lib/prisma";
 import type { NextApiRequest, NextApiResponse } from "next";
+import { prisma } from "lib/prisma";
 
 const getIngredients = async (params: string) => {
   return await prisma.ingredient.findMany({

@@ -1,6 +1,7 @@
-import { prisma } from "lib/prisma";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { unstable_getServerSession } from "next-auth/next";
+
+import { prisma } from "lib/prisma";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 
 const deleteRecipe = async (recipeId: string) => {

@@ -1,5 +1,5 @@
-import { prisma } from "lib/prisma";
 import type { NextApiRequest, NextApiResponse } from "next";
+import { prisma } from "lib/prisma";
 
 const getUnits = async () => {
   return await prisma.unit.findMany();

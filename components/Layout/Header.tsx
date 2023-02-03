@@ -20,7 +20,7 @@ const Header = () => {
 
   return (
     <>
-      <header className="sticky top-0 z-20 flex flex-1 items-center justify-between border-b bg-white px-5 max-sm:pr-3 py-1 font-medium shadow-sm dark:border-black/20 dark:bg-zinc-800 md:px-8">
+      <header className="sticky top-0 z-20 flex flex-1 items-center justify-between border-b bg-white px-5 py-1 font-medium shadow-sm dark:border-black/20 dark:bg-zinc-800 max-sm:pr-3 md:px-8">
         <section className="flex flex-1">
           <button onClick={() => setIsNavOpen(!isNavOpen)}>
             <Bars3Icon className="h-6 w-6 cursor-pointer hover:text-blue-500 md:h-7 md:w-7" />
@@ -45,7 +45,7 @@ const Header = () => {
               <Image
                 src={session.user.image}
                 alt={session.user.name}
-                className="rounded-full border hover:scale-110 hover:bg-blue-100"
+                className="m-2 ml-1 rounded-full border hover:scale-110 hover:bg-blue-100"
                 width={28}
                 height={28}
               />
