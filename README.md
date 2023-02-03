@@ -17,7 +17,7 @@
   <a href="#dependencies">Dependencies</a>
 </p>
 
-![(caption)](https://lmwppfmblpohvtuaqneo.supabase.co/storage/v1/object/public/recipe-images/gifs/showcase.gif?t=2023-02-03T20%3A12%3A40.021Z)
+![(caption)](resource/showcase.gif)
 
 ## Features
 
