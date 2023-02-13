@@ -1,15 +1,15 @@
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useContext } from "react";
+
 import {
-  useForm,
   UseFieldArrayRemove,
   FieldArrayWithId,
   useFormContext,
 } from "react-hook-form";
 
 import { UploadContext } from "lib/contexts";
+
+import { schemaT } from "./schema";
 import { XButton, ErrorMessage } from "../Elements";
-import { schemaT, schema } from "./schema";
 
 type HeadProps = {
   idx: number;

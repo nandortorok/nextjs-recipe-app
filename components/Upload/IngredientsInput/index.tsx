@@ -1,14 +1,16 @@
 import { useContext } from "react";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useFieldArray, useForm } from "react-hook-form";
 
 import { UploadContext } from "lib/contexts";
-import Form from "../Form";
-import { ErrorMessage } from "../Elements";
-import { schemaT, schema } from "./schema";
-import IngredientRow from "./IngredientRow";
-import TableHead from "./TableHead";
+
 import SectionErrorMessage from "./ErrorMessage";
+import IngredientRow from "./IngredientRow";
+import { schemaT, schema } from "./schema";
+import TableHead from "./TableHead";
+import { ErrorMessage } from "../Elements";
+import Form from "../Form";
 
 const IngredientsInput = () => {
   const { formValue, setFormValue } = useContext(UploadContext);

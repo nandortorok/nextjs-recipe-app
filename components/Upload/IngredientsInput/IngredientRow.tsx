@@ -1,13 +1,15 @@
+import { useContext, useState, Fragment } from "react";
+
 import { Combobox, Transition } from "@headlessui/react";
 import { Unit } from "@prisma/client";
-import { useContext, useState, Fragment } from "react";
 import { useFormContext, useFieldArray, Controller } from "react-hook-form";
 import useSWR from "swr";
 
 import { UploadContext } from "lib/contexts";
 import fetcher from "lib/fetcher";
-import { XButton } from "../Elements";
+
 import { schemaT } from "./schema";
+import { XButton } from "../Elements";
 
 const IngredientRow = ({ sectionIndex }: { sectionIndex: number }) => {
   const { formValue, setFormValue } = useContext(UploadContext);
