@@ -2,11 +2,11 @@
 <h3 align="center">A full stack recipe web app built with: </h3>
 <div align="center">
 
-[![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org)
+[![Next JS](https://img.shields.io/badge/next-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
-![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338BDF8.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
-[![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org)
-[![Prisma](https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white)](https://www.prisma.io)
+[![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338BDF8.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com)
+[![PostgreSQL](https://img.shields.io/badge/postgresql-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org)
+[![Prisma](https://img.shields.io/badge/prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white)](https://www.prisma.io)
 
 </div>
 
@@ -93,6 +93,7 @@ To run this web application follow the instructions listed below:
 
 This web app uses the following packages:
 
+- [Eslint](https://eslint.org)
 - [Formidable](https://github.com/node-formidable/formidable)
 - [Framer Motion](https://www.framer.com/motion)
 - [Headlessui](https://headlessui.com)
@@ -101,6 +102,7 @@ This web app uses the following packages:
 - [Next.js](https://nextjs.org)
 - [NextAuth](https://next-auth.js.org)
 - [NProgress](https://github.com/rstacruz/nprogress)
+- [Prettier](https://prettier.io)
 - [Prisma](https://www.prisma.io)
 - [React Hook Form](https://react-hook-form.com)
 - [React](https://github.com/facebook/react)

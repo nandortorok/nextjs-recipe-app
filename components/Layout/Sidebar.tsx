@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import {
   ArrowUpOnSquareIcon,
   BookmarkSquareIcon,
@@ -5,9 +7,9 @@ import {
   RectangleStackIcon,
 } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 
 import Upload from "components/Upload";
+
 import { NavButton, NavLink } from "./NavElements";
 
 const links = [

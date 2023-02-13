@@ -1,6 +1,7 @@
+import { MouseEventHandler, ReactNode } from "react";
+
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { MouseEventHandler, ReactNode } from "react";
 
 type ElementProps = {
   href: string;

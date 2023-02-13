@@ -1,4 +1,5 @@
 import { useContext } from "react";
+
 import {
   UseFieldArrayRemove,
   FieldArrayWithId,
@@ -6,8 +7,9 @@ import {
 } from "react-hook-form";
 
 import { UploadContext } from "lib/contexts";
-import { XButton, ErrorMessage } from "../Elements";
+
 import { schemaT } from "./schema";
+import { XButton, ErrorMessage } from "../Elements";
 
 type HeadProps = {
   idx: number;

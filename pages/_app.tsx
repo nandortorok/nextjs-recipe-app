@@ -1,17 +1,19 @@
-import type { AppProps } from "next/app";
-import { SessionProvider } from "next-auth/react";
+import { useEffect } from "react";
+
 import { Roboto } from "@next/font/google";
+import type { AppProps } from "next/app";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
-import NProgress from "nprogress";
+import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "next-themes";
+import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 
 import "styles/globals.css";
-import Layout from "../components/Layout";
-import { UploadContext } from "lib/contexts";
 import useUpload from "hooks/useUpload";
+import { UploadContext } from "lib/contexts";
+
+import Layout from "../components/Layout";
 
 const roboto = Roboto({
   weight: ["100", "400", "500", "700", "900"],

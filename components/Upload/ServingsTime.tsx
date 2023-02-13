@@ -1,5 +1,7 @@
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useContext } from "react";
+
+import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   useForm,
   Path,
@@ -8,9 +10,9 @@ import {
   FieldErrorsImpl,
 } from "react-hook-form";
 import { z } from "zod";
-import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
 import { UploadContext } from "lib/contexts";
+
 import Form from "./Form";
 
 const schema = z.object({

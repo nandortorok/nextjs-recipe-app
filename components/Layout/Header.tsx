@@ -1,14 +1,16 @@
-import Link from "next/link";
+import { useState, useEffect } from "react";
+
+import { UserIcon, Bars3Icon } from "@heroicons/react/24/outline";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
-import { useState, useEffect } from "react";
-import { UserIcon, Bars3Icon } from "@heroicons/react/24/outline";
+
+import Search from "components/Search";
 
 import Sidebar from "./Sidebar";
-import UserMenu from "./UserMenu";
-import Search from "components/Search";
 import ThemeSwitch from "./ThemeSwitch";
+import UserMenu from "./UserMenu";
 
 const Header = () => {
   const { data: session } = useSession();

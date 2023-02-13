@@ -1,16 +1,19 @@
-import { Ingredient, Section, SectionIngredient } from "@prisma/client";
-import fetcher from "lib/fetcher";
 import { Dispatch, SetStateAction } from "react";
-import useSWR from "swr";
+
+import { Ingredient, Section, SectionIngredient } from "@prisma/client";
 import Link from "next/link";
 import Highlighter from "react-highlight-words";
+import useSWR from "swr";
+
+import Spinner from "components/Spinner";
+import fetcher from "lib/fetcher";
+
 import {
   Arrow,
   Highlight,
   IngredientItems,
   RecipeTitleList,
 } from "./ListElements";
-import Spinner from "components/Spinner";
 
 type SearchProps = {
   recipes: {

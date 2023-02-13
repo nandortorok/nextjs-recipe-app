@@ -1,15 +1,17 @@
 import { ChangeEvent, useContext } from "react";
+
 import {
   CloudArrowUpIcon,
   ExclamationTriangleIcon,
 } from "@heroicons/react/24/outline";
-import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Image from "next/image";
+import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 
-import Form from "./Form";
 import { UploadContext } from "lib/contexts";
-import Image from "next/image";
+
+import Form from "./Form";
 
 const maxImageSize = 5 * 1024 * 1024;
 const validImageTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp"];

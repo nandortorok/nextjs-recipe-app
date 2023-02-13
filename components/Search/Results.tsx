@@ -1,5 +1,6 @@
-import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Dispatch, SetStateAction, useState } from "react";
+
+import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
 import List from "./List";
 

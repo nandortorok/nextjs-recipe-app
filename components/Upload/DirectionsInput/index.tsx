@@ -1,20 +1,15 @@
-import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { UploadContext } from "lib/contexts";
 import { useContext } from "react";
-import {
-  FormProvider,
-  useFieldArray,
-  useForm,
-  useFormContext,
-} from "react-hook-form";
-import { z } from "zod";
 
-import { ErrorMessage, XButton } from "../Elements";
-import Form from "../Form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { FormProvider, useFieldArray, useForm } from "react-hook-form";
+
+import { UploadContext } from "lib/contexts";
+
 import DirectionRow from "./DirectionRow";
 import { schemaT, schema } from "./schema";
 import TableHead from "./TableHead";
+import { ErrorMessage } from "../Elements";
+import Form from "../Form";
 
 const DirectionsInput = () => {
   const { formValue, setFormValue } = useContext(UploadContext);
@@ -43,7 +38,10 @@ const DirectionsInput = () => {
         <section className="space-y-5 pt-5">
           <label className="text-md font-medium">Directions</label>
           {fields.map((field, idx) => (
-            <div key={field.id} className="rounded-md border border-gray-300 dark:border-black/20">
+            <div
+              key={field.id}
+              className="rounded-md border border-gray-300 dark:border-black/20"
+            >
               <table className="w-full text-left">
                 <TableHead idx={idx} fields={fields} remove={remove} />
                 <tbody>

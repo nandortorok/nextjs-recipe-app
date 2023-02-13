@@ -1,12 +1,13 @@
+import { useEffect } from "react";
+
 import { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useSession, signIn } from "next-auth/react";
 
 import GitHubLogo from "../public/github-mark-white.svg";
 import GoogleLogo from "../public/google_logo.svg";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
 
 const SignIn: NextPage = () => {
   const { data: session } = useSession();
@@ -27,7 +28,7 @@ const SignIn: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="h-screen py-5 md:pt-10 dark:bg-zinc-900 bg-white">
+      <main className="h-screen bg-white py-5 dark:bg-zinc-900 md:pt-10">
         <div className="py-10">
           <h1 className="py-2 text-center font-bold">Sign in</h1>
           <p className="text-center">Sign in with one of the providers</p>

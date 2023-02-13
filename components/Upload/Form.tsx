@@ -1,10 +1,12 @@
-import { useRouter } from "next/router";
 import { useContext, useState } from "react";
+
+import { useRouter } from "next/router";
 import { SubmitHandler, useFormContext } from "react-hook-form";
 
 import { FormStateProps } from "hooks/useUpload";
 import { UploadContext } from "lib/contexts";
 import supabase from "lib/supabaseClient";
+
 import { ButtonGroup } from "./Elements";
 
 type FormProps = {

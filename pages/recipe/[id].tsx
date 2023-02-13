@@ -1,4 +1,13 @@
 import {
+  BookmarkSlashIcon,
+  CircleStackIcon,
+  ClockIcon as ClockIconOutline,
+} from "@heroicons/react/24/outline";
+import {
+  BookmarkIcon,
+  ClockIcon as ClockIconSolid,
+} from "@heroicons/react/24/solid";
+import {
   Direction,
   Ingredient,
   Recipe,
@@ -10,20 +19,11 @@ import {
 } from "@prisma/client";
 import { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
-import {
-  BookmarkSlashIcon,
-  CircleStackIcon,
-  ClockIcon as ClockIconOutline,
-} from "@heroicons/react/24/outline";
-import {
-  BookmarkIcon,
-  ClockIcon as ClockIconSolid,
-} from "@heroicons/react/24/solid";
-import useSWR, { mutate } from "swr";
 import { useSession } from "next-auth/react";
+import useSWR, { mutate } from "swr";
 
-import fetcher from "lib/fetcher";
 import RecipeImage from "components/RecipeImage";
+import fetcher from "lib/fetcher";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { req, params } = context;
@@ -109,14 +109,16 @@ const RecipePage: NextPage<Props> = ({ recipe }) => {
         </section>
         <section className="md:flex lg:py-16">
           <div className="w-full px-5 lg:px-16">
-            <h1 className="border-b-2 border-gray-200 md:pt-5 pt-20 pb-2 text-4xl font-bold">
+            <h1 className="border-b-2 border-gray-200 pt-20 pb-2 text-4xl font-bold md:pt-5">
               Ingredients
             </h1>
             <div className="pt-5 lg:flex">
               {recipe.sections.map(
                 ({ title, sectionIngredients }, sectionIdx) => (
                   <div key={sectionIdx} className="w-full">
-                    <h1 className="py-1 font-bold">{title}</h1>
+                    {recipe.sections.length > 2 && (
+                      <h1 className="py-1 font-bold">{title}</h1>
+                    )}
                     <ul className="max-sm:pb-3">
                       {sectionIngredients.map(
                         ({ ingredient, amount, unit }, idx) => (
@@ -140,13 +142,15 @@ const RecipePage: NextPage<Props> = ({ recipe }) => {
           </div>
 
           <div className="w-full px-5 max-sm:pt-5 md:px-16">
-            <h1 className="border-b-2 border-gray-200 md:pt-5 pt-20 pb-2 text-4xl font-bold">
+            <h1 className="border-b-2 border-gray-200 pt-20 pb-2 text-4xl font-bold md:pt-5">
               Directions
             </h1>
             <div className="pt-5">
               {recipe.sections.map(({ title, directions }, idx) => (
                 <div key={idx}>
-                  <h1 className="py-1 font-bold">{title}</h1>
+                  {recipe.sections.length > 2 && (
+                    <h1 className="py-1 font-bold">{title}</h1>
+                  )}
                   <ul className="max-sm:pb-3">
                     {directions.map(({ direction, stepNumber }) => (
                       <li key={stepNumber} className="pb-2 pl-3">

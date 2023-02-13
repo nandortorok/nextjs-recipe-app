@@ -1,7 +1,9 @@
-import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
-import { UploadContext } from "lib/contexts";
 import { useContext } from "react";
+
+import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import { useFormContext, useFieldArray } from "react-hook-form";
+
+import { UploadContext } from "lib/contexts";
 
 import { TextArea } from "./TextArea";
 import { XButton } from "../Elements";
@@ -34,7 +36,10 @@ const DirectionRow = ({ sectionIndex }: { sectionIndex: number }) => {
   return (
     <>
       {fields.map((field, idx) => (
-        <tr className="border-b transition-all ease-in-out dark:border-black/20" key={field.id}>
+        <tr
+          className="border-b transition-all ease-in-out dark:border-black/20"
+          key={field.id}
+        >
           <td>
             <div className="flex px-2">
               <div className="my-auto">

@@ -1,5 +1,6 @@
-import { Ingredient, Section, SectionIngredient } from "@prisma/client";
 import { useEffect, useState } from "react";
+
+import { Ingredient, Section, SectionIngredient } from "@prisma/client";
 
 type HighlightProps = {
   children: string;

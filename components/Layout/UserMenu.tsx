@@ -1,7 +1,8 @@
+import { Fragment, ReactNode } from "react";
+
 import { Menu, Transition } from "@headlessui/react";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { signOut } from "next-auth/react";
-import { Fragment, ReactNode } from "react";
 
 type UserMenuProps = {
   children: ReactNode;

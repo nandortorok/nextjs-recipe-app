@@ -1,17 +1,17 @@
-import { NextPage } from "next";
-import Link from "next/link";
-import useSWR, { mutate } from "swr";
-import { useSession } from "next-auth/react";
-import { Recipe, Section, SectionIngredient } from "@prisma/client";
 import {
   BookmarkSlashIcon,
   CakeIcon,
   ClockIcon,
 } from "@heroicons/react/24/outline";
+import { Recipe, Section, SectionIngredient } from "@prisma/client";
+import { NextPage } from "next";
+import Link from "next/link";
+import { useSession } from "next-auth/react";
+import useSWR, { mutate } from "swr";
 
+import RecipeImage from "components/RecipeImage";
 import fetcher from "lib/fetcher";
 import getIngredientCount from "lib/getIngredientCount";
-import RecipeImage from "components/RecipeImage";
 
 const deleteSavedRecipe = async (recipeId: string) => {
   const res = await fetch(`/api/library/${recipeId}`, {

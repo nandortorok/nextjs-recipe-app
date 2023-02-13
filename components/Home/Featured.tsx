@@ -1,15 +1,16 @@
 import { useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import useSWR from "swr";
+
 import { CakeIcon, ClockIcon } from "@heroicons/react/24/outline";
 import { Recipe, SectionIngredient, Featured } from "@prisma/client";
 import { motion } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
+import useSWR from "swr";
 
-import getIngredientCount from "lib/getIngredientCount";
-import fetcher from "lib/fetcher";
-import Spinner from "components/Spinner";
 import RecipeImage from "components/RecipeImage";
+import Spinner from "components/Spinner";
+import fetcher from "lib/fetcher";
+import getIngredientCount from "lib/getIngredientCount";
 
 const CategoriesInit = [
   { name: "All", route: "/all", isSelected: true },
@@ -82,7 +83,7 @@ const Featured = () => {
                   <Spinner />
                 </header>
                 <main className="space-y-1 px-6 pb-2 lg:flex lg:flex-col">
-                  <p className="font bold my-4 h-4 rounded-full bg-gray-200 xl:mb-auto 2xl:px-16 px-12" />
+                  <p className="font bold my-4 h-4 rounded-full bg-gray-200 px-12 xl:mb-auto 2xl:px-16" />
                   <div className="pb-1">
                     <p className="h-3 w-14 rounded-full bg-gray-200" />
                   </div>

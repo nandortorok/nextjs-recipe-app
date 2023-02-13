@@ -1,8 +1,9 @@
+import { MouseEventHandler, useContext } from "react";
+
 import {
   ExclamationTriangleIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import { MouseEventHandler, useContext } from "react";
 
 import { UploadContext } from "lib/contexts";
 

@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import GitHubLogo from "../../public/github-mark.svg";
 import GitHubDarkLogo from "../../public/github-mark-white.svg";
+import GitHubLogo from "../../public/github-mark.svg";
 
 const Footer = () => {
   return (
@@ -27,7 +27,7 @@ const Footer = () => {
             <Image
               src={GitHubDarkLogo}
               alt="GitHub"
-              className="h-6 w-6 hover:text-slate-900 hidden dark:block"
+              className="hidden h-6 w-6 hover:text-slate-900 dark:block"
             />
           </Link>
         </div>

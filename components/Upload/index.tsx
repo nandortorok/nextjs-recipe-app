@@ -1,15 +1,17 @@
+import { Dispatch, SetStateAction, useContext } from "react";
+
+import { ArrowUpOnSquareIcon } from "@heroicons/react/24/outline";
+import { XMarkIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
-import { Dispatch, SetStateAction, useContext } from "react";
-import { XMarkIcon } from "@heroicons/react/24/solid";
-import { ArrowUpOnSquareIcon } from "@heroicons/react/24/outline";
 
 import { UploadContext } from "lib/contexts";
+
 import DirectionsInput from "./DirectionsInput";
 import IngredientsInput from "./IngredientsInput";
-import TitleImage from "./TitleImage";
 import Modal from "./Modal";
 import ServingsTime from "./ServingsTime";
+import TitleImage from "./TitleImage";
 
 const UploadForm = () => {
   const { page } = useContext(UploadContext);

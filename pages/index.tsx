@@ -1,13 +1,14 @@
+import { CakeIcon, ClockIcon } from "@heroicons/react/24/outline";
+import { Prisma } from "@prisma/client";
 import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import { Prisma } from "@prisma/client";
+
+import Featured from "components/Home/Featured";
+import RecipeImage from "components/RecipeImage";
+import getIngredientCount from "lib/getIngredientCount";
 
 import { prisma } from "../lib/prisma";
-import Featured from "components/Home/Featured";
-import { CakeIcon, ClockIcon } from "@heroicons/react/24/outline";
-import getIngredientCount from "lib/getIngredientCount";
-import RecipeImage from "components/RecipeImage";
 
 const getRecipes = async () => {
   return await prisma.recipe.findMany({

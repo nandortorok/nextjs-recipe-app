@@ -1,15 +1,14 @@
-import { NextPage } from "next";
-import Image from "next/image";
-import Link from "next/link";
-import useSWR, { mutate } from "swr";
-import { useSession } from "next-auth/react";
-import { SectionIngredient } from "@prisma/client";
 import { CakeIcon, ClockIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { SectionIngredient } from "@prisma/client";
+import { NextPage } from "next";
+import Link from "next/link";
+import { useSession } from "next-auth/react";
+import useSWR, { mutate } from "swr";
 
-import fetcher from "lib/fetcher";
-import supabase from "lib/supabaseClient";
-import getIngredientCount from "lib/getIngredientCount";
 import RecipeImage from "components/RecipeImage";
+import fetcher from "lib/fetcher";
+import getIngredientCount from "lib/getIngredientCount";
+import supabase from "lib/supabaseClient";
 
 const deleteRecipe = async (recipeId: string, imagePath: string) => {
   if (process.env.NODE_ENV === "production") {

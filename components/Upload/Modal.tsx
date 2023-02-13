@@ -1,5 +1,6 @@
-import { Transition, Dialog } from "@headlessui/react";
 import { Dispatch, SetStateAction, Fragment } from "react";
+
+import { Transition, Dialog } from "@headlessui/react";
 
 type ModalProps = {
   value: boolean;
