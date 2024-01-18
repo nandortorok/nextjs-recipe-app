@@ -2,7 +2,7 @@
 <h3 align="center">A full stack recipe web app built with: </h3>
 <div align="center">
 
-[![Next JS](https://img.shields.io/badge/next-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org)
+[![Next JS](https://img.shields.io/badge/Next.js%2012-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338BDF8.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com)
 [![PostgreSQL](https://img.shields.io/badge/postgresql-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org)
@@ -11,6 +11,7 @@
 </div>
 
 <p align="center">
+  <a href="#about-this-project">About This Project</a> •
   <a href="#features">Features</a> •
   <a href="#local-development">Local Development</a> •
   <a href="#dependencies">Dependencies</a>
@@ -21,6 +22,9 @@
 ![(caption)](resource/showcase.gif)
 
 </div>
+
+## About This Project
+This project was my initial attempt at developing a full-stack web application. In early 2024, I revisited the project to apply my latest knowledge to its codebase.
 
 ## Features
 
