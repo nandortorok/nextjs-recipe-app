@@ -2,7 +2,7 @@
 <h3 align="center">A full stack recipe web app built with: </h3>
 <div align="center">
 
-[![Next JS](https://img.shields.io/badge/next-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org)
+[![Next JS](https://img.shields.io/badge/Next.js%2012-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338BDF8.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com)
 [![PostgreSQL](https://img.shields.io/badge/postgresql-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org)
@@ -11,18 +11,20 @@
 </div>
 
 <p align="center">
+  <a href="#about-this-project">About This Project</a> •
   <a href="#features">Features</a> •
-  <a href="#deployment">Deployment</a> •
   <a href="#local-development">Local Development</a> •
   <a href="#dependencies">Dependencies</a>
 </p>
 
 <div align="center">
 
-[![(caption)](resource/showcase.gif)](https://nextjs-recipe-app-omega.vercel.app/)
-<font size="2">Click to visit :point_up:</font>
+![(caption)](resource/showcase.gif)
 
 </div>
+
+## About This Project
+This project was my initial attempt at developing a full-stack web application. In early 2024, I revisited the project to apply my latest knowledge to its codebase.
 
 ## Features
 
@@ -31,36 +33,32 @@
 - Supports mobile screens
 - Dark/Light mode
 
-## Deployment
-
-- This web application is deployed to [Vercel](https://vercel.com)
-  - [Visit live demo app](https://nextjs-recipe-app-omega.vercel.app/)
-- The database and file storage is handled by [Supabase](https://supabase.com)
-
 ## Local Development
 
 To run this web application follow the instructions listed below:
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/en/) (comes with [npm](http://npmjs.com))
+- [Node.js v18.x](https://nodejs.org/en/) (comes with [npm](http://npmjs.com))
 - [Docker](https://www.docker.com/)
 
 ### Installation
 
-1. [Register a new GitHub App](https://github.com/settings/apps)
-
-2. Clone the repo
+1. Clone the repo
+   ```bash
+   git clone https://github.com/nandortorok/nextjs-recipe-app.git
    ```
-   git clone https://github.com/BaconPardner/nextjs-recipe-app.git
-   ```
-3. Install NPM packages
-   ```
+2. Install NPM packages
+   ```bash
    npm install
    ```
-4. Enter your environment variables
 
-   ```
+### Auth Setup
+1. [Register a new GitHub App](https://github.com/settings/apps)
+
+2. Enter your environment variables
+
+   ```js
    JWT_SECRET=your_secret
    GITHUB_ID=your_github_id
    GITHUB_SECRET=your_github_secret
@@ -106,7 +104,6 @@ This web app uses the following packages:
 - [Prisma](https://www.prisma.io)
 - [React Hook Form](https://react-hook-form.com)
 - [React](https://github.com/facebook/react)
-- [Supabase](https://github.com/supabase/supabase-js)
 - [SWR](https://swr.vercel.app)
 - [Tailwind](https://tailwindcss.com)
 - [Typescript](https://www.typescriptlang.org)
