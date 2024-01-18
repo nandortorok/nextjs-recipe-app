@@ -5,7 +5,6 @@ import { SubmitHandler, useFormContext } from "react-hook-form";
 
 import { FormStateProps } from "hooks/useUpload";
 import { UploadContext } from "lib/contexts";
-import supabase from "lib/supabaseClient";
 
 import { ButtonGroup } from "./Elements";
 
@@ -29,12 +28,12 @@ const uploadImage = async ({ image }: FormStateProps) => {
     return await data[0].newFilename;
   }
 
-  const { data, error } = await supabase.storage
-    .from("recipe-images")
-    .upload(`${Date.now()}-${recipeImage.name}`, recipeImage);
+  // const { data, error } = await supabase.storage
+  //   .from("recipe-images")
+  //   .upload(`${Date.now()}-${recipeImage.name}`, recipeImage);
 
-  if (!data) return "";
-  return data.path;
+  // if (!data) return "";
+  // return data.path;
 };
 
 const uploadRecipe = async (data: FormStateProps, imageName: string) => {

@@ -104,7 +104,6 @@ This web app uses the following packages:
 - [Prisma](https://www.prisma.io)
 - [React Hook Form](https://react-hook-form.com)
 - [React](https://github.com/facebook/react)
-- [Supabase](https://github.com/supabase/supabase-js)
 - [SWR](https://swr.vercel.app)
 - [Tailwind](https://tailwindcss.com)
 - [Typescript](https://www.typescriptlang.org)

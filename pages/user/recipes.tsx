@@ -8,14 +8,13 @@ import useSWR, { mutate } from "swr";
 import RecipeImage from "components/RecipeImage";
 import fetcher from "lib/fetcher";
 import getIngredientCount from "lib/getIngredientCount";
-import supabase from "lib/supabaseClient";
 
 const deleteRecipe = async (recipeId: string, imagePath: string) => {
-  if (process.env.NODE_ENV === "production") {
-    const { data, error } = await supabase.storage
-      .from("recipe-images")
-      .remove([imagePath]);
-  }
+  // if (process.env.NODE_ENV === "production") {
+  //   const { data, error } = await supabase.storage
+  //     .from("recipe-images")
+  //     .remove([imagePath]);
+  // }
 
   const res = await fetch(`/api/user/recipe/${recipeId}`, {
     method: "DELETE",
