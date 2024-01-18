@@ -1,5 +1,5 @@
 <h1 align="center">Next.js Recipe App</h1>
-<h3 align="center">A full stack recipe web app built with: </h3>
+<h3 align="center">A full-stack recipe web app built with: </h3>
 <div align="center">
 
 [![Next JS](https://img.shields.io/badge/Next.js%2012-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org)
