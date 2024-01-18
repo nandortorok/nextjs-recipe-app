@@ -35,24 +35,26 @@ To run this web application follow the instructions listed below:
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/en/) (comes with [npm](http://npmjs.com))
+- [Node.js v18.x](https://nodejs.org/en/) (comes with [npm](http://npmjs.com))
 - [Docker](https://www.docker.com/)
 
 ### Installation
 
-1. [Register a new GitHub App](https://github.com/settings/apps)
-
-2. Clone the repo
+1. Clone the repo
+   ```bash
+   git clone https://github.com/nandortorok/nextjs-recipe-app.git
    ```
-   git clone https://github.com/BaconPardner/nextjs-recipe-app.git
-   ```
-3. Install NPM packages
-   ```
+2. Install NPM packages
+   ```bash
    npm install
    ```
-4. Enter your environment variables
 
-   ```
+### Auth Setup
+1. [Register a new GitHub App](https://github.com/settings/apps)
+
+2. Enter your environment variables
+
+   ```js
    JWT_SECRET=your_secret
    GITHUB_ID=your_github_id
    GITHUB_SECRET=your_github_secret
