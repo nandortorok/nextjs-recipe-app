@@ -31,8 +31,10 @@ This project was my initial attempt at developing a full-stack web application. 
    * [x] Remove deployment references
    * [ ] initial recipes
    * [ ] Fix auth
+   * [ ] Fix image upload
    * [ ] update references
-   * [ ] update eslint rules 
+   * [ ] update eslint rules
+   * [ ] handle 404 
 
 ## Features
 
