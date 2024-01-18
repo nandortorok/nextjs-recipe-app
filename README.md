@@ -24,7 +24,19 @@
 </div>
 
 ## About This Project
+
 This project was my initial attempt at developing a full-stack web application. In early 2024, I revisited the project to apply my latest knowledge to its codebase.
+
+### Roadmap
+
+- [ ] Cleanup
+  - [x] Remove deployment references
+  - [ ] initial recipes
+  - [ ] Fix auth
+  - [ ] Fix image upload
+  - [ ] update references
+  - [ ] update eslint rules
+  - [ ] handle 404
 
 ## Features
 
@@ -54,38 +66,46 @@ To run this web application follow the instructions listed below:
    ```
 
 ### Auth Setup
+
 1. [Register a new GitHub App](https://github.com/settings/apps)
 
 2. Enter your environment variables
 
    ```js
-   JWT_SECRET=your_secret
-   GITHUB_ID=your_github_id
-   GITHUB_SECRET=your_github_secret
+   JWT_SECRET = your_secret;
+   GITHUB_ID = your_github_id;
+   GITHUB_SECRET = your_github_secret;
    ```
 
 ### Setup
 
 1. Run docker to setup the database
 
-   ```
+   ```bash
    docker compose up
    ```
 
 2. Run the migration and seed:
 
-   ```
+   ```bash
    npx prisma migrate dev
    npx prisma db seed
    ```
 
 3. Run the development server:
 
-   ```
+   ```bash
    npm run dev
    ```
 
 4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+### Dev Commands
+
+   ```bash
+   # Reset database
+   npm run db:reset
+   ```
 
 ## Dependencies
 
