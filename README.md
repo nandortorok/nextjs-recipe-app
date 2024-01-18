@@ -12,15 +12,13 @@
 
 <p align="center">
   <a href="#features">Features</a> •
-  <a href="#deployment">Deployment</a> •
   <a href="#local-development">Local Development</a> •
   <a href="#dependencies">Dependencies</a>
 </p>
 
 <div align="center">
 
-[![(caption)](resource/showcase.gif)](https://nextjs-recipe-app-omega.vercel.app/)
-<font size="2">Click to visit :point_up:</font>
+![(caption)](resource/showcase.gif)
 
 </div>
 
@@ -30,12 +28,6 @@
 - Users can search, view, create, delete and save recipes
 - Supports mobile screens
 - Dark/Light mode
-
-## Deployment
-
-- This web application is deployed to [Vercel](https://vercel.com)
-  - [Visit live demo app](https://nextjs-recipe-app-omega.vercel.app/)
-- The database and file storage is handled by [Supabase](https://supabase.com)
 
 ## Local Development
 
