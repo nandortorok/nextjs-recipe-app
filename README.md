@@ -26,6 +26,14 @@
 ## About This Project
 This project was my initial attempt at developing a full-stack web application. In early 2024, I revisited the project to apply my latest knowledge to its codebase.
 
+### Roadmap
+- [ ] Cleanup
+   * [x] Remove deployment references
+   * [ ] initial recipes
+   * [ ] Fix auth
+   * [ ] update references
+   * [ ] update eslint rules 
+
 ## Features
 
 - Users can sign in using [third party providers](https://next-auth.js.org/v3/configuration/providers) (GitHub, Google)
