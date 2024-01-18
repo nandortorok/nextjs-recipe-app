@@ -1,0 +1,538 @@
+{
+  "users": [
+    { "id": "user1", "name": "John Doe", "email": "john@example.com" },
+    { "id": "user2", "name": "Jane Doe", "email": "jane@example.com" }
+  ],
+  "units": [
+    {
+      "id": 1,
+      "name": "gram",
+      "short": "g"
+    },
+    {
+      "id": 2,
+      "name": "kilogram",
+      "short": "kg"
+    },
+    {
+      "id": 3,
+      "name": "ounce",
+      "short": "oz"
+    },
+    {
+      "id": 4,
+      "name": "pound",
+      "short": "lb"
+    },
+    {
+      "id": 5,
+      "name": "liter",
+      "short": "l"
+    },
+    {
+      "id": 6,
+      "name": "milliliter",
+      "short": "ml"
+    },
+    {
+      "id": 7,
+      "name": "gallon",
+      "short": "gal"
+    },
+    {
+      "id": 8,
+      "name": "quart",
+      "short": "qt"
+    },
+    {
+      "id": 9,
+      "name": "pint",
+      "short": "pt"
+    },
+    {
+      "id": 10,
+      "name": "cup"
+    },
+    {
+      "id": 11,
+      "name": "tablespoon",
+      "short": "tbsp"
+    },
+    {
+      "id": 12,
+      "name": "teaspoon",
+      "short": "tsp"
+    },
+    {
+      "id": 13,
+      "name": "drop",
+      "short": "gt"
+    },
+    {
+      "id": 14,
+      "name": "pinch",
+      "short": "pn"
+    }
+  ],
+  "unitConversions": [
+    {
+      "imperialUnitId": 3,
+      "imperialAmount": 1,
+      "metricUnitId": 1,
+      "metricAmount": 28.35
+    },
+    {
+      "imperialUnitId": 4,
+      "imperialAmount": 1,
+      "metricUnitId": 1,
+      "metricAmount": 453.6
+    },
+    {
+      "imperialUnitId": 7,
+      "imperialAmount": 1,
+      "metricUnitId": 5,
+      "metricAmount": 3.785
+    },
+    {
+      "imperialUnitId": 8,
+      "imperialAmount": 1,
+      "metricUnitId": 5,
+      "metricAmount": 0.95
+    },
+    {
+      "imperialUnitId": 9,
+      "imperialAmount": 1,
+      "metricUnitId": 6,
+      "metricAmount": 480
+    },
+    {
+      "imperialUnitId": 10,
+      "imperialAmount": 1,
+      "metricUnitId": 6,
+      "metricAmount": 240
+    },
+    {
+      "imperialUnitId": 11,
+      "imperialAmount": 1,
+      "metricUnitId": 6,
+      "metricAmount": 15
+    },
+    {
+      "imperialUnitId": 12,
+      "imperialAmount": 1,
+      "metricUnitId": 6,
+      "metricAmount": 5
+    }
+  ],
+  "recipes": [
+    {
+      "ingredients": [
+        {
+          "id": 1,
+          "name": "Flour"
+        },
+        {
+          "id": 2,
+          "name": "Sugar"
+        },
+        {
+          "id": 3,
+          "name": "Brown Sugar"
+        },
+        {
+          "id": 4,
+          "name": "Butter"
+        },
+        {
+          "id": 5,
+          "name": "Eggs"
+        },
+        {
+          "id": 6,
+          "name": "Chocolate Chips"
+        },
+        {
+          "id": 7,
+          "name": "Vanilla Extract"
+        },
+        {
+          "id": 8,
+          "name": "Baking Soda"
+        }
+      ],
+      "recipes": [
+        {
+          "id": "recipe1",
+          "userId": "user1",
+          "title": "Chocolate Chip Cookies",
+          "imagePath": "image.jpg",
+          "servings": 36,
+          "prepTime": 20,
+          "cookTime": 10
+        }
+      ],
+      "sections": [
+        {
+          "id": 1,
+          "recipeId": "recipe1",
+          "title": "Ingredients"
+        },
+        {
+          "id": 2,
+          "recipeId": "recipe1",
+          "title": "Instructions"
+        }
+      ],
+      "sectionIngredients": [
+        {
+          "sectionId": 1,
+          "sectionRecipeId": "recipe1",
+          "ingredientId": 1,
+          "unitId": 10,
+          "amount": 2.5
+        },
+        {
+          "sectionId": 1,
+          "sectionRecipeId": "recipe1",
+          "ingredientId": 7,
+          "unitId": 13,
+          "amount": 2
+        },
+        {
+          "sectionId": 2,
+          "sectionRecipeId": "recipe1",
+          "ingredientId": 4,
+          "unitId": 5,
+          "amount": 8
+        },
+        {
+          "sectionId": 2,
+          "sectionRecipeId": "recipe1",
+          "ingredientId": 5,
+          "unitId": 2,
+          "amount": 0.3
+        },
+        {
+          "sectionId": 2,
+          "sectionRecipeId": "recipe1",
+          "ingredientId": 7,
+          "unitId": 14,
+          "amount": 1.5
+        }
+      ],
+      "directions": [
+        {
+          "stepNumber": 1,
+          "direction": "Preheat the oven to 350°F.",
+          "sectionId": 1,
+          "sectionRecipeId": "recipe1"
+        },
+        {
+          "stepNumber": 2,
+          "direction": "In a large bowl, cream together butter, sugar, and brown sugar until smooth.",
+          "sectionId": 2,
+          "sectionRecipeId": "recipe1"
+        },
+        {
+          "stepNumber": 3,
+          "direction": "Beat in eggs one at a time, then stir in vanilla extract.",
+          "sectionId": 2,
+          "sectionRecipeId": "recipe1"
+        },
+        {
+          "stepNumber": 4,
+          "direction": "Combine flour, baking soda, and salt. Gradually add this mixture to the butter-sugar mixture.",
+          "sectionId": 2,
+          "sectionRecipeId": "recipe1"
+        },
+        {
+          "stepNumber": 5,
+          "direction": "Fold in chocolate chips.",
+          "sectionId": 2,
+          "sectionRecipeId": "recipe1"
+        }
+      ]
+    },
+    {
+      "ingredients": [
+        {
+          "id": 11,
+          "name": "Ground Beef"
+        },
+        {
+          "id": 12,
+          "name": "Onion"
+        },
+        {
+          "id": 13,
+          "name": "Garlic"
+        },
+        {
+          "id": 14,
+          "name": "Tomato Paste"
+        },
+        {
+          "id": 15,
+          "name": "Crushed Tomatoes"
+        },
+        {
+          "id": 16,
+          "name": "Red Wine"
+        },
+        {
+          "id": 17,
+          "name": "Italian Seasoning"
+        },
+        {
+          "id": 19,
+          "name": "Black Pepper"
+        },
+        {
+          "id": 20,
+          "name": "Olive Oil"
+        },
+        {
+          "id": 21,
+          "name": "Spaghetti"
+        }
+      ],
+      "recipes": [
+        {
+          "id": "recipe3",
+          "userId": "user1",
+          "title": "Spaghetti Bolognese",
+          "imagePath": "image.jpg",
+          "servings": 6,
+          "prepTime": 20,
+          "cookTime": 40
+        }
+      ],
+      "sections": [
+        {
+          "id": 5,
+          "recipeId": "recipe3",
+          "title": "Ingredients"
+        },
+        {
+          "id": 6,
+          "recipeId": "recipe3",
+          "title": "Instructions"
+        }
+      ],
+      "sectionIngredients": [
+        {
+          "sectionId": 5,
+          "sectionRecipeId": "recipe3",
+          "ingredientId": 11,
+          "unitId": 5,
+          "amount": 1.5
+        },
+        {
+          "sectionId": 5,
+          "sectionRecipeId": "recipe3",
+          "ingredientId": 12,
+          "unitId": 6,
+          "amount": 1
+        },
+        {
+          "sectionId": 5,
+          "sectionRecipeId": "recipe3",
+          "ingredientId": 13,
+          "unitId": 7,
+          "amount": 3
+        },
+        {
+          "sectionId": 6,
+          "sectionRecipeId": "recipe3",
+          "ingredientId": 14,
+          "unitId": 8,
+          "amount": 2
+        },
+        {
+          "sectionId": 6,
+          "sectionRecipeId": "recipe3",
+          "ingredientId": 15,
+          "unitId": 9,
+          "amount": 28
+        },
+        {
+          "sectionId": 6,
+          "sectionRecipeId": "recipe3",
+          "ingredientId": 16,
+          "unitId": 10,
+          "amount": 0.5
+        }
+      ],
+      "directions": [
+        {
+          "stepNumber": 1,
+          "direction": "In a large pot, heat olive oil and sauté onions and garlic until golden brown.",
+          "sectionId": 5,
+          "sectionRecipeId": "recipe3"
+        },
+        {
+          "stepNumber": 2,
+          "direction": "Add ground beef and cook until browned. Drain excess fat.",
+          "sectionId": 5,
+          "sectionRecipeId": "recipe3"
+        },
+        {
+          "stepNumber": 3,
+          "direction": "Stir in tomato paste, crushed tomatoes, red wine, Italian seasoning, salt, and black pepper.",
+          "sectionId": 6,
+          "sectionRecipeId": "recipe3"
+        },
+        {
+          "stepNumber": 4,
+          "direction": "Simmer for 30 minutes, stirring occasionally.",
+          "sectionId": 6,
+          "sectionRecipeId": "recipe3"
+        },
+        {
+          "stepNumber": 5,
+          "direction": "Meanwhile, cook spaghetti according to package instructions. Serve Bolognese sauce over cooked spaghetti.",
+          "sectionId": 6,
+          "sectionRecipeId": "recipe3"
+        }
+      ]
+    },
+    {
+      "ingredients": [
+        {
+          "id": 22,
+          "name": "Chicken Breast"
+        },
+        {
+          "id": 23,
+          "name": "Romaine Lettuce"
+        },
+        {
+          "id": 24,
+          "name": "Croutons"
+        },
+        {
+          "id": 25,
+          "name": "Parmesan Cheese"
+        },
+        {
+          "id": 26,
+          "name": "Caesar Dressing"
+        },
+        {
+          "id": 28,
+          "name": "Lemon Juice"
+        },
+        {
+          "id": 29,
+          "name": "Garlic Powder"
+        }
+      ],
+      "recipes": [
+        {
+          "id": "recipe4",
+          "userId": "user1",
+          "title": "Chicken Caesar Salad",
+          "imagePath": "image.jpg",
+          "servings": 4,
+          "prepTime": 15,
+          "cookTime": 15
+        }
+      ],
+      "sections": [
+        {
+          "id": 7,
+          "recipeId": "recipe4",
+          "title": "Ingredients"
+        },
+        {
+          "id": 8,
+          "recipeId": "recipe4",
+          "title": "Instructions"
+        }
+      ],
+      "sectionIngredients": [
+        {
+          "sectionId": 7,
+          "sectionRecipeId": "recipe4",
+          "ingredientId": 22,
+          "unitId": 1,
+          "amount": 2
+        },
+        {
+          "sectionId": 7,
+          "sectionRecipeId": "recipe4",
+          "ingredientId": 23,
+          "unitId": 2,
+          "amount": 2
+        },
+        {
+          "sectionId": 7,
+          "sectionRecipeId": "recipe4",
+          "ingredientId": 24,
+          "unitId": 3,
+          "amount": 1.5
+        },
+        {
+          "sectionId": 7,
+          "sectionRecipeId": "recipe4",
+          "ingredientId": 25,
+          "unitId": 4,
+          "amount": 0.5
+        },
+        {
+          "sectionId": 8,
+          "sectionRecipeId": "recipe4",
+          "ingredientId": 26,
+          "unitId": 5,
+          "amount": 0.75
+        },
+        {
+          "sectionId": 8,
+          "sectionRecipeId": "recipe4",
+          "ingredientId": 20,
+          "unitId": 10,
+          "amount": 2
+        },
+        {
+          "sectionId": 8,
+          "sectionRecipeId": "recipe4",
+          "ingredientId": 28,
+          "unitId": 6,
+          "amount": 1
+        }
+      ],
+      "directions": [
+        {
+          "stepNumber": 1,
+          "direction": "Season chicken breasts with salt, black pepper, and garlic powder. Cook in olive oil until fully cooked.",
+          "sectionId": 7,
+          "sectionRecipeId": "recipe4"
+        },
+        {
+          "stepNumber": 2,
+          "direction": "Slice cooked chicken into strips.",
+          "sectionId": 7,
+          "sectionRecipeId": "recipe4"
+        },
+        {
+          "stepNumber": 3,
+          "direction": "In a large bowl, toss together Romaine lettuce, croutons, Parmesan cheese, and chicken strips.",
+          "sectionId": 8,
+          "sectionRecipeId": "recipe4"
+        },
+        {
+          "stepNumber": 4,
+          "direction": "Drizzle Caesar dressing and lemon juice over the salad. Toss until well coated.",
+          "sectionId": 8,
+          "sectionRecipeId": "recipe4"
+        },
+        {
+          "stepNumber": 5,
+          "direction": "Serve immediately and enjoy your Chicken Caesar Salad!",
+          "sectionId": 8,
+          "sectionRecipeId": "recipe4"
+        }
+      ]
+    }
+  ]
+}
